@@ -3,256 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beach Eats | Sand Delivery</title>
+  <title>Beach Eats | Sand Delivery to Your Chair</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 220px; }
+    /* Mobile-first base styling */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
+
+    /* Header & Hero */
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 24px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
+    header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+    header p { font-size: 0.95rem; opacity: 0.9; font-weight: 500; }
+
+    /* Main Container */
+    .container { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
+
+    .hero-banner { background-color: #e0f2fe; border: 1.5px solid #bae6fd; border-radius: 12px; padding: 12px 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+    .hero-banner span { font-size: 1.5rem; }
+    .hero-banner p { font-size: 0.85rem; color: #0369a1; font-weight: 600; line-height: 1.3; }
+
+    .section-title { font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Store Grid Cards */
+    .store-grid { display: flex; flex-direction: column; gap: 14px; }
     
-    /* Header */
-    .app-header { background: #fff; padding: 20px 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-    .app-logo { max-width: 340px; width: 85%; height: auto; display: block; margin: 0 auto 10px; }
-    .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
-
-    .container { max-width: 480px; margin: 0 auto; padding: 15px; }
-
-    /* Custom Restaurant Banner Box */
-    .custom-banner { 
-      background: #0284c7; 
-      color: #fff; 
-      border-radius: 14px; 
-      padding: 18px; 
-      margin-bottom: 18px; 
+    .store-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px;
       text-decoration: none;
-      display: block;
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15); 
+      color: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .custom-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-    .custom-desc { font-size: 0.85rem; opacity: 0.95; line-height: 1.35; margin-bottom: 14px; }
-    .call-btn { 
-      display: block; 
-      background: #fff; 
-      color: #0284c7; 
-      font-weight: 800; 
-      font-size: 0.9rem; 
-      padding: 12px 16px; 
-      border-radius: 8px; 
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-    }
+    .store-card:active { transform: scale(0.98); }
 
-    /* Square Category Nav Tiles (Horizontal Row) */
-    .nav-scroll { display: flex; justify-content: flex-start; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
-    .nav-square { 
-      background: #fff; 
-      border: 1px solid #cbd5e1; 
-      border-radius: 12px; 
-      width: 100px; 
-      height: 95px; 
-      flex-shrink: 0; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: space-between; 
-      padding: 12px 6px;
-      text-decoration: none; 
-      color: #334155; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
-    }
-    .nav-square.active { border-color: #0284c7; border-width: 2px; }
+    .store-info { display: flex; align-items: center; gap: 14px; }
+    .store-icon { font-size: 2.2rem; background: #f1f5f9; width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .store-details h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+    .store-details p { font-size: 0.82rem; color: #64748b; font-weight: 500; }
     
-    .logo-container {
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-    .square-logo { 
-      max-height: 36px; 
-      max-width: 75px; 
-      object-fit: contain; 
-    }
-    .square-label { font-size: 0.75rem; font-weight: 700; text-align: center; }
+    .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
 
-    /* Main Store Section Cards */
-    .store-card { 
-      background: #fff; 
-      border-radius: 12px; 
-      padding: 16px 20px; 
-      margin-bottom: 12px; 
-      border: 1px solid #e2e8f0; 
-      text-decoration: none; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
-    }
-    .card-left { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: flex-start;
-      gap: 6px; 
-    }
-    .banner-logo-box {
-      height: 38px;
-      display: flex;
-      align-items: center;
-    }
-    .store-banner-logo { 
-      max-height: 36px; 
-      max-width: 160px; 
-      object-fit: contain; 
-    }
-    .kaia-title { font-size: 1.15rem; font-weight: 900; color: #0284c7; }
-    .tag-line { font-size: 0.78rem; font-weight: 700; color: #64748b; letter-spacing: 0.2px; }
-    .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
-
-    /* Bottom Checkout Panel */
-    .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
-    .panel-content { max-width: 480px; margin: 0 auto; }
-    .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
-    .fee-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
-    .tip-section { margin-bottom: 10px; }
-    .tip-label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 6px; display: block; }
-    .tip-buttons { display: flex; gap: 8px; }
-    .tip-btn { flex: 1; padding: 6px 0; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: #334155; }
-    .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .cart-summary { display: flex; justify-content: space-between; align-items: center; }
-    .total-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
-    .checkout-btn { background: #0284c7; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+    /* Trust Footer */
+    .trust-footer { margin-top: 30px; text-align: center; font-size: 0.78rem; color: #94a3b8; font-weight: 500; }
   </style>
 </head>
 <body>
 
-  <!-- App Header -->
-  <div class="app-header">
-    <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
-    <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
-  </div>
+  <header>
+    <h1>🏖️ Beach Eats</h1>
+    <p>Food, Drinks & Essentials Delivered to Your Chair</p>
+  </header>
 
   <div class="container">
-
-    <!-- Custom Restaurant Banner Card -->
-    <a href="custom-order.html" class="custom-banner">
-      <div class="custom-title">🍔 Order From ANY Beach Restaurant</div>
-      <div class="custom-desc">Want food from your favorite local spot on the strip? Type in your custom order right in the app and our runner will deliver it to your chair!</div>
-      <div class="call-btn">👉 Click Here to Order from Your Choice Restaurant</div>
-    </a>
-
-    <!-- Horizontal Square Category Nav Tiles -->
-    <div class="nav-scroll">
-      <a href="mcdonalds.html" class="nav-square active">
-        <div class="logo-container">
-          <img src="mcdonalds.png" alt="McDonald's" class="square-logo">
-        </div>
-        <span class="square-label">McDonald's</span>
-      </a>
-      <a href="kaiabowls.html" class="nav-square">
-        <div class="logo-container">
-          <span style="font-size: 1.6rem;">🌺</span>
-        </div>
-        <span class="square-label">Kaia Bowls</span>
-      </a>
-      <a href="7-eleven.html" class="nav-square">
-        <div class="logo-container">
-          <img src="7eleven.png" alt="7-Eleven" class="square-logo">
-        </div>
-        <span class="square-label">Convenience</span>
-      </a>
-      <a href="cvs.html" class="nav-square">
-        <div class="logo-container">
-          <img src="CVS.jpeg" alt="CVS Essentials" class="square-logo">
-        </div>
-        <span class="square-label">Essentials</span>
-      </a>
+    
+    <div class="hero-banner">
+      <span>📍</span>
+      <p>Select a store below, enter your beach location at checkout, and our runner brings it straight to you!</p>
     </div>
 
-    <!-- McDonald's Banner Card -->
-    <a href="mcdonalds.html" class="store-card">
-      <div class="card-left">
-        <div class="banner-logo-box">
-          <img src="mcdonalds.png" alt="McDonald's Logo" class="store-banner-logo">
-        </div>
-        <div class="tag-line">🍔 Big Macs • 🍟 Fries • 🍦 McFlurries</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+    <h2 class="section-title">Select a Store</h2>
 
-    <!-- Kaia Bowls Banner Card -->
-    <a href="kaiabowls.html" class="store-card">
-      <div class="card-left">
-        <div class="kaia-title">🌺 Kaia Bowls</div>
-        <div class="tag-line">🥣 Acai Bowls • 🥤 Smoothies • 🥭 Fruit Bowls</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
-
-    <!-- 7-Eleven Store Banner Card -->
-    <a href="7-eleven.html" class="store-card">
-      <div class="card-left">
-        <div class="banner-logo-box">
-          <img src="7eleven.png" alt="7-Eleven Logo" class="store-banner-logo">
+    <div class="store-grid">
+      
+      <!-- McDonald's Card -->
+      <a href="mcdonalds.html" class="store-card">
+        <div class="store-info">
+          <div class="store-icon">🍔</div>
+          <div class="store-details">
+            <h3>McDonald's</h3>
+            <p>Burgers, Fries, McFlurries & Cold Drinks</p>
+          </div>
         </div>
-        <div class="tag-line">🍺 Beer • 🥤 Drinks • 🥨 Snacks & Food</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
 
-    <!-- CVS Store Banner Card -->
-    <a href="cvs.html" class="store-card">
-      <div class="card-left">
-        <div class="banner-logo-box">
-          <img src="CVS.jpeg" alt="CVS Logo" class="store-banner-logo">
+      <!-- 7-Eleven Card -->
+      <a href="7eleven.html" class="store-card">
+        <div class="store-info">
+          <div class="store-icon">🥤</div>
+          <div class="store-details">
+            <h3>7-Eleven</h3>
+            <p>Big Gulps, Chips, Candy, Ice Cream & Ice</p>
+          </div>
         </div>
-        <div class="tag-line">🧴 Sunscreen • 🕶️ Shades • 🏖️ Towels & Care</div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
+
+      <!-- CVS Card -->
+      <a href="cvs.html" class="store-card">
+        <div class="store-info">
+          <div class="store-icon">🧴</div>
+          <div class="store-details">
+            <h3>CVS Essentials</h3>
+            <p>Sunscreen, Towels, First Aid & Hydration</p>
+          </div>
+        </div>
+        <div class="arrow-badge">→</div>
+      </a>
+
+    </div>
+
+    <div class="trust-footer">
+      ⚡ Fast Sand Runner Delivery • Pay via Venmo, Cash App & Cards
+    </div>
 
   </div>
 
-  <!-- Bottom Checkout Panel -->
-  <div class="checkout-panel">
-    <div class="panel-content">
-      <div class="fee-summary">
-        <div class="fee-row"><span>Items Subtotal:</span><span>$<span id="subtotalDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Sand Delivery Fee:</span><span>$<span id="deliveryFeeDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Service Fee (8%):</span><span>$<span id="serviceFeeDisplay">0.00</span></span></div>
-      </div>
-      <div class="tip-section">
-        <span class="tip-label">ADD COURIER TIP</span>
-        <div class="tip-buttons">
-          <button class="tip-btn" onclick="selectTip(0.15, this)">15%</button>
-          <button class="tip-btn active" onclick="selectTip(0.20, this)">20%</button>
-          <button class="tip-btn" onclick="selectTip(0.25, this)">25%</button>
-        </div>
-      </div>
-      <div class="cart-summary">
-        <div>
-          <div style="font-size: 0.72rem; color: #64748b;">Final Grand Total</div>
-          <div class="total-amount">$<span id="grandTotal">0.00</span></div>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">Review & Pay →</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let tipPercent = 0.20;
-    function calculateTotal() {
-      document.getElementById('subtotalDisplay').innerText = "0.00";
-      document.getElementById('deliveryFeeDisplay').innerText = "0.00";
-      document.getElementById('serviceFeeDisplay').innerText = "0.00";
-      document.getElementById('grandTotal').innerText = "0.00";
-    }
-    function selectTip(percent, btnElement) {
-      tipPercent = percent;
-      document.querySelectorAll('.tip-btn').forEach(btn => btn.classList.remove('active'));
-      btnElement.classList.add('active');
-    }
-    function checkout() {
-      alert("Tap a store card above to enter and pick items!");
-    }
-  </script>
 </body>
 </html>
