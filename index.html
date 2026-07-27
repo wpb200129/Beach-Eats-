@@ -15,11 +15,27 @@
 
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-    /* Top Navigation Bar Pills (Logos + Labels) */
-    .nav-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
-    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 24px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
-    .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .pill-logo { height: 18px; width: auto; object-fit: contain; }
+    /* Square Category Nav Tiles */
+    .nav-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
+    .nav-square { 
+      background: #fff; 
+      border: 1px solid #cbd5e1; 
+      border-radius: 12px; 
+      width: 100px; 
+      height: 90px; 
+      flex-shrink: 0; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 6px; 
+      text-decoration: none; 
+      color: #334155; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
+    }
+    .nav-square.active { border-color: #0284c7; border-width: 2px; }
+    .square-logo { height: 32px; width: auto; object-fit: contain; max-width: 70px; }
+    .square-label { font-size: 0.75rem; font-weight: 700; text-align: center; }
 
     /* Main Store Section Cards */
     .store-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
@@ -50,30 +66,31 @@
 
   <div class="container">
 
-    <!-- Top Navigation Bar Pills with Store Logos & Text -->
+    <!-- Square Top Navigation Tiles -->
     <div class="nav-scroll">
-      <a href="7-eleven.html" class="nav-pill active">
-        <img src="7eleven.png" alt="7-Eleven" class="pill-logo">
-        <span>Convenience</span>
+      <a href="7-eleven.html" class="nav-square active">
+        <img src="7eleven.png" alt="7-Eleven" class="square-logo">
+        <span class="square-label">Convenience</span>
       </a>
-      <a href="cvs.html" class="nav-pill">
-        <img src="cvs.png" alt="CVS" class="pill-logo">
-        <span>Pharmacy</span>
+      <a href="cvs.html" class="nav-square">
+        <img src="CVS.jpeg" alt="CVS Pharmacy" class="square-logo">
+        <span class="square-label">Pharmacy</span>
       </a>
-      <a href="restaurants.html" class="nav-pill">
-        <span>🍔 Local Eats</span>
+      <a href="restaurants.html" class="nav-square">
+        <span style="font-size: 1.5rem;">🍔</span>
+        <span class="square-label">Local Eats</span>
       </a>
     </div>
 
-    <!-- 7-Eleven Store Card -->
+    <!-- 7-Eleven Store Banner Card -->
     <a href="7-eleven.html" class="store-card">
       <img src="7eleven.png" alt="7-Eleven Logo" class="store-logo-only">
       <span class="arrow">→</span>
     </a>
 
-    <!-- CVS Store Card -->
+    <!-- CVS Store Banner Card -->
     <a href="cvs.html" class="store-card">
-      <img src="cvs.png" alt="CVS Logo" class="store-logo-only">
+      <img src="CVS.jpeg" alt="CVS Logo" class="store-logo-only">
       <span class="arrow">→</span>
     </a>
 
