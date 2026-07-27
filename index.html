@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,25 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beach Eats | Sand Delivery to Your Chair</title>
   <style>
-    /* Base styling */
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
-    /* Header & Hero */
+    /* Header with Full Branding */
     header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 20px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
-    .header-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; }
-    .header-logo { height: 40px; width: auto; object-fit: contain; }
-    header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
-    header p { font-size: 0.95rem; opacity: 0.9; font-weight: 500; }
+    .brand-logo { max-width: 220px; height: auto; margin-bottom: 8px; }
+    header p { font-size: 0.95rem; opacity: 0.95; font-weight: 500; }
 
-    /* Main Container */
     .container { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
 
-    .hero-banner { background-color: #e0f2fe; border: 1.5px solid #bae6fd; border-radius: 12px; padding: 12px 16px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-    .hero-banner span { font-size: 1.5rem; }
-    .hero-banner p { font-size: 0.85rem; color: #0369a1; font-weight: 600; line-height: 1.3; }
+    /* GPS Location Indicator Bar */
+    .gps-status-bar { 
+      background-color: #f0fdf4; 
+      border: 1px solid #bbf7d0; 
+      border-radius: 12px; 
+      padding: 12px 16px; 
+      margin-bottom: 20px; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      color: #166534;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .gps-icon { font-size: 1.2rem; }
 
-    .section-title { font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .section-title { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 
     /* Store Grid Cards */
     .store-grid { display: flex; flex-direction: column; gap: 14px; }
@@ -40,13 +47,12 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease;
     }
     .store-card:active { transform: scale(0.98); }
 
     .store-info { display: flex; align-items: center; gap: 14px; }
     
-    /* Logo Image Styling */
     .store-logo-wrapper { 
       width: 56px; 
       height: 56px; 
@@ -60,42 +66,32 @@
       padding: 6px;
       font-size: 1.8rem;
     }
-    .store-logo-wrapper img { 
-      max-width: 100%; 
-      max-height: 100%; 
-      object-fit: contain; 
-    }
+    .store-logo-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
     .store-details h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
     .store-details p { font-size: 0.82rem; color: #64748b; font-weight: 500; }
     
     .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; flex-shrink: 0; }
 
-    /* Custom Order Card Styling */
-    .custom-card {
-      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-      border: 1.5px dashed #0284c7;
-    }
+    .custom-card { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1.5px dashed #0284c7; }
 
-    /* Trust Footer */
     .trust-footer { margin-top: 30px; text-align: center; font-size: 0.78rem; color: #94a3b8; font-weight: 500; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="header-brand">
-      <img src="logos/beacheats.png" alt="Beach Eats Logo" class="header-logo" onerror="this.style.display='none'">
-      <h1>Beach Eats</h1>
-    </div>
+    <!-- Your Header Logo -->
+    <img src="logos/beacheats.png" alt="Beach Eats Logo" class="brand-logo" onerror="this.src='logos/logo.png'">
     <p>Food, Drinks & Essentials Delivered to Your Chair</p>
   </header>
 
   <div class="container">
     
-    <div class="hero-banner">
-      <span>📍</span>
-      <p>Select a store below, enter your beach location at checkout, and our runner brings it straight to you!</p>
+    <!-- Automatic GPS Status Bar -->
+    <div class="gps-status-bar">
+      <span class="gps-icon">🎯</span>
+      <span>GPS Active • Delivering to your live beach coordinates</span>
     </div>
 
     <h2 class="section-title">Select a Store</h2>
@@ -161,9 +157,7 @@
       <!-- Custom Local Restaurant Card -->
       <a href="custom.html" class="store-card custom-card">
         <div class="store-info">
-          <div class="store-logo-wrapper">
-            📍
-          </div>
+          <div class="store-logo-wrapper">📍</div>
           <div class="store-details">
             <h3>Local Spot Not Listed?</h3>
             <p>Type in any local restaurant or shop & we'll fetch it!</p>
