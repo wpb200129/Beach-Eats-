@@ -8,15 +8,38 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 220px; }
     
-    /* Header (Bigger Logo) */
+    /* Header */
     .app-header { background: #fff; padding: 20px 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
     .app-logo { max-width: 340px; width: 85%; height: auto; display: block; margin: 0 auto 10px; }
     .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
+    /* Custom Order Banner Box */
+    .custom-banner { 
+      background: linear-gradient(135deg, #0284c7, #0369a1); 
+      color: #fff; 
+      border-radius: 14px; 
+      padding: 16px; 
+      margin-bottom: 18px; 
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); 
+    }
+    .custom-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .custom-desc { font-size: 0.82rem; opacity: 0.95; line-height: 1.35; margin-bottom: 12px; }
+    .call-btn { 
+      display: inline-block; 
+      background: #fff; 
+      color: #0284c7; 
+      font-weight: 800; 
+      font-size: 0.85rem; 
+      padding: 10px 16px; 
+      border-radius: 8px; 
+      text-decoration: none; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    }
+
     /* Square Category Nav Tiles */
-    .nav-scroll { display: flex; justify-content: center; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
+    .nav-scroll { display: flex; justify-content: flex-start; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
     .nav-square { 
       background: #fff; 
       border: 1px solid #cbd5e1; 
@@ -34,54 +57,20 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
     }
     .nav-square.active { border-color: #0284c7; border-width: 2px; }
-    
-    .logo-container {
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-    .square-logo { 
-      max-height: 36px; 
-      max-width: 75px; 
-      object-fit: contain; 
-    }
+    .logo-container { height: 40px; display: flex; align-items: center; justify-content: center; width: 100%; }
+    .square-logo { max-height: 36px; max-width: 75px; object-fit: contain; }
     .square-label { font-size: 0.75rem; font-weight: 700; text-align: center; }
 
     /* Main Store Banner Cards */
-    .store-card { 
-      background: #fff; 
-      border-radius: 12px; 
-      padding: 16px 20px; 
-      margin-bottom: 12px; 
-      border: 1px solid #e2e8f0; 
-      text-decoration: none; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
-    }
-    .card-left { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: flex-start;
-      gap: 8px; 
-    }
-    .banner-logo-box {
-      height: 38px;
-      display: flex;
-      align-items: center;
-    }
-    .store-banner-logo { 
-      max-height: 36px; 
-      max-width: 160px; 
-      object-fit: contain; 
-    }
+    .store-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .card-left { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .banner-logo-box { height: 38px; display: flex; align-items: center; }
+    .store-banner-logo { max-height: 36px; max-width: 160px; object-fit: contain; }
+    .kaia-title { font-size: 1.2rem; font-weight: 900; color: #0284c7; }
     .tag-line { font-size: 0.78rem; font-weight: 700; color: #64748b; letter-spacing: 0.2px; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
 
-    /* Bottom Checkout Panel */
+    /* Bottom Panel */
     .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
     .panel-content { max-width: 480px; margin: 0 auto; }
     .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
@@ -98,7 +87,6 @@
 </head>
 <body>
 
-  <!-- Header with Significantly Larger Logo -->
   <div class="app-header">
     <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
     <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
@@ -106,45 +94,51 @@
 
   <div class="container">
 
-    <!-- Square Top Navigation Tiles -->
+    <!-- ANY RESTAURANT PICKUP BANNER -->
+    <div class="custom-banner">
+      <div class="custom-title">📞 Want food from ANY restaurant?</div>
+      <div class="custom-desc">Order takeout from any spot on the beach strip. Call or text us your pickup order details & beach chair spot and we'll deliver it straight to you!</div>
+      <a href="tel:15555555555" class="call-btn">📲 Call / Text Delivery Runner</a>
+    </div>
+
+    <!-- Square Top Tiles -->
     <div class="nav-scroll">
-      <a href="7-eleven.html" class="nav-square active">
-        <div class="logo-container">
-          <img src="7eleven.png" alt="7-Eleven" class="square-logo">
-        </div>
+      <a href="kaiabowls.html" class="nav-square active">
+        <div class="logo-container"><span style="font-size: 1.6rem;">🌺</span></div>
+        <span class="square-label">Kaia Bowls</span>
+      </a>
+      <a href="7-eleven.html" class="nav-square">
+        <div class="logo-container"><img src="7eleven.png" alt="7-Eleven" class="square-logo"></div>
         <span class="square-label">Convenience</span>
       </a>
       <a href="cvs.html" class="nav-square">
-        <div class="logo-container">
-          <img src="CVS.jpeg" alt="CVS Essentials" class="square-logo">
-        </div>
+        <div class="logo-container"><img src="CVS.jpeg" alt="CVS Essentials" class="square-logo"></div>
         <span class="square-label">Essentials</span>
-      </a>
-      <a href="restaurants.html" class="nav-square">
-        <div class="logo-container">
-          <span style="font-size: 1.6rem;">🍔</span>
-        </div>
-        <span class="square-label">Local Eats</span>
       </a>
     </div>
 
-    <!-- 7-Eleven Store Banner Card -->
+    <!-- Kaia Bowls Card -->
+    <a href="kaiabowls.html" class="store-card">
+      <div class="card-left">
+        <div class="kaia-title">🌺 Kaia Bowls</div>
+        <div class="tag-line">🥣 Acai Bowls • 🥤 Smoothies • 🥭 Fruit Bowls</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <!-- 7-Eleven Card -->
     <a href="7-eleven.html" class="store-card">
       <div class="card-left">
-        <div class="banner-logo-box">
-          <img src="7eleven.png" alt="7-Eleven Logo" class="store-banner-logo">
-        </div>
+        <div class="banner-logo-box"><img src="7eleven.png" alt="7-Eleven Logo" class="store-banner-logo"></div>
         <div class="tag-line">🍺 Beer • 🥤 Drinks • 🥨 Snacks & Food</div>
       </div>
       <span class="arrow">→</span>
     </a>
 
-    <!-- CVS Store Banner Card -->
+    <!-- CVS Card -->
     <a href="cvs.html" class="store-card">
       <div class="card-left">
-        <div class="banner-logo-box">
-          <img src="CVS.jpeg" alt="CVS Logo" class="store-banner-logo">
-        </div>
+        <div class="banner-logo-box"><img src="CVS.jpeg" alt="CVS Logo" class="store-banner-logo"></div>
         <div class="tag-line">🧴 Sunscreen • 🕶️ Shades • 🏖️ Towels & Care</div>
       </div>
       <span class="arrow">→</span>
@@ -152,7 +146,6 @@
 
   </div>
 
-  <!-- Bottom Checkout Panel -->
   <div class="checkout-panel">
     <div class="panel-content">
       <div class="fee-summary">
@@ -192,7 +185,7 @@
       btnElement.classList.add('active');
     }
     function checkout() {
-      alert("Tap a store card above to enter and pick items!");
+      alert("Tap a store card above or use the Call button to order!");
     }
   </script>
 </body>
