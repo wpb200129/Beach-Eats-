@@ -15,34 +15,69 @@
 
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-    /* Square Category Nav Tiles */
-    .nav-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
+    /* Square Category Nav Tiles (Centered Flexbox) */
+    .nav-scroll { display: flex; justify-content: center; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
     .nav-square { 
       background: #fff; 
       border: 1px solid #cbd5e1; 
       border-radius: 12px; 
       width: 100px; 
-      height: 90px; 
+      height: 95px; 
       flex-shrink: 0; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
-      justify-content: center; 
-      gap: 6px; 
+      justify-content: space-between; 
+      padding: 12px 6px;
       text-decoration: none; 
       color: #334155; 
       box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
     }
     .nav-square.active { border-color: #0284c7; border-width: 2px; }
-    .square-logo { height: 32px; width: auto; object-fit: contain; max-width: 70px; }
-    .square-logo-cvs { height: 44px; width: auto; object-fit: contain; max-width: 85px; } /* Doubled sizing for top CVS tile */
+    
+    .logo-container {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .square-logo { 
+      max-height: 36px; 
+      max-width: 75px; 
+      object-fit: contain; 
+    }
     .square-label { font-size: 0.75rem; font-weight: 700; text-align: center; }
 
-    /* Main Store Section Cards */
-    .store-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .card-left { display: flex; flex-direction: column; gap: 6px; }
-    .store-logo-only { height: 40px; width: auto; max-width: 150px; object-fit: contain; }
-    .store-logo-cvs { height: 65px; width: auto; max-width: 220px; object-fit: contain; margin-left: -5px; } /* Doubled sizing for CVS store card */
+    /* Main Store Banner Cards */
+    .store-card { 
+      background: #fff; 
+      border-radius: 12px; 
+      padding: 16px 20px; 
+      margin-bottom: 12px; 
+      border: 1px solid #e2e8f0; 
+      text-decoration: none; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
+    }
+    .card-left { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start;
+      gap: 8px; 
+    }
+    .banner-logo-box {
+      height: 38px;
+      display: flex;
+      align-items: center;
+    }
+    .store-banner-logo { 
+      max-height: 36px; 
+      max-width: 160px; 
+      object-fit: contain; 
+    }
     .tag-line { font-size: 0.78rem; font-weight: 700; color: #64748b; letter-spacing: 0.2px; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
 
@@ -73,15 +108,21 @@
     <!-- Square Top Navigation Tiles -->
     <div class="nav-scroll">
       <a href="7-eleven.html" class="nav-square active">
-        <img src="7eleven.png" alt="7-Eleven" class="square-logo">
+        <div class="logo-container">
+          <img src="7eleven.png" alt="7-Eleven" class="square-logo">
+        </div>
         <span class="square-label">Convenience</span>
       </a>
       <a href="cvs.html" class="nav-square">
-        <img src="CVS.jpeg" alt="CVS Essentials" class="square-logo-cvs">
+        <div class="logo-container">
+          <img src="CVS.jpeg" alt="CVS Essentials" class="square-logo">
+        </div>
         <span class="square-label">Essentials</span>
       </a>
       <a href="restaurants.html" class="nav-square">
-        <span style="font-size: 1.5rem;">🍔</span>
+        <div class="logo-container">
+          <span style="font-size: 1.6rem;">🍔</span>
+        </div>
         <span class="square-label">Local Eats</span>
       </a>
     </div>
@@ -89,16 +130,20 @@
     <!-- 7-Eleven Store Banner Card -->
     <a href="7-eleven.html" class="store-card">
       <div class="card-left">
-        <img src="7eleven.png" alt="7-Eleven Logo" class="store-logo-only">
+        <div class="banner-logo-box">
+          <img src="7eleven.png" alt="7-Eleven Logo" class="store-banner-logo">
+        </div>
         <div class="tag-line">🍺 Beer • 🥤 Drinks • 🥨 Snacks & Food</div>
       </div>
       <span class="arrow">→</span>
     </a>
 
-    <!-- CVS Store Banner Card (Doubled Logo) -->
+    <!-- CVS Store Banner Card -->
     <a href="cvs.html" class="store-card">
       <div class="card-left">
-        <img src="CVS.jpeg" alt="CVS Logo" class="store-logo-cvs">
+        <div class="banner-logo-box">
+          <img src="CVS.jpeg" alt="CVS Logo" class="store-banner-logo">
+        </div>
         <div class="tag-line">🧴 Sunscreen • 🕶️ Shades • 🏖️ Towels & Care</div>
       </div>
       <span class="arrow">→</span>
