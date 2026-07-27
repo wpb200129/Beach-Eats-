@@ -15,12 +15,13 @@
 
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-    /* Navigation Pills */
-    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
-    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
+    /* Top Navigation Bar Pills (Logos + Labels) */
+    .nav-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
+    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 24px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
     .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
+    .pill-logo { height: 18px; width: auto; object-fit: contain; }
 
-    /* Logo Only Store Cards */
+    /* Main Store Section Cards */
     .store-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .store-logo-only { height: 45px; width: auto; max-width: 160px; object-fit: contain; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
@@ -49,21 +50,28 @@
 
   <div class="container">
 
-    <!-- Store Navigation Pills -->
+    <!-- Top Navigation Bar Pills with Store Logos & Text -->
     <div class="nav-scroll">
-      <a href="index.html" class="nav-pill active">🔥 Stores</a>
-      <a href="7-eleven.html" class="nav-pill">7-Eleven</a>
-      <a href="cvs.html" class="nav-pill">CVS</a>
-      <a href="restaurants.html" class="nav-pill">Local Eats</a>
+      <a href="7-eleven.html" class="nav-pill active">
+        <img src="7eleven.png" alt="7-Eleven" class="pill-logo">
+        <span>Convenience</span>
+      </a>
+      <a href="cvs.html" class="nav-pill">
+        <img src="cvs.png" alt="CVS" class="pill-logo">
+        <span>Pharmacy</span>
+      </a>
+      <a href="restaurants.html" class="nav-pill">
+        <span>🍔 Local Eats</span>
+      </a>
     </div>
 
-    <!-- 7-Eleven Logo Card -->
+    <!-- 7-Eleven Store Card -->
     <a href="7-eleven.html" class="store-card">
       <img src="7eleven.png" alt="7-Eleven Logo" class="store-logo-only">
       <span class="arrow">→</span>
     </a>
 
-    <!-- CVS Logo Card -->
+    <!-- CVS Store Card -->
     <a href="cvs.html" class="store-card">
       <img src="cvs.png" alt="CVS Logo" class="store-logo-only">
       <span class="arrow">→</span>
