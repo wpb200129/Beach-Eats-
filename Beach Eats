@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Beach Eats App</title>
+  <style>
+    :root { 
+      --primary: #f39c12; 
+      --accent: #3498db; 
+      --bg: #f8f9fa; 
+    }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background-color: var(--bg); 
+      color: #333; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+    
+    /* App Header */
+    .app-header { 
+      background: white; 
+      padding: 15px; 
+      text-align: center; 
+      position: sticky; 
+      top: 0; 
+      z-index: 100; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    }
+    .app-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .app-header h1 { 
+      margin: 0; 
+      color: var(--primary); 
+      font-size: 1.6rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 8px; 
+    }
+    .app-header p { 
+      margin: 2px 0 0 0; 
+      font-size: 0.85rem; 
+      color: #777; 
+      font-weight: 500;
+    }
+
+    /* App Container */
+    .container { 
+      padding: 16px; 
+      max-width: 480px; 
+      margin: 0 auto; 
+      padding-bottom: 40px; 
+    }
+
+    /* Form Cards */
+    .card { 
+      background: white; 
+      border-radius: 16px; 
+      padding: 20px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+      margin-bottom: 16px; 
+    }
+    .card-title { 
+      font-weight: 700; 
+      font-size: 1.1rem; 
+      margin-bottom: 12px; 
+      color: #444; 
+    }
+
+    label { 
+      font-weight: 600; 
+      display: block; 
+      margin-top: 10px; 
+      font-size: 0.85rem; 
+      color: #555; 
+    }
+    input, select { 
+      width: 100%; 
+      padding: 14px; 
+      margin-top: 4px; 
+      border-radius: 10px; 
+      border: 1px solid #e0e0e0; 
+      box-sizing: border-box; 
+      font-size: 1rem; 
+      background: #fafafa; 
+    }
+    input:focus, select:focus { 
+      outline: none; 
+      border-color: var(--primary); 
+      background: #fff; 
+    }
+
+    /* Action Buttons */
+    .btn { 
+      width: 100%; 
+      padding: 16px; 
+      border-radius: 12px; 
+      border: none; 
+      font-weight: 700; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      transition: transform 0.1s; 
+      display: block; 
+      text-align: center; 
+      margin-top: 12px; 
+    }
+    .btn:active { 
+      transform: scale(0.98); 
+    }
+    .btn-gps { 
+      background: #e1f5fe; 
+      color: #0288d1; 
+      border: 1px solid #b3e5fc; 
+    }
+    .btn-order { 
+      background: var(--primary); 
+      color: white; 
+      margin-top: 20px; 
+      box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3); 
+    }
+
+    .status { 
+      font-size: 0.85rem; 
+      color: #2e7d32; 
+      font-weight: 600; 
+      margin-top: 8px; 
+      text-align: center; 
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+
+  <div class="app-header">
+    <!-- Make sure to upload your logo image as logo.png to your GitHub repository -->
+    <img src="logo.png" alt="Beach Eats Logo" class="app-logo" onerror="this.style.display='none'">
+    <h1>Beach Eats</h1>
+    <p>Beachside Food & Drink Delivery</p>
+  </div>
+
+  <div class="container">
+    <form id="orderForm">
+      
+      <!-- Location Card -->
+      <div class="card">
+        <div class="card-title">1. Your Delivery Spot</div>
+        
+        <label>Your Name</label>
+        <input type="text" id="custName" placeholder="e.g. Alex" required>
+
+        <label>Umbrella / Chair # or Spot Description</label>
+        <input type="text" id="chairDetails" placeholder="e.g. Blue Umbrella #4 near Lifeguard Stand 2" required>
+
+        <label>Cell Phone Number</label>
+        <input type="tel" id="custPhone" placeholder="(555) 000-0000" required>
+
+        <button type="button" class="btn btn-gps" onclick="captureGPS()">📍 Share Precise GPS Pin</button>
+        <div id="gpsStatus" class="status"></div>
+        <input type="hidden" id="gpsUrl">
+      </div>
+
+      <!-- Menu Card -->
+      <div class="card">
+        <div class="card-title">2. Select Your Order</div>
+        
+        <label>Choose Item / Pack</label>
+        <select id="orderItem">
+          <option value="Cold Drinks & Ice Combo ($15)">🥤 Cold Drinks & Ice Combo ($15)</option>
+          <option value="Beach Lunch Special: Burger & Fries ($22)">🍔 Beach Lunch Special: Burger & Fries ($22)</option>
+          <option value="Snack Bag & Sunscreen Pack ($18)">☀️ Snack Bag & Sunscreen Pack ($18)</option>
+        </select>
+
+        <button type="submit" id="submitBtn" class="btn btn-order">Proceed to Payment ➔</button>
+      </div>
+
+    </form>
+  </div>
+
+<script>
+  // Initialize EmailJS with your Public Key
+  (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // REPLACE WITH YOUR EMAILJS PUBLIC KEY
+  })();
+
+  let userLat = null;
+  let userLng = null;
+
+  function captureGPS() {
+    const status = document.getElementById('gpsStatus');
+    status.innerText = "Locating your beach spot...";
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        document.getElementById('gpsUrl').value = `https://www.google.com/maps?q=${userLat},${userLng}`;
+        status.innerText = "✅ GPS Locked!";
+      }, () => {
+        status.innerText = "❌ Couldn't grab GPS. Chair # details will be used!";
+      }, { enableHighAccuracy: true, timeout: 10000 });
+    } else {
+      status.innerText = "GPS not supported on this browser.";
+    }
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.innerText = "Sending Order...";
+    btn.disabled = true;
+
+    // Send order details to EmailJS
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+      customer_name: document.getElementById('custName').value,
+      boat_info: document.getElementById('chairDetails').value, // Used for Chair/Spot info
+      phone: document.getElementById('custPhone').value,
+      item: document.getElementById('orderItem').value,
+      gps_link: document.getElementById('gpsUrl').value || "No GPS shared (Check Chair #)"
+    }).then(() => {
+      // REPLACE WITH YOUR STRIPE PAYMENT LINK URL
+      window.location.href = "https://buy.stripe.com/YOUR_STRIPE_LINK";
+    }, (error) => {
+      alert("Order submission failed. Please try again.");
+      btn.innerText = "Proceed to Payment ➔";
+      btn.disabled = false;
+    });
+  });
+</script>
+
+</body>
+</html>
