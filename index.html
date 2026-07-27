@@ -3,54 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beach Eats | Direct To Your Chair</title>
+  <title>Beach Eats | Sand Delivery</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 220px; }
     
-    /* App Header */
-    .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
     .app-logo { max-width: 170px; height: auto; display: block; margin: 0 auto 6px; }
     .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
 
-    /* Container */
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-    /* Category Nav Pills */
-    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 10px; scrollbar-width: none; }
-    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
+    /* Store Navigation Bar */
+    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
+    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
     .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
 
-    /* Store Section Headers */
-    .store-header { font-size: 1.1rem; font-weight: 800; margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; color: #0284c7; }
+    /* Store Banner Cards */
+    .store-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .store-name { font-size: 1.05rem; font-weight: 800; color: #0284c7; margin-bottom: 2px; }
+    .store-sub { font-size: 0.8rem; color: #64748b; }
+    .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
 
-    /* DoorDash Style Cards */
-    .item-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; }
+    /* Shared Item Cards */
+    .item-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f1f5f9; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .item-info { flex: 1; padding-right: 12px; }
     .item-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
-    .item-desc { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; line-height: 1.25; }
+    .item-desc { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; }
     .item-price { font-size: 0.9rem; font-weight: 700; color: #0f172a; }
     
-    /* Quantity Stepper */
     .stepper { display: flex; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 3px; }
     .step-btn { width: 28px; height: 28px; border: none; background: #fff; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     .step-count { width: 28px; text-align: center; font-weight: 700; font-size: 0.85rem; }
 
-    /* Fixed Bottom Checkout Panel */
+    /* Bottom Checkout */
     .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
     .panel-content { max-width: 480px; margin: 0 auto; }
-    
-    /* Fee Breakdown & Tip Section */
     .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
     .fee-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
-
     .tip-section { margin-bottom: 10px; }
-    .tip-label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 6px; display: block; letter-spacing: 0.5px; }
+    .tip-label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 6px; display: block; }
     .tip-buttons { display: flex; gap: 8px; }
     .tip-btn { flex: 1; padding: 6px 0; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: #334155; }
     .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-
-    /* Checkout Bar */
     .cart-summary { display: flex; justify-content: space-between; align-items: center; }
     .total-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
     .checkout-btn { background: #0284c7; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
@@ -58,7 +53,6 @@
 </head>
 <body>
 
-  <!-- App Header -->
   <div class="app-header">
     <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
     <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
@@ -66,136 +60,49 @@
 
   <div class="container">
 
-    <!-- Store Category Nav Pills -->
+    <!-- Store Link Tabs -->
     <div class="nav-scroll">
-      <a href="#seven-eleven" class="nav-pill active">🏪 7-Eleven</a>
-      <a href="#cvs" class="nav-pill">💊 CVS Essentials</a>
-      <a href="#restaurants" class="nav-pill">🍔 Local Beach Eats</a>
+      <a href="index.html" class="nav-pill active">🔥 All Featured</a>
+      <a href="7-eleven.html" class="nav-pill">🏪 7-Eleven</a>
+      <a href="cvs.html" class="nav-pill">💊 CVS Essentials</a>
+      <a href="restaurants.html" class="nav-pill">🍔 Local Eats</a>
     </div>
 
-    <!-- 1. 7-ELEVEN SECTION -->
-    <div id="seven-eleven" class="store-header">🏪 7-Eleven (Drinks, Beer & Snacks)</div>
-    
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Ice-Cold 6-Pack Beer</div>
-        <div class="item-desc">Domestic or seltzer cans in ice pouch. 21+ ID required.</div>
-        <div class="item-price">$16.99</div>
+    <!-- Store Category Cards -->
+    <a href="7-eleven.html" class="store-card">
+      <div>
+        <div class="store-name">🏪 7-Eleven Store</div>
+        <div class="store-sub">Beer, Ice, Energy Drinks, Chips & Snacks</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item1', -1)">-</button>
-        <span id="item1" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item1', 1)">+</button>
-      </div>
-    </div>
+      <span class="arrow">→</span>
+    </a>
 
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Bag of Ice (10 lb)</div>
-        <div class="item-desc">Keep your cooler chilled on the sand.</div>
-        <div class="item-price">$5.50</div>
+    <a href="cvs.html" class="store-card">
+      <div>
+        <div class="store-name">💊 CVS Pharmacy</div>
+        <div class="store-sub">Sunscreen, Aloe Vera, Towels & Accessories</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item2', -1)">-</button>
-        <span id="item2" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item2', 1)">+</button>
-      </div>
-    </div>
+      <span class="arrow">→</span>
+    </a>
 
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Gatorade / BodyArmor (28oz)</div>
-        <div class="item-desc">Ice-cold hydration sports drink.</div>
-        <div class="item-price">$4.00</div>
+    <a href="restaurants.html" class="store-card">
+      <div>
+        <div class="store-name">🍔 Local Beach Eats</div>
+        <div class="store-sub">Fresh Tacos, Burgers, Fries & Hot Meals</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item3', -1)">-</button>
-        <span id="item3" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item3', 1)">+</button>
-      </div>
-    </div>
-
-    <!-- 2. CVS SECTION -->
-    <div id="cvs" class="store-header">💊 CVS (Beach Essentials)</div>
-
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Coppertone Sport Sunscreen SPF 50</div>
-        <div class="item-desc">Water-resistant continuous spray.</div>
-        <div class="item-price">$14.99</div>
-      </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item4', -1)">-</button>
-        <span id="item4" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item4', 1)">+</button>
-      </div>
-    </div>
-
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Aloe Vera After-Sun Gel</div>
-        <div class="item-desc">Cooling relief for sun-exposed skin.</div>
-        <div class="item-price">$8.50</div>
-      </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item5', -1)">-</button>
-        <span id="item5" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item5', 1)">+</button>
-      </div>
-    </div>
-
-    <!-- 3. LOCAL RESTAURANTS SECTION -->
-    <div id="restaurants" class="store-header">🍔 Local Beach Eats</div>
-
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Coastal Fish Tacos (3) & Chips</div>
-        <div class="item-desc">Mahi mahi, cabbage slaw & lime crema.</div>
-        <div class="item-price">$17.50</div>
-      </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item6', -1)">-</button>
-        <span id="item6" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item6', 1)">+</button>
-      </div>
-    </div>
-
-    <div class="item-card">
-      <div class="item-info">
-        <div class="item-title">Double Beach Cheeseburger</div>
-        <div class="item-desc">Angus beef, cheddar, house sauce & seasoned fries.</div>
-        <div class="item-price">$16.00</div>
-      </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('item7', -1)">-</button>
-        <span id="item7" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('item7', 1)">+</button>
-      </div>
-    </div>
+      <span class="arrow">→</span>
+    </a>
 
   </div>
 
   <!-- Bottom Checkout Panel -->
   <div class="checkout-panel">
     <div class="panel-content">
-      
-      <!-- Fee Breakdown Summary -->
       <div class="fee-summary">
-        <div class="fee-row">
-          <span>Items Subtotal:</span>
-          <span>$<span id="subtotalDisplay">0.00</span></span>
-        </div>
-        <div class="fee-row">
-          <span>Sand Delivery Fee:</span>
-          <span>$<span id="deliveryFeeDisplay">0.00</span></span>
-        </div>
-        <div class="fee-row">
-          <span>Service Fee (8%):</span>
-          <span>$<span id="serviceFeeDisplay">0.00</span></span>
-        </div>
+        <div class="fee-row"><span>Items Subtotal:</span><span>$<span id="subtotalDisplay">0.00</span></span></div>
+        <div class="fee-row"><span>Sand Delivery Fee:</span><span>$<span id="deliveryFeeDisplay">0.00</span></span></div>
+        <div class="fee-row"><span>Service Fee (8%):</span><span>$<span id="serviceFeeDisplay">0.00</span></span></div>
       </div>
-
-      <!-- Courier Tip Selector -->
       <div class="tip-section">
         <span class="tip-label">ADD COURIER TIP</span>
         <div class="tip-buttons">
@@ -204,8 +111,6 @@
           <button class="tip-btn" onclick="selectTip(0.25, this)">25%</button>
         </div>
       </div>
-
-      <!-- Total & Action Button -->
       <div class="cart-summary">
         <div>
           <div style="font-size: 0.72rem; color: #64748b;">Final Grand Total</div>
@@ -213,54 +118,25 @@
         </div>
         <button class="checkout-btn" onclick="checkout()">Review & Pay →</button>
       </div>
-
     </div>
   </div>
 
   <script>
-    const itemPrices = { item1: 16.99, item2: 5.50, item3: 4.00, item4: 14.99, item5: 8.50, item6: 17.50, item7: 16.00 };
-    const cart = { item1: 0, item2: 0, item3: 0, item4: 0, item5: 0, item6: 0, item7: 0 };
-    let tipPercent = 0.20; // Default 20% tip
-
-    function updateQty(id, delta) {
-      cart[id] = Math.max(0, cart[id] + delta);
-      document.getElementById(id).innerText = cart[id];
-      calculateTotal();
+    let tipPercent = 0.20;
+    function calculateTotal() {
+      // Base logic for index page
+      document.getElementById('subtotalDisplay').innerText = "0.00";
+      document.getElementById('deliveryFeeDisplay').innerText = "0.00";
+      document.getElementById('serviceFeeDisplay').innerText = "0.00";
+      document.getElementById('grandTotal').innerText = "0.00";
     }
-
     function selectTip(percent, btnElement) {
       tipPercent = percent;
       document.querySelectorAll('.tip-btn').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
-      calculateTotal();
     }
-
-    function calculateTotal() {
-      let subtotal = 0;
-      for (let key in cart) {
-        subtotal += cart[key] * itemPrices[key];
-      }
-      
-      const deliveryFee = subtotal > 0 ? 5.99 : 0;
-      const serviceFee = subtotal > 0 ? (subtotal * 0.08) : 0;
-      const tipAmount = subtotal * tipPercent;
-      const grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
-
-      document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
-      document.getElementById('deliveryFeeDisplay').innerText = deliveryFee.toFixed(2);
-      document.getElementById('serviceFeeDisplay').innerText = serviceFee.toFixed(2);
-      document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
-    }
-
     function checkout() {
-      const grandTotal = document.getElementById('grandTotal').innerText;
-      if (parseFloat(grandTotal) <= 0) {
-        alert("Please add at least one item to your order before checking out!");
-        return;
-      }
-      alert("Proceeding to checkout for Total: $" + grandTotal);
-      // Insert your payment destination here (Venmo / Cash App / Square / Formspree):
-      // window.location.href = "https://venmo.com/your-username";
+      alert("Tap a store above to add items to your cart!");
     }
   </script>
 </body>
