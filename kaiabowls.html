@@ -6,7 +6,7 @@
   <title>Kaia Bowls Menu | Beach Eats Sand Delivery</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 90px; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 100px; }
 
     /* Top Nav Bar */
     header { background: #0284c7; color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -21,15 +21,20 @@
     .menu-category { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin: 24px 0 12px; color: #0369a1; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
 
     /* Item Card */
-    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .item-info { flex: 1; }
     .item-info h4 { font-size: 0.98rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
     .item-info p { font-size: 0.8rem; color: #64748b; line-height: 1.3; margin-bottom: 8px; }
     .item-price { font-weight: 800; color: #0284c7; font-size: 0.95rem; }
     
-    /* Add Button */
-    .add-btn { background: #e0f2fe; color: #0284c7; border: none; font-weight: 700; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
+    /* Buttons & Quantity Controls */
+    .add-btn { background: #e0f2fe; color: #0284c7; border: none; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
     .add-btn:active { background: #0284c7; color: #fff; }
+
+    .qty-controls { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border-radius: 20px; padding: 4px 8px; border: 1px solid #cbd5e1; flex-shrink: 0; }
+    .qty-btn { background: #0284c7; color: #fff; border: none; font-weight: 800; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; }
+    .qty-btn:active { transform: scale(0.92); }
+    .qty-count { font-weight: 800; color: #0f172a; font-size: 0.9rem; min-width: 18px; text-align: center; }
 
     /* Bottom Fixed Cart Bar */
     .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 0 auto; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 99; }
@@ -58,55 +63,67 @@
     <div class="item-card">
       <div class="item-info">
         <h4>Kaia Bowl ⭐ Most Popular</h4>
-        <p>Organic, non-GMO & gluten-free açai and gluten-free granola. Topped with bananas, strawberries, coconut flakes, and Nutella.</p>
+        <p>Organic, non-GMO & gluten-free açai, GF granola, bananas, strawberries, coconut flakes & Nutella.</p>
         <div class="item-price">$15.55</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Kaia Bowl', 15.55)">+ Add</button>
+      <div id="btn-KaiaBowl">
+        <button class="add-btn" onclick="updateQty('Kaia Bowl', 15.55, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Hono Lulu</h4>
-        <p>Organic açai, blueberry flax gluten-free granola, chocolate protein, bananas, strawberry, hemp seeds, and peanut butter.</p>
+        <p>Organic açai, blueberry flax GF granola, chocolate protein, bananas, strawberry, hemp seeds & peanut butter.</p>
         <div class="item-price">$15.55</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Hono Lulu', 15.55)">+ Add</button>
+      <div id="btn-HonoLulu">
+        <button class="add-btn" onclick="updateQty('Hono Lulu', 15.55, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Purple Passion</h4>
-        <p>Organic açai, blueberry flax seed gluten-free granola, bananas, pineapple, kiwi, coconut flakes, and honey.</p>
+        <p>Organic açai, blueberry flax seed GF granola, bananas, pineapple, kiwi, coconut flakes & honey.</p>
         <div class="item-price">$15.55</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Purple Passion', 15.55)">+ Add</button>
+      <div id="btn-PurplePassion">
+        <button class="add-btn" onclick="updateQty('Purple Passion', 15.55, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Maui Wowie</h4>
-        <p>Organic açai, blueberry flax seed gluten-free granola, blueberries, strawberries, chia seeds, and honey.</p>
+        <p>Organic açai, blueberry flax seed GF granola, blueberries, strawberries, chia seeds & honey.</p>
         <div class="item-price">$15.55</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Maui Wowie', 15.55)">+ Add</button>
+      <div id="btn-MauiWowie">
+        <button class="add-btn" onclick="updateQty('Maui Wowie', 15.55, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Tom Tom</h4>
-        <p>Organic açai, blueberry flax seed granola, pineapple, mango, blueberries, chia seeds, and coconut flakes.</p>
+        <p>Organic açai, blueberry flax seed granola, pineapple, mango, blueberries, chia seeds & coconut flakes.</p>
         <div class="item-price">$15.55</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Tom Tom', 15.55)">+ Add</button>
+      <div id="btn-TomTom">
+        <button class="add-btn" onclick="updateQty('Tom Tom', 15.55, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Wipe Out</h4>
-        <p>Organic açai, gluten-free granola, banana, pineapple, kiwi, raw cacao nibs, and almonds.</p>
+        <p>Organic açai, gluten-free granola, banana, pineapple, kiwi, raw cacao nibs & almonds.</p>
         <div class="item-price">$15.55</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Wipe Out', 15.55)">+ Add</button>
+      <div id="btn-WipeOut">
+        <button class="add-btn" onclick="updateQty('Wipe Out', 15.55, 1)">+ Add</button>
+      </div>
     </div>
 
   </div>
@@ -121,15 +138,53 @@
   </div>
 
   <script>
-    let currentTotal = 0;
-    let itemCount = 0;
+    let cart = {};
 
-    function addToCart(itemName, price) {
-      currentTotal += price;
-      itemCount += 1;
-      
-      document.getElementById('cart-total').innerText = '$' + currentTotal.toFixed(2);
-      document.getElementById('cart-count').innerText = itemCount + (itemCount === 1 ? ' item added' : ' items added');
+    function updateQty(name, price, change) {
+      if (!cart[name]) {
+        cart[name] = { price: price, qty: 0 };
+      }
+
+      cart[name].qty += change;
+
+      if (cart[name].qty <= 0) {
+        delete cart[name];
+      }
+
+      renderCart(name, price);
+    }
+
+    function renderCart(name, price) {
+      let total = 0;
+      let count = 0;
+
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+        count += cart[key].qty;
+      }
+
+      document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+      document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
+
+      const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
+      const container = document.getElementById(safeId);
+
+      if (container) {
+        const qty = cart[name] ? cart[name].qty : 0;
+        if (qty > 0) {
+          container.innerHTML = `
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, -1)">−</button>
+              <span class="qty-count">${qty}</span>
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, 1)">+</button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <button class="add-btn" onclick="updateQty('${name}', ${price}, 1)">+ Add</button>
+          `;
+        }
+      }
     }
   </script>
 
