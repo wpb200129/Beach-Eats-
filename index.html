@@ -41,7 +41,7 @@
     }
 
     /* Square Category Nav Tiles (Horizontal Row) */
-    .nav-scroll { display: flex; justify-content: center; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
+    .nav-scroll { display: flex; justify-content: flex-start; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
     .nav-square { 
       background: #fff; 
       border: 1px solid #cbd5e1; 
@@ -103,6 +103,7 @@
       max-width: 160px; 
       object-fit: contain; 
     }
+    .mc-title { font-size: 1.2rem; font-weight: 900; color: #da291c; }
     .kaia-title { font-size: 1.15rem; font-weight: 900; color: #0284c7; }
     .tag-line { font-size: 0.78rem; font-weight: 700; color: #64748b; letter-spacing: 0.2px; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
@@ -141,7 +142,13 @@
 
     <!-- Horizontal Square Category Nav Tiles -->
     <div class="nav-scroll">
-      <a href="kaiabowls.html" class="nav-square active">
+      <a href="mcdonalds.html" class="nav-square active">
+        <div class="logo-container">
+          <span style="font-size: 1.6rem;">🍔</span>
+        </div>
+        <span class="square-label">McDonald's</span>
+      </a>
+      <a href="kaiabowls.html" class="nav-square">
         <div class="logo-container">
           <span style="font-size: 1.6rem;">🌺</span>
         </div>
@@ -160,6 +167,15 @@
         <span class="square-label">Essentials</span>
       </a>
     </div>
+
+    <!-- McDonald's Banner Card -->
+    <a href="mcdonalds.html" class="store-card">
+      <div class="card-left">
+        <div class="mc-title">🍟 McDonald's</div>
+        <div class="tag-line">🍔 Big Macs • 🍟 Fries • 🍦 McFlurries</div>
+      </div>
+      <span class="arrow">→</span>
+    </a>
 
     <!-- Kaia Bowls Banner Card -->
     <a href="kaiabowls.html" class="store-card">
