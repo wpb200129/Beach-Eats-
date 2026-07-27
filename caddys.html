@@ -6,7 +6,7 @@
   <title>Caddy's Menu | Beach Eats Sand Delivery</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 90px; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 100px; }
 
     /* Top Nav Bar */
     header { background: #0284c7; color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -21,15 +21,20 @@
     .menu-category { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin: 24px 0 12px; color: #0369a1; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
 
     /* Item Card */
-    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .item-info { flex: 1; }
     .item-info h4 { font-size: 0.98rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
     .item-info p { font-size: 0.8rem; color: #64748b; line-height: 1.3; margin-bottom: 8px; }
     .item-price { font-weight: 800; color: #0284c7; font-size: 0.95rem; }
     
-    /* Add Button */
-    .add-btn { background: #e0f2fe; color: #0284c7; border: none; font-weight: 700; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
+    /* Buttons & Quantity Controls */
+    .add-btn { background: #e0f2fe; color: #0284c7; border: none; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
     .add-btn:active { background: #0284c7; color: #fff; }
+
+    .qty-controls { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border-radius: 20px; padding: 4px 8px; border: 1px solid #cbd5e1; flex-shrink: 0; }
+    .qty-btn { background: #0284c7; color: #fff; border: none; font-weight: 800; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; }
+    .qty-btn:active { transform: scale(0.92); }
+    .qty-count { font-weight: 800; color: #0f172a; font-size: 0.9rem; min-width: 18px; text-align: center; }
 
     /* Bottom Fixed Cart Bar */
     .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 0 auto; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 99; }
@@ -58,10 +63,12 @@
     <div class="item-card">
       <div class="item-info">
         <h4>Southwest Nachos</h4>
-        <p>Tri-colored tortilla chips, grilled chicken, lime crema, black beans, jalapenos, roasted corn, pico de gallo, scallions, queso blanco & cilantro</p>
+        <p>Tri-colored tortilla chips, grilled chicken, lime crema, black beans, jalapenos, roasted corn, pico, queso blanco & cilantro</p>
         <div class="item-price">$26.39</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Southwest Nachos', 26.39)">+ Add</button>
+      <div id="btn-SouthwestNachos">
+        <button class="add-btn" onclick="updateQty('Southwest Nachos', 26.39, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -70,7 +77,9 @@
         <p>Lightly fried grouper served with house-made dill tartar sauce</p>
         <div class="item-price">$22.19</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Grouper Nuggets', 22.19)">+ Add</button>
+      <div id="btn-GrouperNuggets">
+        <button class="add-btn" onclick="updateQty('Grouper Nuggets', 22.19, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -79,7 +88,9 @@
         <p>Soft, salty pretzel served with a side of beer queso</p>
         <div class="item-price">$21.59</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Soft Pretzel', 21.59)">+ Add</button>
+      <div id="btn-SoftPretzel">
+        <button class="add-btn" onclick="updateQty('Soft Pretzel', 21.59, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -88,7 +99,9 @@
         <p>Flash fried calamari served with sweet thai chili sauce</p>
         <div class="item-price">$20.99</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Calamari', 20.99)">+ Add</button>
+      <div id="btn-Calamari">
+        <button class="add-btn" onclick="updateQty('Calamari', 20.99, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -97,16 +110,20 @@
         <p>Served chilled with cocktail sauce & lemon</p>
         <div class="item-price">$20.99</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Peel & Eat Shrimp', 20.99)">+ Add</button>
+      <div id="btn-PeelEatShrimp">
+        <button class="add-btn" onclick="updateQty('Peel & Eat Shrimp', 20.99, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Boneless Wings</h4>
-        <p>Tossed in choice of Tropical BBQ, Buffalo, Lemon Pepper, Sesame Teriyaki, Garlic Parmesan or Honey Sriracha</p>
+        <p>Tossed in Tropical BBQ, Buffalo, Lemon Pepper, Teriyaki, Garlic Parm, or Honey Sriracha</p>
         <div class="item-price">$19.50</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Boneless Wings', 19.50)">+ Add</button>
+      <div id="btn-BonelessWings">
+        <button class="add-btn" onclick="updateQty('Boneless Wings', 19.50, 1)">+ Add</button>
+      </div>
     </div>
 
     <!-- HANDHELDS & TACOS -->
@@ -115,10 +132,12 @@
     <div class="item-card">
       <div class="item-info">
         <h4>Bacon BBQ Burger</h4>
-        <p>1/2lb Black Angus burger, applewood bacon, crispy onion straws, tropical BBQ sauce on brioche. Served with chips</p>
+        <p>1/2lb Black Angus burger, bacon, onion straws, tropical BBQ sauce on brioche. Served with chips</p>
         <div class="item-price">$23.95</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Bacon BBQ Burger', 23.95)">+ Add</button>
+      <div id="btn-BaconBBQBurger">
+        <button class="add-btn" onclick="updateQty('Bacon BBQ Burger', 23.95, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -127,7 +146,9 @@
         <p>Grilled shrimp, gulf coast salsa, mixed cheese, Florida citrus aioli. Served with kettle chips</p>
         <div class="item-price">$23.39</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Sunshine Shrimp Tacos', 23.39)">+ Add</button>
+      <div id="btn-SunshineShrimpTacos">
+        <button class="add-btn" onclick="updateQty('Sunshine Shrimp Tacos', 23.39, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -136,7 +157,9 @@
         <p>Lightly blackened mahi, pico de gallo, mixed cheese, chipotle sauce. Served with kettle chips</p>
         <div class="item-price">$23.35</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Mahi Tacos', 23.35)">+ Add</button>
+      <div id="btn-MahiTacos">
+        <button class="add-btn" onclick="updateQty('Mahi Tacos', 23.35, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -145,7 +168,9 @@
         <p>Hand-breaded tenders served with french fries & Caddy's coleslaw</p>
         <div class="item-price">$23.10</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Chicken Tenders Basket', 23.10)">+ Add</button>
+      <div id="btn-ChickenTendersBasket">
+        <button class="add-btn" onclick="updateQty('Chicken Tenders Basket', 23.10, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -154,7 +179,9 @@
         <p>1/2lb Black Angus burger, cheese, bacon, lettuce, tomato, onion on brioche</p>
         <div class="item-price">$22.75</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Caddys Burger', 22.75)">+ Add</button>
+      <div id="btn-CaddysBurger">
+        <button class="add-btn" onclick="updateQty('Caddys Burger', 22.75, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -163,7 +190,9 @@
         <p>Grilled chicken, ranch, avocado spread, bacon, pico de gallo & mixed cheese</p>
         <div class="item-price">$20.39</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Cool Ranch Wrap', 20.39)">+ Add</button>
+      <div id="btn-CoolRanchWrap">
+        <button class="add-btn" onclick="updateQty('Cool Ranch Wrap', 20.39, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -172,7 +201,9 @@
         <p>Pulled chicken, peppers, onions, Mexican cheeses. Served with salsa & sour cream</p>
         <div class="item-price">$20.39</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Chicken Quesadilla', 20.39)">+ Add</button>
+      <div id="btn-ChickenQuesadilla">
+        <button class="add-btn" onclick="updateQty('Chicken Quesadilla', 20.39, 1)">+ Add</button>
+      </div>
     </div>
 
     <!-- SEAFOOD MAINS -->
@@ -184,7 +215,9 @@
         <p>Grilled, blackened or fried with lettuce, tomato, onion & dill tartar. Served with chips</p>
         <div class="item-price">$39.59</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Grouper Sandwich', 39.59)">+ Add</button>
+      <div id="btn-GrouperSandwich">
+        <button class="add-btn" onclick="updateQty('Grouper Sandwich', 39.59, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -193,16 +226,20 @@
         <p>Served with french fries, Caddy's coleslaw & orange marmalade</p>
         <div class="item-price">$31.50</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Coconut Shrimp Basket', 31.50)">+ Add</button>
+      <div id="btn-CoconutShrimpBasket">
+        <button class="add-btn" onclick="updateQty('Coconut Shrimp Basket', 31.50, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
         <h4>Seafood Mac & Cheese</h4>
-        <p>Shell pasta in rich gouda & parmesan cream, tossed with shrimp & snapper with panko crust</p>
+        <p>Shell pasta in gouda & parmesan cream, tossed with shrimp & snapper with panko crust</p>
         <div class="item-price">$29.35</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Seafood Mac & Cheese', 29.35)">+ Add</button>
+      <div id="btn-SeafoodMacCheese">
+        <button class="add-btn" onclick="updateQty('Seafood Mac & Cheese', 29.35, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -211,7 +248,9 @@
         <p>Hand battered haddock served with fries, coleslaw & dill tartar</p>
         <div class="item-price">$28.19</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Fish & Chips', 28.19)">+ Add</button>
+      <div id="btn-FishChips">
+        <button class="add-btn" onclick="updateQty('Fish & Chips', 28.19, 1)">+ Add</button>
+      </div>
     </div>
 
     <!-- ESSENTIALS & DRINKS -->
@@ -223,7 +262,9 @@
         <p>Keep your beach cooler packed cold all day</p>
         <div class="item-price">$6.00</div>
       </div>
-      <button class="add-btn" onclick="addToCart('10lb Ice Bag', 6.00)">+ Add</button>
+      <div id="btn-10lbIceBag">
+        <button class="add-btn" onclick="updateQty('10lb Ice Bag', 6.00, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -232,7 +273,9 @@
         <p>8.4oz cold can</p>
         <div class="item-price">$6.60</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Red Bull', 6.60)">+ Add</button>
+      <div id="btn-RedBull">
+        <button class="add-btn" onclick="updateQty('Red Bull', 6.60, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -241,7 +284,9 @@
         <p>Pepsi, Diet Pepsi, Sierra Mist, Dr Pepper, Lemonade, Sweet Tea</p>
         <div class="item-price">$4.20</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Fountain Drink', 4.20)">+ Add</button>
+      <div id="btn-FountainDrink">
+        <button class="add-btn" onclick="updateQty('Fountain Drink', 4.20, 1)">+ Add</button>
+      </div>
     </div>
 
     <div class="item-card">
@@ -250,7 +295,9 @@
         <p>Classic Florida key lime pie slice</p>
         <div class="item-price">$12.59</div>
       </div>
-      <button class="add-btn" onclick="addToCart('Key Lime Pie', 12.59)">+ Add</button>
+      <div id="btn-KeyLimePie">
+        <button class="add-btn" onclick="updateQty('Key Lime Pie', 12.59, 1)">+ Add</button>
+      </div>
     </div>
 
   </div>
@@ -265,15 +312,53 @@
   </div>
 
   <script>
-    let currentTotal = 0;
-    let itemCount = 0;
+    let cart = {};
 
-    function addToCart(itemName, price) {
-      currentTotal += price;
-      itemCount += 1;
-      
-      document.getElementById('cart-total').innerText = '$' + currentTotal.toFixed(2);
-      document.getElementById('cart-count').innerText = itemCount + (itemCount === 1 ? ' item added' : ' items added');
+    function updateQty(name, price, change) {
+      if (!cart[name]) {
+        cart[name] = { price: price, qty: 0 };
+      }
+
+      cart[name].qty += change;
+
+      if (cart[name].qty <= 0) {
+        delete cart[name];
+      }
+
+      renderCart(name, price);
+    }
+
+    function renderCart(name, price) {
+      let total = 0;
+      let count = 0;
+
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+        count += cart[key].qty;
+      }
+
+      document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+      document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
+
+      const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
+      const container = document.getElementById(safeId);
+
+      if (container) {
+        const qty = cart[name] ? cart[name].qty : 0;
+        if (qty > 0) {
+          container.innerHTML = `
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, -1)">−</button>
+              <span class="qty-count">${qty}</span>
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, 1)">+</button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <button class="add-btn" onclick="updateQty('${name}', ${price}, 1)">+ Add</button>
+          `;
+        }
+      }
     }
   </script>
 
