@@ -38,8 +38,10 @@
     .square-label { font-size: 0.75rem; font-weight: 700; text-align: center; }
 
     /* Main Store Section Cards */
-    .store-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .store-logo-only { height: 45px; width: auto; max-width: 160px; object-fit: contain; }
+    .store-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .card-left { display: flex; flex-direction: column; gap: 6px; }
+    .store-logo-only { height: 40px; width: auto; max-width: 150px; object-fit: contain; }
+    .tag-line { font-size: 0.78rem; font-weight: 700; color: #64748b; letter-spacing: 0.2px; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
 
     /* Bottom Checkout Panel */
@@ -84,13 +86,19 @@
 
     <!-- 7-Eleven Store Banner Card -->
     <a href="7-eleven.html" class="store-card">
-      <img src="7eleven.png" alt="7-Eleven Logo" class="store-logo-only">
+      <div class="card-left">
+        <img src="7eleven.png" alt="7-Eleven Logo" class="store-logo-only">
+        <div class="tag-line">🍺 Beer • 🥤 Drinks • 🥨 Snacks & Food</div>
+      </div>
       <span class="arrow">→</span>
     </a>
 
     <!-- CVS Store Banner Card -->
     <a href="cvs.html" class="store-card">
-      <img src="CVS.jpeg" alt="CVS Logo" class="store-logo-only">
+      <div class="card-left">
+        <img src="CVS.jpeg" alt="CVS Logo" class="store-logo-only">
+        <div class="tag-line">🧴 Sunscreen • 🕶️ Shades • 🏖️ Towels & Care</div>
+      </div>
       <span class="arrow">→</span>
     </a>
 
