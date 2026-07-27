@@ -15,21 +15,33 @@
 
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-   <!-- CUSTOM RESTAURANT PICKUP BANNER -->
-    <div class="custom-banner">
-      <div class="custom-title">🍔 Custom Restaurant Runner ($9.99 Delivery Fee)</div>
-      <div class="custom-desc">
-        Want food from a specific restaurant on the strip? Call or text our runner! Pay for your food order + our flat delivery fee, and we’ll pick it up and bring it straight to your sand spot.
-      </div>
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <a href="sms:15555555555?body=Hi!%20I'd%20like%20to%20place%20a%20custom%20restaurant%20order.%20Restaurant:%20%0AItems:%20%0AMy%20Beach%20Location:" class="call-btn">💬 Text Order Request</a>
-        <a href="tel:15555555555" class="call-btn" style="background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff;">📞 Call Runner</a>
-      </div>
-    </div> 
+    /* Custom Restaurant Banner Box */
+    .custom-banner { 
+      background: #0284c7; 
+      color: #fff; 
+      border-radius: 14px; 
+      padding: 18px; 
+      margin-bottom: 18px; 
+      text-decoration: none;
+      display: block;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15); 
+    }
+    .custom-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .custom-desc { font-size: 0.85rem; opacity: 0.95; line-height: 1.35; margin-bottom: 14px; }
+    .call-btn { 
+      display: block; 
+      background: #fff; 
+      color: #0284c7; 
+      font-weight: 800; 
+      font-size: 0.9rem; 
+      padding: 12px 16px; 
+      border-radius: 8px; 
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
     }
 
-    /* Square Category Nav Tiles */
-    .nav-scroll { display: flex; justify-content: flex-start; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
+    /* Square Category Nav Tiles (Horizontal Row) */
+    .nav-scroll { display: flex; justify-content: center; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; scrollbar-width: none; }
     .nav-square { 
       background: #fff; 
       border: 1px solid #cbd5e1; 
@@ -47,20 +59,55 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
     }
     .nav-square.active { border-color: #0284c7; border-width: 2px; }
-    .logo-container { height: 40px; display: flex; align-items: center; justify-content: center; width: 100%; }
-    .square-logo { max-height: 36px; max-width: 75px; object-fit: contain; }
+    
+    .logo-container {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .square-logo { 
+      max-height: 36px; 
+      max-width: 75px; 
+      object-fit: contain; 
+    }
     .square-label { font-size: 0.75rem; font-weight: 700; text-align: center; }
 
-    /* Main Store Banner Cards */
-    .store-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .card-left { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-    .banner-logo-box { height: 38px; display: flex; align-items: center; }
-    .store-banner-logo { max-height: 36px; max-width: 160px; object-fit: contain; }
-    .kaia-title { font-size: 1.2rem; font-weight: 900; color: #0284c7; }
+    /* Main Store Section Cards */
+    .store-card { 
+      background: #fff; 
+      border-radius: 12px; 
+      padding: 16px 20px; 
+      margin-bottom: 12px; 
+      border: 1px solid #e2e8f0; 
+      text-decoration: none; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04); 
+    }
+    .card-left { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start;
+      gap: 6px; 
+    }
+    .banner-logo-box {
+      height: 38px;
+      display: flex;
+      align-items: center;
+    }
+    .store-banner-logo { 
+      max-height: 36px; 
+      max-width: 160px; 
+      object-fit: contain; 
+    }
+    .kaia-title { font-size: 1.15rem; font-weight: 900; color: #0284c7; }
     .tag-line { font-size: 0.78rem; font-weight: 700; color: #64748b; letter-spacing: 0.2px; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
 
-    /* Bottom Panel */
+    /* Bottom Checkout Panel */
     .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
     .panel-content { max-width: 480px; margin: 0 auto; }
     .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
@@ -77,6 +124,7 @@
 </head>
 <body>
 
+  <!-- App Header -->
   <div class="app-header">
     <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
     <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
@@ -84,30 +132,36 @@
 
   <div class="container">
 
-    <!-- ANY RESTAURANT PICKUP BANNER -->
-    <div class="custom-banner">
-      <div class="custom-title">📞 Want food from ANY restaurant?</div>
-      <div class="custom-desc">Order takeout from any spot on the beach strip. Call or text us your pickup order details & beach chair spot and we'll deliver it straight to you!</div>
-      <a href="tel:15555555555" class="call-btn">📲 Call / Text Delivery Runner</a>
-    </div>
+    <!-- Custom Restaurant Banner Card -->
+    <a href="custom-order.html" class="custom-banner">
+      <div class="custom-title">🍔 Order From ANY Beach Restaurant</div>
+      <div class="custom-desc">Want food from your favorite local spot on the strip? Type in your custom order right in the app and our runner will deliver it to your chair!</div>
+      <div class="call-btn">👉 Click Here to Order from Your Choice Restaurant</div>
+    </a>
 
-    <!-- Square Top Tiles -->
+    <!-- Horizontal Square Category Nav Tiles -->
     <div class="nav-scroll">
       <a href="kaiabowls.html" class="nav-square active">
-        <div class="logo-container"><span style="font-size: 1.6rem;">🌺</span></div>
+        <div class="logo-container">
+          <span style="font-size: 1.6rem;">🌺</span>
+        </div>
         <span class="square-label">Kaia Bowls</span>
       </a>
       <a href="7-eleven.html" class="nav-square">
-        <div class="logo-container"><img src="7eleven.png" alt="7-Eleven" class="square-logo"></div>
+        <div class="logo-container">
+          <img src="7eleven.png" alt="7-Eleven" class="square-logo">
+        </div>
         <span class="square-label">Convenience</span>
       </a>
       <a href="cvs.html" class="nav-square">
-        <div class="logo-container"><img src="CVS.jpeg" alt="CVS Essentials" class="square-logo"></div>
+        <div class="logo-container">
+          <img src="CVS.jpeg" alt="CVS Essentials" class="square-logo">
+        </div>
         <span class="square-label">Essentials</span>
       </a>
     </div>
 
-    <!-- Kaia Bowls Card -->
+    <!-- Kaia Bowls Banner Card -->
     <a href="kaiabowls.html" class="store-card">
       <div class="card-left">
         <div class="kaia-title">🌺 Kaia Bowls</div>
@@ -116,19 +170,23 @@
       <span class="arrow">→</span>
     </a>
 
-    <!-- 7-Eleven Card -->
+    <!-- 7-Eleven Store Banner Card -->
     <a href="7-eleven.html" class="store-card">
       <div class="card-left">
-        <div class="banner-logo-box"><img src="7eleven.png" alt="7-Eleven Logo" class="store-banner-logo"></div>
+        <div class="banner-logo-box">
+          <img src="7eleven.png" alt="7-Eleven Logo" class="store-banner-logo">
+        </div>
         <div class="tag-line">🍺 Beer • 🥤 Drinks • 🥨 Snacks & Food</div>
       </div>
       <span class="arrow">→</span>
     </a>
 
-    <!-- CVS Card -->
+    <!-- CVS Store Banner Card -->
     <a href="cvs.html" class="store-card">
       <div class="card-left">
-        <div class="banner-logo-box"><img src="CVS.jpeg" alt="CVS Logo" class="store-banner-logo"></div>
+        <div class="banner-logo-box">
+          <img src="CVS.jpeg" alt="CVS Logo" class="store-banner-logo">
+        </div>
         <div class="tag-line">🧴 Sunscreen • 🕶️ Shades • 🏖️ Towels & Care</div>
       </div>
       <span class="arrow">→</span>
@@ -136,6 +194,7 @@
 
   </div>
 
+  <!-- Bottom Checkout Panel -->
   <div class="checkout-panel">
     <div class="panel-content">
       <div class="fee-summary">
@@ -175,7 +234,7 @@
       btnElement.classList.add('active');
     }
     function checkout() {
-      alert("Tap a store card above or use the Call button to order!");
+      alert("Tap a store card above to enter and pick items!");
     }
   </script>
 </body>
