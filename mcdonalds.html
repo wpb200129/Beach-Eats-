@@ -3,198 +3,323 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>McDonald's | Beach Eats</title>
+  <title>McDonald's Menu | Beach Eats Sand Delivery</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 260px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 100px; }
+
+    /* Top Nav Bar */
+    header { background: #0284c7; color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .back-btn { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+    .header-brand { display: flex; align-items: center; gap: 8px; }
+    .header-brand img { width: 32px; height: 32px; border-radius: 6px; object-fit: contain; background: #fff; padding: 2px; }
+    .header-brand h1 { font-size: 1.1rem; font-weight: 800; }
+
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+    /* Category Header */
+    .menu-category { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin: 24px 0 12px; color: #0369a1; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+
+    /* Item Card */
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .item-info { flex: 1; }
+    .item-info h4 { font-size: 0.98rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .item-info p { font-size: 0.8rem; color: #64748b; line-height: 1.3; margin-bottom: 8px; }
+    .item-price { font-weight: 800; color: #0284c7; font-size: 0.95rem; }
     
-    .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
-    .app-logo { max-width: 280px; width: 75%; height: auto; display: block; margin: 0 auto 8px; }
-    .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+    /* Buttons & Quantity Controls */
+    .add-btn { background: #e0f2fe; color: #0284c7; border: none; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
+    .add-btn:active { background: #0284c7; color: #fff; }
 
-    .container { max-width: 480px; margin: 0 auto; padding: 15px; }
+    .qty-controls { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border-radius: 20px; padding: 4px 8px; border: 1px solid #cbd5e1; flex-shrink: 0; }
+    .qty-btn { background: #0284c7; color: #fff; border: none; font-weight: 800; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; }
+    .qty-btn:active { transform: scale(0.92); }
+    .qty-count { font-weight: 800; color: #0f172a; font-size: 0.9rem; min-width: 18px; text-align: center; }
 
-    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
-    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
-    .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-
-    .store-header { font-size: 1.25rem; font-weight: 800; margin: 10px 0 4px; color: #da291c; }
-    .store-sub { font-size: 0.85rem; color: #64748b; margin-bottom: 15px; }
-
-    .cat-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 15px 0 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-
-    .item-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f1f5f9; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .item-info { flex: 1; padding-right: 12px; }
-    .item-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
-    .item-desc { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; line-height: 1.25; }
-    .item-price { font-size: 0.9rem; font-weight: 700; color: #0f172a; }
-    
-    .stepper { display: flex; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 3px; }
-    .step-btn { width: 28px; height: 28px; border: none; background: #fff; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    .step-count { width: 28px; text-align: center; font-weight: 700; font-size: 0.85rem; }
-
-    .location-box { background: #fff; border-radius: 12px; padding: 12px; border: 1px solid #cbd5e1; margin-top: 15px; }
-    .location-label { font-size: 0.75rem; font-weight: 700; color: #0284c7; text-transform: uppercase; margin-bottom: 6px; display: block; }
-    .location-input { width: 100%; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px; font-size: 0.85rem; outline: none; }
-
-    .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
-    .panel-content { max-width: 480px; margin: 0 auto; }
-    .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; }
-    .fee-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
-    .tip-section { margin-bottom: 8px; }
-    .tip-label { font-size: 0.72rem; font-weight: 700; color: #64748b; margin-bottom: 4px; display: block; }
-    .tip-buttons { display: flex; gap: 8px; }
-    .tip-btn { flex: 1; padding: 5px 0; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; color: #334155; }
-    .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .cart-summary { display: flex; justify-content: space-between; align-items: center; }
-    .total-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
-    .checkout-btn { background: #0284c7; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+    /* Bottom Fixed Cart Bar */
+    .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 0 auto; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 99; }
+    .cart-info { display: flex; flex-direction: column; }
+    .cart-count { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+    .cart-total { font-size: 1.2rem; font-weight: 800; color: #0f172a; }
+    .checkout-btn { background: #0284c7; color: #fff; text-decoration: none; font-weight: 800; padding: 12px 20px; border-radius: 12px; font-size: 0.95rem; }
   </style>
 </head>
 <body>
 
-  <div class="app-header">
-    <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
-    <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
-  </div>
+  <header>
+    <a href="index.html" class="back-btn">← Back</a>
+    <div class="header-brand">
+      <img src="mcdonalds.png" alt="McDonald's" onerror="this.outerHTML='🍟';">
+      <h1>McDonald's</h1>
+    </div>
+    <div style="width: 40px;"></div>
+  </header>
 
   <div class="container">
 
-    <div class="nav-scroll">
-      <a href="index.html" class="nav-pill">🔥 Home</a>
-      <a href="mcdonalds.html" class="nav-pill active">🍔 McDonald's</a>
-      <a href="kaiabowls.html" class="nav-pill">🌺 Kaia Bowls</a>
-      <a href="7-eleven.html" class="nav-pill">🏪 7-Eleven</a>
-    </div>
-
-    <div class="store-header">🍔 McDonald's</div>
-    <div class="store-sub">Burgers, Fries, McNuggets & Cold Drinks</div>
-
-    <div class="cat-title">🍟 Popular Beach Favorites</div>
+    <!-- BURGERS -->
+    <div class="menu-category">🍔 Burgers & Handhelds</div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Big Mac Meal</div>
-        <div class="item-desc">Big Mac, Large World Famous Fries & Large Drink.</div>
-        <div class="item-price">$11.99</div>
+        <h4>Big Mac®</h4>
+        <p>100% pure all beef patties and Big Mac sauce sandwiched between a sesame seed bun</p>
+        <div class="item-price">$7.67</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('m1', -1)">-</button>
-        <span id="m1" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('m1', 1)">+</button>
+      <div id="btn-BigMac">
+        <button class="add-btn" onclick="updateQty('Big Mac', 7.67, 1)">+ Add</button>
       </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">10 Piece Chicken McNuggets Meal</div>
-        <div class="item-desc">10 McNuggets, Large Fries, Dip Sauce & Large Drink.</div>
-        <div class="item-price">$11.49</div>
+        <h4>Quarter Pounder® with Cheese</h4>
+        <p>1/4 lb of 100% fresh beef seasoned with salt and pepper, topped with cheese and onions</p>
+        <div class="item-price">$8.87</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('m2', -1)">-</button>
-        <span id="m2" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('m2', 1)">+</button>
+      <div id="btn-QuarterPounderCheese">
+        <button class="add-btn" onclick="updateQty('Quarter Pounder with Cheese', 8.87, 1)">+ Add</button>
       </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Large World Famous Fries</div>
-        <div class="item-desc">Hot, crispy golden salty fries.</div>
-        <div class="item-price">$4.89</div>
+        <h4>Double Quarter Pounder® with Cheese</h4>
+        <p>Two quarter pound 100% fresh beef burger patties with two slices of melted cheese</p>
+        <div class="item-price">$10.19</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('m3', -1)">-</button>
-        <span id="m3" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('m3', 1)">+</button>
+      <div id="btn-DoubleQuarterPounderCheese">
+        <button class="add-btn" onclick="updateQty('Double Quarter Pounder with Cheese', 10.19, 1)">+ Add</button>
       </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">OREO® McFlurry®</div>
-        <div class="item-desc">Creamy soft serve blended with crushed OREO cookies.</div>
-        <div class="item-price">$5.29</div>
+        <h4>Double Cheeseburger</h4>
+        <p>Two 100% pure all beef patties seasoned with salt and pepper, topped with melted cheese</p>
+        <div class="item-price">$5.15</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('m4', -1)">-</button>
-        <span id="m4" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('m4', 1)">+</button>
+      <div id="btn-DoubleCheeseburger">
+        <button class="add-btn" onclick="updateQty('Double Cheeseburger', 5.15, 1)">+ Add</button>
       </div>
     </div>
 
-    <div class="location-box">
-      <span class="location-label">📍 Your Beach Spot / Chair Location</span>
-      <input type="text" id="chairSpot" class="location-input" placeholder="e.g., Lifeguard Stand #3, Blue Umbrella">
+    <div class="item-card">
+      <div class="item-info">
+        <h4>McDouble®</h4>
+        <p>Two 100% pure beef patties with pickle, chopped onions, ketchup, mustard, and cheese</p>
+        <div class="item-price">$5.03</div>
+      </div>
+      <div id="btn-McDouble">
+        <button class="add-btn" onclick="updateQty('McDouble', 5.03, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Cheeseburger</h4>
+        <p>Classic 100% pure beef patty with melted cheese, pickles, onions, ketchup & mustard</p>
+        <div class="item-price">$3.35</div>
+      </div>
+      <div id="btn-Cheeseburger">
+        <button class="add-btn" onclick="updateQty('Cheeseburger', 3.35, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <!-- CHICKEN & FISH -->
+    <div class="menu-category">🍗 Chicken & Fish</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>10 pc. Chicken McNuggets®</h4>
+        <p>Tender, juicy Chicken McNuggets made with all white meat and your choice of dip</p>
+        <div class="item-price">$7.55</div>
+      </div>
+      <div id="btn-10pcMcNuggets">
+        <button class="add-btn" onclick="updateQty('10 pc. Chicken McNuggets', 7.55, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>20 pc. Chicken McNuggets®</h4>
+        <p>20 tender, juicy Chicken McNuggets with no artificial flavors or preservatives</p>
+        <div class="item-price">$11.15</div>
+      </div>
+      <div id="btn-20pcMcNuggets">
+        <button class="add-btn" onclick="updateQty('20 pc. Chicken McNuggets', 11.15, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>McCrispy™</h4>
+        <p>Southern-style fried chicken sandwich that's crispy, juicy, and tender</p>
+        <div class="item-price">$6.35</div>
+      </div>
+      <div id="btn-McCrispy">
+        <button class="add-btn" onclick="updateQty('McCrispy', 6.35, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>McChicken®</h4>
+        <p>Classic crispy chicken patty topped with shredded lettuce and creamy mayonnaise</p>
+        <div class="item-price">$4.79</div>
+      </div>
+      <div id="btn-McChicken">
+        <button class="add-btn" onclick="updateQty('McChicken', 4.79, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Filet-O-Fish®</h4>
+        <p>Wild-caught fish filet patty with tartar sauce and melted American cheese on a steamed bun</p>
+        <div class="item-price">$6.83</div>
+      </div>
+      <div id="btn-FiletOFish">
+        <button class="add-btn" onclick="updateQty('Filet-O-Fish', 6.83, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <!-- FRIES & SIDES -->
+    <div class="menu-category">🍟 Fries & Sides</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>World Famous Fries®</h4>
+        <p>Crispy and golden McDonald's French Fries made with premium potatoes</p>
+        <div class="item-price">$3.59</div>
+      </div>
+      <div id="btn-FrenchFries">
+        <button class="add-btn" onclick="updateQty('World Famous Fries', 3.59, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <!-- SWEETS & TREATS -->
+    <div class="menu-category">🍦 Sweets & Treats</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>OREO® McFlurry®</h4>
+        <p>Creamy vanilla soft serve blended with crunchy OREO cookies</p>
+        <div class="item-price">$3.23</div>
+      </div>
+      <div id="btn-OreoMcFlurry">
+        <button class="add-btn" onclick="updateQty('OREO McFlurry', 3.23, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Chocolate Shake</h4>
+        <p>Smooth, rich and creamy chocolate shake topped with whipped light cream</p>
+        <div class="item-price">$5.27</div>
+      </div>
+      <div id="btn-ChocolateShake">
+        <button class="add-btn" onclick="updateQty('Chocolate Shake', 5.27, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Fried Apple Pie</h4>
+        <p>Warm, crisp crust filled with sweet 100% American grown apples</p>
+        <div class="item-price">$3.11</div>
+      </div>
+      <div id="btn-FriedApplePie">
+        <button class="add-btn" onclick="updateQty('Fried Apple Pie', 3.11, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <!-- COLD DRINKS -->
+    <div class="menu-category">🥤 Cold Drinks</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Fountain Drink / Soda</h4>
+        <p>Coca-Cola, Diet Coke, Sprite, Dr Pepper, Fanta Orange, Hi-C</p>
+        <div class="item-price">$2.63</div>
+      </div>
+      <div id="btn-FountainDrink">
+        <button class="add-btn" onclick="updateQty('Fountain Drink', 2.63, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Iced Coffee</h4>
+        <p>Refreshing McCafé iced coffee made with 100% Arabica beans and flavor choice</p>
+        <div class="item-price">$2.99</div>
+      </div>
+      <div id="btn-IcedCoffee">
+        <button class="add-btn" onclick="updateQty('Iced Coffee', 2.99, 1)">+ Add</button>
+      </div>
     </div>
 
   </div>
 
-  <div class="checkout-panel">
-    <div class="panel-content">
-      <div class="fee-summary">
-        <div class="fee-row"><span>Items Subtotal:</span><span>$<span id="subtotalDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Sand Delivery Fee:</span><span>$<span id="deliveryFeeDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Service Fee (8%):</span><span>$<span id="serviceFeeDisplay">0.00</span></span></div>
-      </div>
-      <div class="tip-section">
-        <span class="tip-label">ADD COURIER TIP</span>
-        <div class="tip-buttons">
-          <button class="tip-btn" onclick="selectTip(0.15, this)">15%</button>
-          <button class="tip-btn active" onclick="selectTip(0.20, this)">20%</button>
-          <button class="tip-btn" onclick="selectTip(0.25, this)">25%</button>
-        </div>
-      </div>
-      <div class="cart-summary">
-        <div>
-          <div style="font-size: 0.72rem; color: #64748b;">Final Grand Total</div>
-          <div class="total-amount">$<span id="grandTotal">0.00</span></div>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">Review & Pay →</button>
-      </div>
+  <!-- Cart Bar -->
+  <div class="cart-bar">
+    <div class="cart-info">
+      <span class="cart-count" id="cart-count">0 items added</span>
+      <div class="cart-total" id="cart-total">$0.00</div>
     </div>
+    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
   </div>
 
   <script>
-    const itemPrices = { m1: 11.99, m2: 11.49, m3: 4.89, m4: 5.29 };
-    const cart = { m1: 0, m2: 0, m3: 0, m4: 0 };
-    let tipPercent = 0.20;
+    let cart = {};
 
-    function updateQty(id, delta) {
-      cart[id] = Math.max(0, cart[id] + delta);
-      document.getElementById(id).innerText = cart[id];
-      calculateTotal();
+    function updateQty(name, price, change) {
+      if (!cart[name]) {
+        cart[name] = { price: price, qty: 0 };
+      }
+
+      cart[name].qty += change;
+
+      if (cart[name].qty <= 0) {
+        delete cart[name];
+      }
+
+      renderCart(name, price);
     }
 
-    function selectTip(percent, btnElement) {
-      tipPercent = percent;
-      document.querySelectorAll('.tip-btn').forEach(btn => btn.classList.remove('active'));
-      btnElement.classList.add('active');
-      calculateTotal();
-    }
+    function renderCart(name, price) {
+      let total = 0;
+      let count = 0;
 
-    function calculateTotal() {
-      let subtotal = 0;
-      for (let key in cart) { subtotal += cart[key] * itemPrices[key]; }
-      const deliveryFee = subtotal > 0 ? 5.99 : 0;
-      const serviceFee = subtotal > 0 ? (subtotal * 0.08) : 0;
-      const tipAmount = subtotal * tipPercent;
-      const grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+        count += cart[key].qty;
+      }
 
-      document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
-      document.getElementById('deliveryFeeDisplay').innerText = deliveryFee.toFixed(2);
-      document.getElementById('serviceFeeDisplay').innerText = serviceFee.toFixed(2);
-      document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
-    }
+      document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+      document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
-    function checkout() {
-      const grandTotal = document.getElementById('grandTotal').innerText;
-      const spot = document.getElementById('chairSpot').value.trim();
-      if (parseFloat(grandTotal) <= 0) { alert("Please add an item first!"); return; }
-      if (!spot) { alert("Please enter your beach spot location so our courier can find you!"); return; }
-      alert("Order placed! Total: $" + grandTotal + "\nDelivering to: " + spot);
+      const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
+      const container = document.getElementById(safeId);
+
+      if (container) {
+        const qty = cart[name] ? cart[name].qty : 0;
+        if (qty > 0) {
+          container.innerHTML = `
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, -1)">−</button>
+              <span class="qty-count">${qty}</span>
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, 1)">+</button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <button class="add-btn" onclick="updateQty('${name}', ${price}, 1)">+ Add</button>
+          `;
+        }
+      }
     }
   </script>
+
 </body>
 </html>
