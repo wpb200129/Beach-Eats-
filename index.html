@@ -8,14 +8,14 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
-    /* Header with Full Branding */
-    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 20px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
-    .brand-logo { max-width: 220px; height: auto; margin-bottom: 8px; }
+    /* Header with Main Brand Logo */
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 24px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
+    .brand-logo { max-width: 220px; height: auto; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto; }
     header p { font-size: 0.95rem; opacity: 0.95; font-weight: 500; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
 
-    /* GPS Location Indicator Bar */
+    /* GPS Live Delivery Bar */
     .gps-status-bar { 
       background-color: #f0fdf4; 
       border: 1px solid #bbf7d0; 
@@ -65,6 +65,7 @@
       overflow: hidden;
       padding: 6px;
       font-size: 1.8rem;
+      flex-shrink: 0;
     }
     .store-logo-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
@@ -81,14 +82,14 @@
 <body>
 
   <header>
-    <!-- Your Header Logo -->
-    <img src="logos/beacheats.png" alt="Beach Eats Logo" class="brand-logo" onerror="this.src='logos/logo.png'">
+    <!-- Main Header Logo from Root -->
+    <img src="logo.png" alt="Beach Eats" class="brand-logo">
     <p>Food, Drinks & Essentials Delivered to Your Chair</p>
   </header>
 
   <div class="container">
     
-    <!-- Automatic GPS Status Bar -->
+    <!-- GPS Location Bar -->
     <div class="gps-status-bar">
       <span class="gps-icon">🎯</span>
       <span>GPS Active • Delivering to your live beach coordinates</span>
@@ -102,7 +103,7 @@
       <a href="kaiabowls.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="logos/kaia.png" alt="Kaia Bowls Logo">
+            <img src="kaiabowls.png" alt="Kaia Bowls" onerror="this.outerHTML='🥣'">
           </div>
           <div class="store-details">
             <h3>Kaia Bowls</h3>
@@ -116,7 +117,7 @@
       <a href="mcdonalds.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="logos/mcdonalds.png" alt="McDonald's Logo">
+            <img src="mcdonalds.png" alt="McDonald's">
           </div>
           <div class="store-details">
             <h3>McDonald's</h3>
@@ -127,10 +128,10 @@
       </a>
 
       <!-- 7-Eleven Card -->
-      <a href="7eleven.html" class="store-card">
+      <a href="7-eleven.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="logos/7eleven.png" alt="7-Eleven Logo">
+            <img src="7eleven.png" alt="7-Eleven">
           </div>
           <div class="store-details">
             <h3>7-Eleven</h3>
@@ -144,7 +145,7 @@
       <a href="cvs.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="logos/cvs.png" alt="CVS Logo">
+            <img src="CVS.jpeg" alt="CVS Essentials">
           </div>
           <div class="store-details">
             <h3>CVS Essentials</h3>
@@ -154,8 +155,8 @@
         <div class="arrow-badge">→</div>
       </a>
 
-      <!-- Custom Local Restaurant Card -->
-      <a href="custom.html" class="store-card custom-card">
+      <!-- Local Restaurant Not Listed -->
+      <a href="restaurants.html" class="store-card custom-card">
         <div class="store-info">
           <div class="store-logo-wrapper">📍</div>
           <div class="store-details">
