@@ -8,26 +8,24 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 220px; }
     
+    /* Header */
     .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
     .app-logo { max-width: 170px; height: auto; display: block; margin: 0 auto 6px; }
     .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-    /* Store Navigation Bar */
+    /* Navigation Pills */
     .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
     .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
     .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
 
-    /* Store Banner Cards with Logos */
-    .store-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .store-left { display: flex; align-items: center; gap: 12px; }
-    .store-icon-img { width: 42px; height: 42px; object-fit: contain; }
-    .store-name { font-size: 1.05rem; font-weight: 800; color: #008060; margin-bottom: 2px; }
-    .store-sub { font-size: 0.8rem; color: #64748b; }
+    /* Logo Only Store Cards */
+    .store-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; border: 1px solid #e2e8f0; text-decoration: none; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .store-logo-only { height: 45px; width: auto; max-width: 160px; object-fit: contain; }
     .arrow { font-size: 1.2rem; font-weight: bold; color: #0284c7; }
 
-    /* Bottom Checkout */
+    /* Bottom Checkout Panel */
     .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
     .panel-content { max-width: 480px; margin: 0 auto; }
     .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
@@ -51,45 +49,23 @@
 
   <div class="container">
 
-    <!-- Store Link Tabs -->
+    <!-- Store Navigation Pills -->
     <div class="nav-scroll">
       <a href="index.html" class="nav-pill active">🔥 Stores</a>
-      <a href="7-eleven.html" class="nav-pill">🏪 7-Eleven</a>
-      <a href="cvs.html" class="nav-pill">💊 CVS Essentials</a>
-      <a href="restaurants.html" class="nav-pill">🍔 Local Eats</a>
+      <a href="7-eleven.html" class="nav-pill">7-Eleven</a>
+      <a href="cvs.html" class="nav-pill">CVS</a>
+      <a href="restaurants.html" class="nav-pill">Local Eats</a>
     </div>
 
-    <!-- Store Category Cards -->
+    <!-- 7-Eleven Logo Card -->
     <a href="7-eleven.html" class="store-card">
-      <div class="store-left">
-        <img src="7eleven.png" alt="7-Eleven Logo" class="store-icon-img">
-        <div>
-          <div class="store-name">7-Eleven Convenience</div>
-          <div class="store-sub">Beer, Ice, Energy Drinks, Chips & Snacks</div>
-        </div>
-      </div>
+      <img src="7eleven.png" alt="7-Eleven Logo" class="store-logo-only">
       <span class="arrow">→</span>
     </a>
 
+    <!-- CVS Logo Card -->
     <a href="cvs.html" class="store-card">
-      <div class="store-left">
-        <div style="font-size: 1.8rem;">💊</div>
-        <div>
-          <div class="store-name" style="color: #cc0000;">CVS Pharmacy</div>
-          <div class="store-sub">Sunscreen, Aloe Vera, Towels & Accessories</div>
-        </div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
-
-    <a href="restaurants.html" class="store-card">
-      <div class="store-left">
-        <div style="font-size: 1.8rem;">🍔</div>
-        <div>
-          <div class="store-name" style="color: #0284c7;">Local Beach Eats</div>
-          <div class="store-sub">Fresh Tacos, Burgers, Fries & Hot Meals</div>
-        </div>
-      </div>
+      <img src="cvs.png" alt="CVS Logo" class="store-logo-only">
       <span class="arrow">→</span>
     </a>
 
@@ -135,7 +111,7 @@
       btnElement.classList.add('active');
     }
     function checkout() {
-      alert("Select a store above to add items to your cart!");
+      alert("Tap a store card above to enter and pick items!");
     }
   </script>
 </body>
