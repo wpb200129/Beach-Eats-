@@ -2,237 +2,266 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Beach Eats App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beach Eats | Direct To Your Chair</title>
   <style>
-    :root { 
-      --primary: #f39c12; 
-      --accent: #3498db; 
-      --bg: #f8f9fa; 
-    }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      margin: 0; 
-      padding: 0; 
-      background-color: var(--bg); 
-      color: #333; 
-      -webkit-tap-highlight-color: transparent; 
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 220px; }
     
     /* App Header */
-    .app-header { 
-      background: white; 
-      padding: 15px; 
-      text-align: center; 
-      position: sticky; 
-      top: 0; 
-      z-index: 100; 
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
-    }
-    .app-logo {
-  width: 100% !important;
-  max-width: 450px !important; /* Adjust this number to make it bigger/smaller */
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto 15px auto !important;
-}
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .app-header h1 { 
-      margin: 0; 
-      color: var(--primary); 
-      font-size: 1.6rem; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 8px; 
-    }
-    .app-header p { 
-      margin: 2px 0 0 0; 
-      font-size: 0.85rem; 
-      color: #777; 
-      font-weight: 500;
-    }
+    .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .app-logo { max-width: 170px; height: auto; display: block; margin: 0 auto 6px; }
+    .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
 
-    /* App Container */
-    .container { 
-      padding: 16px; 
-      max-width: 480px; 
-      margin: 0 auto; 
-      padding-bottom: 40px; 
-    }
+    /* Container */
+    .container { max-width: 480px; margin: 0 auto; padding: 15px; }
 
-    /* Form Cards */
-    .card { 
-      background: white; 
-      border-radius: 16px; 
-      padding: 20px; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-      margin-bottom: 16px; 
-    }
-    .card-title { 
-      font-weight: 700; 
-      font-size: 1.1rem; 
-      margin-bottom: 12px; 
-      color: #444; 
-    }
+    /* Category Nav Pills */
+    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 10px; scrollbar-width: none; }
+    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
+    .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
 
-    label { 
-      font-weight: 600; 
-      display: block; 
-      margin-top: 10px; 
-      font-size: 0.85rem; 
-      color: #555; 
-    }
-    input, select { 
-      width: 100%; 
-      padding: 14px; 
-      margin-top: 4px; 
-      border-radius: 10px; 
-      border: 1px solid #e0e0e0; 
-      box-sizing: border-box; 
-      font-size: 1rem; 
-      background: #fafafa; 
-    }
-    input:focus, select:focus { 
-      outline: none; 
-      border-color: var(--primary); 
-      background: #fff; 
-    }
+    /* Store Section Headers */
+    .store-header { font-size: 1.1rem; font-weight: 800; margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; color: #0284c7; }
 
-    /* Action Buttons */
-    .btn { 
-      width: 100%; 
-      padding: 16px; 
-      border-radius: 12px; 
-      border: none; 
-      font-weight: 700; 
-      font-size: 1rem; 
-      cursor: pointer; 
-      transition: transform 0.1s; 
-      display: block; 
-      text-align: center; 
-      margin-top: 12px; 
-    }
-    .btn:active { 
-      transform: scale(0.98); 
-    }
-    .btn-gps { 
-      background: #e1f5fe; 
-      color: #0288d1; 
-      border: 1px solid #b3e5fc; 
-    }
-    .btn-order { 
-      background: var(--primary); 
-      color: white; 
-      margin-top: 20px; 
-      box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3); 
-    }
+    /* DoorDash Style Cards */
+    .item-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; }
+    .item-info { flex: 1; padding-right: 12px; }
+    .item-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
+    .item-desc { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; line-height: 1.25; }
+    .item-price { font-size: 0.9rem; font-weight: 700; color: #0f172a; }
+    
+    /* Quantity Stepper */
+    .stepper { display: flex; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 3px; }
+    .step-btn { width: 28px; height: 28px; border: none; background: #fff; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .step-count { width: 28px; text-align: center; font-weight: 700; font-size: 0.85rem; }
 
-    .status { 
-      font-size: 0.85rem; 
-      color: #2e7d32; 
-      font-weight: 600; 
-      margin-top: 8px; 
-      text-align: center; 
-    }
+    /* Fixed Bottom Checkout Panel */
+    .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
+    .panel-content { max-width: 480px; margin: 0 auto; }
+    
+    /* Fee Breakdown & Tip Section */
+    .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+    .fee-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
+
+    .tip-section { margin-bottom: 10px; }
+    .tip-label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 6px; display: block; letter-spacing: 0.5px; }
+    .tip-buttons { display: flex; gap: 8px; }
+    .tip-btn { flex: 1; padding: 6px 0; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: #334155; }
+    .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
+
+    /* Checkout Bar */
+    .cart-summary { display: flex; justify-content: space-between; align-items: center; }
+    .total-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
+    .checkout-btn { background: #0284c7; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
   </style>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
+  <!-- App Header -->
   <div class="app-header">
-    <!-- Make sure to upload your logo image as logo.png to your GitHub repository -->
-<img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo" style="max-width: 560px; width: 100%; height: auto; display: block; margin: 0 auto;">
-
-  <div class="container">
-    <form id="orderForm">
-      
-      <!-- Location Card -->
-      <div class="card">
-        <div class="card-title">1. Your Delivery Spot</div>
-        
-        <label>Your Name</label>
-        <input type="text" id="custName" placeholder="e.g. Alex" required>
-
-        <label>Umbrella / Chair # or Spot Description</label>
-        <input type="text" id="chairDetails" placeholder="e.g. Blue Umbrella #4 near Lifeguard Stand 2" required>
-
-        <label>Cell Phone Number</label>
-        <input type="tel" id="custPhone" placeholder="(555) 000-0000" required>
-
-        <button type="button" class="btn btn-gps" onclick="captureGPS()">📍 Share Precise GPS Pin</button>
-        <div id="gpsStatus" class="status"></div>
-        <input type="hidden" id="gpsUrl">
-      </div>
-
-      <!-- Menu Card -->
-      <div class="card">
-        <div class="card-title">2. Select Your Order</div>
-        
-        <label>Choose Item / Pack</label>
-        <select id="orderItem">
-          <option value="Cold Drinks & Ice Combo ($15)">🥤 Cold Drinks & Ice Combo ($15)</option>
-          <option value="Beach Lunch Special: Burger & Fries ($22)">🍔 Beach Lunch Special: Burger & Fries ($22)</option>
-          <option value="Snack Bag & Sunscreen Pack ($18)">☀️ Snack Bag & Sunscreen Pack ($18)</option>
-        </select>
-
-        <button type="submit" id="submitBtn" class="btn btn-order">Proceed to Payment ➔</button>
-      </div>
-
-    </form>
+    <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
+    <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
   </div>
 
-<script>
-  // Initialize EmailJS with your Public Key
-  (function(){
-      emailjs.init("YOUR_PUBLIC_KEY"); // REPLACE WITH YOUR EMAILJS PUBLIC KEY
-  })();
+  <div class="container">
 
-  let userLat = null;
-  let userLng = null;
+    <!-- Store Category Nav Pills -->
+    <div class="nav-scroll">
+      <a href="#seven-eleven" class="nav-pill active">🏪 7-Eleven</a>
+      <a href="#cvs" class="nav-pill">💊 CVS Essentials</a>
+      <a href="#restaurants" class="nav-pill">🍔 Local Beach Eats</a>
+    </div>
 
-  function captureGPS() {
-    const status = document.getElementById('gpsStatus');
-    status.innerText = "Locating your beach spot...";
+    <!-- 1. 7-ELEVEN SECTION -->
+    <div id="seven-eleven" class="store-header">🏪 7-Eleven (Drinks, Beer & Snacks)</div>
+    
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Ice-Cold 6-Pack Beer</div>
+        <div class="item-desc">Domestic or seltzer cans in ice pouch. 21+ ID required.</div>
+        <div class="item-price">$16.99</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item1', -1)">-</button>
+        <span id="item1" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item1', 1)">+</button>
+      </div>
+    </div>
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        userLat = pos.coords.latitude;
-        userLng = pos.coords.longitude;
-        document.getElementById('gpsUrl').value = `https://www.google.com/maps?q=${userLat},${userLng}`;
-        status.innerText = "✅ GPS Locked!";
-      }, () => {
-        status.innerText = "❌ Couldn't grab GPS. Chair # details will be used!";
-      }, { enableHighAccuracy: true, timeout: 10000 });
-    } else {
-      status.innerText = "GPS not supported on this browser.";
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Bag of Ice (10 lb)</div>
+        <div class="item-desc">Keep your cooler chilled on the sand.</div>
+        <div class="item-price">$5.50</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item2', -1)">-</button>
+        <span id="item2" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item2', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Gatorade / BodyArmor (28oz)</div>
+        <div class="item-desc">Ice-cold hydration sports drink.</div>
+        <div class="item-price">$4.00</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item3', -1)">-</button>
+        <span id="item3" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item3', 1)">+</button>
+      </div>
+    </div>
+
+    <!-- 2. CVS SECTION -->
+    <div id="cvs" class="store-header">💊 CVS (Beach Essentials)</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Coppertone Sport Sunscreen SPF 50</div>
+        <div class="item-desc">Water-resistant continuous spray.</div>
+        <div class="item-price">$14.99</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item4', -1)">-</button>
+        <span id="item4" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item4', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Aloe Vera After-Sun Gel</div>
+        <div class="item-desc">Cooling relief for sun-exposed skin.</div>
+        <div class="item-price">$8.50</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item5', -1)">-</button>
+        <span id="item5" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item5', 1)">+</button>
+      </div>
+    </div>
+
+    <!-- 3. LOCAL RESTAURANTS SECTION -->
+    <div id="restaurants" class="store-header">🍔 Local Beach Eats</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Coastal Fish Tacos (3) & Chips</div>
+        <div class="item-desc">Mahi mahi, cabbage slaw & lime crema.</div>
+        <div class="item-price">$17.50</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item6', -1)">-</button>
+        <span id="item6" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item6', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <div class="item-title">Double Beach Cheeseburger</div>
+        <div class="item-desc">Angus beef, cheddar, house sauce & seasoned fries.</div>
+        <div class="item-price">$16.00</div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" onclick="updateQty('item7', -1)">-</button>
+        <span id="item7" class="step-count">0</span>
+        <button class="step-btn" onclick="updateQty('item7', 1)">+</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Checkout Panel -->
+  <div class="checkout-panel">
+    <div class="panel-content">
+      
+      <!-- Fee Breakdown Summary -->
+      <div class="fee-summary">
+        <div class="fee-row">
+          <span>Items Subtotal:</span>
+          <span>$<span id="subtotalDisplay">0.00</span></span>
+        </div>
+        <div class="fee-row">
+          <span>Sand Delivery Fee:</span>
+          <span>$<span id="deliveryFeeDisplay">0.00</span></span>
+        </div>
+        <div class="fee-row">
+          <span>Service Fee (8%):</span>
+          <span>$<span id="serviceFeeDisplay">0.00</span></span>
+        </div>
+      </div>
+
+      <!-- Courier Tip Selector -->
+      <div class="tip-section">
+        <span class="tip-label">ADD COURIER TIP</span>
+        <div class="tip-buttons">
+          <button class="tip-btn" onclick="selectTip(0.15, this)">15%</button>
+          <button class="tip-btn active" onclick="selectTip(0.20, this)">20%</button>
+          <button class="tip-btn" onclick="selectTip(0.25, this)">25%</button>
+        </div>
+      </div>
+
+      <!-- Total & Action Button -->
+      <div class="cart-summary">
+        <div>
+          <div style="font-size: 0.72rem; color: #64748b;">Final Grand Total</div>
+          <div class="total-amount">$<span id="grandTotal">0.00</span></div>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">Review & Pay →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const itemPrices = { item1: 16.99, item2: 5.50, item3: 4.00, item4: 14.99, item5: 8.50, item6: 17.50, item7: 16.00 };
+    const cart = { item1: 0, item2: 0, item3: 0, item4: 0, item5: 0, item6: 0, item7: 0 };
+    let tipPercent = 0.20; // Default 20% tip
+
+    function updateQty(id, delta) {
+      cart[id] = Math.max(0, cart[id] + delta);
+      document.getElementById(id).innerText = cart[id];
+      calculateTotal();
     }
-  }
 
-  document.getElementById('orderForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.innerText = "Sending Order...";
-    btn.disabled = true;
+    function selectTip(percent, btnElement) {
+      tipPercent = percent;
+      document.querySelectorAll('.tip-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      calculateTotal();
+    }
 
-    // Send order details to EmailJS
-    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-      customer_name: document.getElementById('custName').value,
-      boat_info: document.getElementById('chairDetails').value, // Used for Chair/Spot info
-      phone: document.getElementById('custPhone').value,
-      item: document.getElementById('orderItem').value,
-      gps_link: document.getElementById('gpsUrl').value || "No GPS shared (Check Chair #)"
-    }).then(() => {
-      // REPLACE WITH YOUR STRIPE PAYMENT LINK URL
-      window.location.href = "https://buy.stripe.com/YOUR_STRIPE_LINK";
-    }, (error) => {
-      alert("Order submission failed. Please try again.");
-      btn.innerText = "Proceed to Payment ➔";
-      btn.disabled = false;
-    });
-  });
-</script>
+    function calculateTotal() {
+      let subtotal = 0;
+      for (let key in cart) {
+        subtotal += cart[key] * itemPrices[key];
+      }
+      
+      const deliveryFee = subtotal > 0 ? 5.99 : 0;
+      const serviceFee = subtotal > 0 ? (subtotal * 0.08) : 0;
+      const tipAmount = subtotal * tipPercent;
+      const grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
 
+      document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
+      document.getElementById('deliveryFeeDisplay').innerText = deliveryFee.toFixed(2);
+      document.getElementById('serviceFeeDisplay').innerText = serviceFee.toFixed(2);
+      document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
+    }
+
+    function checkout() {
+      const grandTotal = document.getElementById('grandTotal').innerText;
+      if (parseFloat(grandTotal) <= 0) {
+        alert("Please add at least one item to your order before checking out!");
+        return;
+      }
+      alert("Proceeding to checkout for Total: $" + grandTotal);
+      // Insert your payment destination here (Venmo / Cash App / Square / Formspree):
+      // window.location.href = "https://venmo.com/your-username";
+    }
+  </script>
 </body>
-</html> 
+</html>
