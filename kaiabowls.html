@@ -3,187 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaia Bowls | Beach Eats</title>
+  <title>Kaia Bowls Menu | Beach Eats Sand Delivery</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 260px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 90px; }
+
+    /* Top Nav Bar */
+    header { background: #0284c7; color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .back-btn { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+    .header-brand { display: flex; align-items: center; gap: 8px; }
+    .header-brand img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; background: #fff; }
+    .header-brand h1 { font-size: 1.1rem; font-weight: 800; }
+
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+    /* Category Header */
+    .menu-category { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin: 24px 0 12px; color: #0369a1; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+
+    /* Item Card */
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .item-info { flex: 1; }
+    .item-info h4 { font-size: 0.98rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .item-info p { font-size: 0.8rem; color: #64748b; line-height: 1.3; margin-bottom: 8px; }
+    .item-price { font-weight: 800; color: #0284c7; font-size: 0.95rem; }
     
-    .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
-    .app-logo { max-width: 280px; width: 75%; height: auto; display: block; margin: 0 auto 8px; }
-    .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+    /* Add Button */
+    .add-btn { background: #e0f2fe; color: #0284c7; border: none; font-weight: 700; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
+    .add-btn:active { background: #0284c7; color: #fff; }
 
-    .container { max-width: 480px; margin: 0 auto; padding: 15px; }
-
-    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
-    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
-    .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-
-    .store-header { font-size: 1.25rem; font-weight: 800; margin: 10px 0 4px; color: #0284c7; }
-    .store-sub { font-size: 0.85rem; color: #64748b; margin-bottom: 15px; }
-
-    .cat-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; margin: 15px 0 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-
-    .item-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f1f5f9; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .item-info { flex: 1; padding-right: 12px; }
-    .item-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
-    .item-desc { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; line-height: 1.25; }
-    .item-price { font-size: 0.9rem; font-weight: 700; color: #0f172a; }
-    
-    .stepper { display: flex; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 3px; }
-    .step-btn { width: 28px; height: 28px; border: none; background: #fff; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    .step-count { width: 28px; text-align: center; font-weight: 700; font-size: 0.85rem; }
-
-    .location-box { background: #fff; border-radius: 12px; padding: 12px; border: 1px solid #cbd5e1; margin-top: 15px; }
-    .location-label { font-size: 0.75rem; font-weight: 700; color: #0284c7; text-transform: uppercase; margin-bottom: 6px; display: block; }
-    .location-input { width: 100%; border: 1px solid #e2e8f0; padding: 8px; border-radius: 6px; font-size: 0.85rem; outline: none; }
-
-    .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
-    .panel-content { max-width: 480px; margin: 0 auto; }
-    .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; }
-    .fee-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
-    .tip-section { margin-bottom: 8px; }
-    .tip-label { font-size: 0.72rem; font-weight: 700; color: #64748b; margin-bottom: 4px; display: block; }
-    .tip-buttons { display: flex; gap: 8px; }
-    .tip-btn { flex: 1; padding: 5px 0; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; color: #334155; }
-    .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .cart-summary { display: flex; justify-content: space-between; align-items: center; }
-    .total-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
-    .checkout-btn { background: #0284c7; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+    /* Bottom Fixed Cart Bar */
+    .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 0 auto; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 99; }
+    .cart-info { display: flex; flex-direction: column; }
+    .cart-count { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+    .cart-total { font-size: 1.2rem; font-weight: 800; color: #0f172a; }
+    .checkout-btn { background: #0284c7; color: #fff; text-decoration: none; font-weight: 800; padding: 12px 20px; border-radius: 12px; font-size: 0.95rem; }
   </style>
 </head>
 <body>
 
-  <div class="app-header">
-    <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
-    <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
-  </div>
+  <header>
+    <a href="index.html" class="back-btn">← Back</a>
+    <div class="header-brand">
+      <img src="kaia.png" alt="Kaia Bowls" onerror="this.outerHTML='🥣';">
+      <h1>Kaia Bowls</h1>
+    </div>
+    <div style="width: 40px;"></div>
+  </header>
 
   <div class="container">
 
-    <div class="nav-scroll">
-      <a href="index.html" class="nav-pill">🔥 Home</a>
-      <a href="kaiabowls.html" class="nav-pill active">🌺 Kaia Bowls</a>
-      <a href="7-eleven.html" class="nav-pill">🏪 7-Eleven</a>
-      <a href="cvs.html" class="nav-pill">💊 CVS</a>
-    </div>
-
-    <div class="store-header">🌺 Kaia Bowls</div>
-    <div class="store-sub">Fresh Acai Bowls, Pitaya, Smoothies & Poke</div>
-
-    <div class="cat-title">🥣 Signature Acai & Fruit Bowls</div>
+    <!-- ACAI BOWLS -->
+    <div class="menu-category">🥣 Signature Açaí Bowls</div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Classic Kaia Acai Bowl</div>
-        <div class="item-desc">Organic acai topped with organic granola, banana, strawberries, blueberries & honey drizzled.</div>
-        <div class="item-price">$13.50</div>
+        <h4>Kaia Bowl ⭐ Most Popular</h4>
+        <p>Organic, non-GMO & gluten-free açai and gluten-free granola. Topped with bananas, strawberries, coconut flakes, and Nutella.</p>
+        <div class="item-price">$15.55</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('k1', -1)">-</button>
-        <span id="k1" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('k1', 1)">+</button>
-      </div>
+      <button class="add-btn" onclick="addToCart('Kaia Bowl', 15.55)">+ Add</button>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Nutty Peanut Butter Bowl</div>
-        <div class="item-desc">Acai base, topped with granola, banana, cacao nibs, almonds & peanut butter drip.</div>
-        <div class="item-price">$14.50</div>
+        <h4>Hono Lulu</h4>
+        <p>Organic açai, blueberry flax gluten-free granola, chocolate protein, bananas, strawberry, hemp seeds, and peanut butter.</p>
+        <div class="item-price">$15.55</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('k2', -1)">-</button>
-        <span id="k2" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('k2', 1)">+</button>
-      </div>
+      <button class="add-btn" onclick="addToCart('Hono Lulu', 15.55)">+ Add</button>
     </div>
-
-    <div class="cat-title">🥤 Refreshing Tropical Smoothies</div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Island Mango & Dragonfruit Blend</div>
-        <div class="item-desc">Mango, dragonfruit, coconut water & agave. Chilled cold.</div>
-        <div class="item-price">$9.50</div>
+        <h4>Purple Passion</h4>
+        <p>Organic açai, blueberry flax seed gluten-free granola, bananas, pineapple, kiwi, coconut flakes, and honey.</p>
+        <div class="item-price">$15.55</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('k3', -1)">-</button>
-        <span id="k3" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('k3', 1)">+</button>
-      </div>
+      <button class="add-btn" onclick="addToCart('Purple Passion', 15.55)">+ Add</button>
     </div>
 
-    <div class="location-box">
-      <span class="location-label">📍 Your Beach Spot / Chair Location</span>
-      <input type="text" id="chairSpot" class="location-input" placeholder="e.g., Lifeguard Stand #3, Blue Umbrella">
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Maui Wowie</h4>
+        <p>Organic açai, blueberry flax seed gluten-free granola, blueberries, strawberries, chia seeds, and honey.</p>
+        <div class="item-price">$15.55</div>
+      </div>
+      <button class="add-btn" onclick="addToCart('Maui Wowie', 15.55)">+ Add</button>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Tom Tom</h4>
+        <p>Organic açai, blueberry flax seed granola, pineapple, mango, blueberries, chia seeds, and coconut flakes.</p>
+        <div class="item-price">$15.55</div>
+      </div>
+      <button class="add-btn" onclick="addToCart('Tom Tom', 15.55)">+ Add</button>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Wipe Out</h4>
+        <p>Organic açai, gluten-free granola, banana, pineapple, kiwi, raw cacao nibs, and almonds.</p>
+        <div class="item-price">$15.55</div>
+      </div>
+      <button class="add-btn" onclick="addToCart('Wipe Out', 15.55)">+ Add</button>
     </div>
 
   </div>
 
-  <div class="checkout-panel">
-    <div class="panel-content">
-      <div class="fee-summary">
-        <div class="fee-row"><span>Items Subtotal:</span><span>$<span id="subtotalDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Sand Delivery Fee:</span><span>$<span id="deliveryFeeDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Service Fee (8%):</span><span>$<span id="serviceFeeDisplay">0.00</span></span></div>
-      </div>
-      <div class="tip-section">
-        <span class="tip-label">ADD COURIER TIP</span>
-        <div class="tip-buttons">
-          <button class="tip-btn" onclick="selectTip(0.15, this)">15%</button>
-          <button class="tip-btn active" onclick="selectTip(0.20, this)">20%</button>
-          <button class="tip-btn" onclick="selectTip(0.25, this)">25%</button>
-        </div>
-      </div>
-      <div class="cart-summary">
-        <div>
-          <div style="font-size: 0.72rem; color: #64748b;">Final Grand Total</div>
-          <div class="total-amount">$<span id="grandTotal">0.00</span></div>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">Review & Pay →</button>
-      </div>
+  <!-- Cart Bar -->
+  <div class="cart-bar">
+    <div class="cart-info">
+      <span class="cart-count" id="cart-count">0 items added</span>
+      <div class="cart-total" id="cart-total">$0.00</div>
     </div>
+    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
   </div>
 
   <script>
-    const itemPrices = { k1: 13.50, k2: 14.50, k3: 9.50 };
-    const cart = { k1: 0, k2: 0, k3: 0 };
-    let tipPercent = 0.20;
+    let currentTotal = 0;
+    let itemCount = 0;
 
-    function updateQty(id, delta) {
-      cart[id] = Math.max(0, cart[id] + delta);
-      document.getElementById(id).innerText = cart[id];
-      calculateTotal();
-    }
-
-    function selectTip(percent, btnElement) {
-      tipPercent = percent;
-      document.querySelectorAll('.tip-btn').forEach(btn => btn.classList.remove('active'));
-      btnElement.classList.add('active');
-      calculateTotal();
-    }
-
-    function calculateTotal() {
-      let subtotal = 0;
-      for (let key in cart) { subtotal += cart[key] * itemPrices[key]; }
-      const deliveryFee = subtotal > 0 ? 5.99 : 0;
-      const serviceFee = subtotal > 0 ? (subtotal * 0.08) : 0;
-      const tipAmount = subtotal * tipPercent;
-      const grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
-
-      document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
-      document.getElementById('deliveryFeeDisplay').innerText = deliveryFee.toFixed(2);
-      document.getElementById('serviceFeeDisplay').innerText = serviceFee.toFixed(2);
-      document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
-    }
-
-    function checkout() {
-      const grandTotal = document.getElementById('grandTotal').innerText;
-      const spot = document.getElementById('chairSpot').value.trim();
-      if (parseFloat(grandTotal) <= 0) { alert("Please add an item first!"); return; }
-      if (!spot) { alert("Please enter your beach spot location so our courier can find you!"); return; }
-      alert("Order placed! Total: $" + grandTotal + "\nDelivering to: " + spot);
+    function addToCart(itemName, price) {
+      currentTotal += price;
+      itemCount += 1;
+      
+      document.getElementById('cart-total').innerText = '$' + currentTotal.toFixed(2);
+      document.getElementById('cart-count').innerText = itemCount + (itemCount === 1 ? ' item added' : ' items added');
     }
   </script>
+
 </body>
 </html>
