@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +11,10 @@
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
     /* Header & Hero */
-    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 24px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
-    header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 20px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
+    .header-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 4px; }
+    .header-logo { height: 40px; width: auto; object-fit: contain; }
+    header h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
     header p { font-size: 0.95rem; opacity: 0.9; font-weight: 500; }
 
     /* Main Container */
@@ -66,9 +69,9 @@
     .store-details h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
     .store-details p { font-size: 0.82rem; color: #64748b; font-weight: 500; }
     
-    .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
+    .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; flex-shrink: 0; }
 
-    /* Custom Order Card Highlighting */
+    /* Custom Order Card Styling */
     .custom-card {
       background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
       border: 1.5px dashed #0284c7;
@@ -81,7 +84,10 @@
 <body>
 
   <header>
-    <h1>🏖️ Beach Eats</h1>
+    <div class="header-brand">
+      <img src="logos/beacheats.png" alt="Beach Eats Logo" class="header-logo" onerror="this.style.display='none'">
+      <h1>Beach Eats</h1>
+    </div>
     <p>Food, Drinks & Essentials Delivered to Your Chair</p>
   </header>
 
@@ -100,7 +106,7 @@
       <a href="kaiabowls.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="kaiabowls-logo.png" alt="Kaia Bowls Logo">
+            <img src="logos/kaia.png" alt="Kaia Bowls Logo">
           </div>
           <div class="store-details">
             <h3>Kaia Bowls</h3>
@@ -114,7 +120,7 @@
       <a href="mcdonalds.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="mcdonalds-logo.png" alt="McDonald's Logo">
+            <img src="logos/mcdonalds.png" alt="McDonald's Logo">
           </div>
           <div class="store-details">
             <h3>McDonald's</h3>
@@ -128,7 +134,7 @@
       <a href="7eleven.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="7eleven-logo.png" alt="7-Eleven Logo">
+            <img src="logos/7eleven.png" alt="7-Eleven Logo">
           </div>
           <div class="store-details">
             <h3>7-Eleven</h3>
@@ -142,7 +148,7 @@
       <a href="cvs.html" class="store-card">
         <div class="store-info">
           <div class="store-logo-wrapper">
-            <img src="cvs-logo.png" alt="CVS Logo">
+            <img src="logos/cvs.png" alt="CVS Logo">
           </div>
           <div class="store-details">
             <h3>CVS Essentials</h3>
@@ -159,8 +165,8 @@
             📍
           </div>
           <div class="store-details">
-            <h3>Local Restaurant Not Listed?</h3>
-            <p>Type in any local spot, pizza joint or shop & we'll fetch it!</p>
+            <h3>Local Spot Not Listed?</h3>
+            <p>Type in any local restaurant or shop & we'll fetch it!</p>
           </div>
         </div>
         <div class="arrow-badge">→</div>
