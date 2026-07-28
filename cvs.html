@@ -3,186 +3,328 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CVS Essentials | Beach Eats</title>
+  <title>CVS Beach Essentials | Beach Eats Sand Delivery</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 220px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 100px; }
+
+    /* Top Nav Bar */
+    header { background: #cc0000; color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .back-btn { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+    .header-brand { display: flex; align-items: center; gap: 8px; }
+    .header-brand img { width: 32px; height: 32px; border-radius: 6px; object-fit: contain; background: #fff; padding: 2px; }
+    .header-brand h1 { font-size: 1.1rem; font-weight: 800; }
+
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+    /* Category Header */
+    .menu-category { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin: 24px 0 12px; color: #cc0000; border-bottom: 2px solid #fecdd3; padding-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+
+    /* Item Card */
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .item-info { flex: 1; }
+    .item-info h4 { font-size: 0.98rem; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .item-info p { font-size: 0.8rem; color: #64748b; line-height: 1.3; margin-bottom: 8px; }
+    .item-price { font-weight: 800; color: #cc0000; font-size: 0.95rem; }
     
-    /* Header & Badges */
-    .app-header { background: #fff; padding: 15px; text-align: center; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
-    .app-logo { max-width: 170px; height: auto; display: block; margin: 0 auto 6px; }
-    .status-badge { display: inline-block; background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+    /* Buttons & Quantity Controls */
+    .add-btn { background: #ffe4e6; color: #cc0000; border: none; font-weight: 700; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; flex-shrink: 0; }
+    .add-btn:active { background: #cc0000; color: #fff; }
 
-    .container { max-width: 480px; margin: 0 auto; padding: 15px; }
+    .qty-controls { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border-radius: 20px; padding: 4px 8px; border: 1px solid #cbd5e1; flex-shrink: 0; }
+    .qty-btn { background: #cc0000; color: #fff; border: none; font-weight: 800; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; }
+    .qty-btn:active { transform: scale(0.92); }
+    .qty-count { font-weight: 800; color: #0f172a; font-size: 0.9rem; min-width: 18px; text-align: center; }
 
-    /* Nav Pills */
-    .nav-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; scrollbar-width: none; }
-    .nav-pill { background: #fff; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #475569; white-space: nowrap; text-decoration: none; }
-    .nav-pill.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-
-    .store-header { font-size: 1.2rem; font-weight: 800; margin: 10px 0 15px; color: #0284c7; }
-
-    /* Product Cards */
-    .item-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f1f5f9; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .item-info { flex: 1; padding-right: 12px; }
-    .item-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
-    .item-desc { font-size: 0.8rem; color: #64748b; margin-bottom: 6px; }
-    .item-price { font-size: 0.9rem; font-weight: 700; color: #0f172a; }
-    
-    /* Steppers */
-    .stepper { display: flex; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 3px; }
-    .step-btn { width: 28px; height: 28px; border: none; background: #fff; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    .step-count { width: 28px; text-align: center; font-weight: 700; font-size: 0.85rem; }
-
-    /* Bottom Panel */
-    .checkout-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; box-shadow: 0 -4px 16px rgba(0,0,0,0.08); z-index: 1000; }
-    .panel-content { max-width: 480px; margin: 0 auto; }
-    .fee-summary { font-size: 0.78rem; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
-    .fee-row { display: flex; justify-content: space-between; margin-bottom: 3px; }
-    .tip-section { margin-bottom: 10px; }
-    .tip-label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 6px; display: block; }
-    .tip-buttons { display: flex; gap: 8px; }
-    .tip-btn { flex: 1; padding: 6px 0; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: #334155; }
-    .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-    .cart-summary { display: flex; justify-content: space-between; align-items: center; }
-    .total-amount { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
-    .checkout-btn { background: #0284c7; color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+    /* Bottom Fixed Cart Bar */
+    .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 0 auto; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 99; }
+    .cart-info { display: flex; flex-direction: column; }
+    .cart-count { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+    .cart-total { font-size: 1.2rem; font-weight: 800; color: #0f172a; }
+    .checkout-btn { background: #cc0000; color: #fff; text-decoration: none; font-weight: 800; padding: 12px 20px; border-radius: 12px; font-size: 0.95rem; }
   </style>
 </head>
 <body>
 
-  <div class="app-header">
-    <img src="https://raw.githubusercontent.com/wpb200129/Beach-Eats-/main/logo.png" alt="Beach Eats Logo" class="app-logo">
-    <span class="status-badge">🏖️ Sand Delivery • 20-30 Min</span>
-  </div>
+  <header>
+    <a href="index.html" class="back-btn">← Back</a>
+    <div class="header-brand">
+      <img src="cvs.png" alt="CVS" onerror="this.outerHTML='💊';">
+      <h1>CVS Pharmacy</h1>
+    </div>
+    <div style="width: 40px;"></div>
+  </header>
 
   <div class="container">
 
-    <div class="nav-scroll">
-      <a href="index.html" class="nav-pill">🔥 Home</a>
-      <a href="7-eleven.html" class="nav-pill">🏪 7-Eleven</a>
-      <a href="cvs.html" class="nav-pill active">💊 CVS Essentials</a>
-      <a href="restaurants.html" class="nav-pill">🍔 Local Eats</a>
-    </div>
-
-    <div class="store-header">💊 CVS Beach Essentials</div>
+    <!-- SUNCARE & PROTECTION -->
+    <div class="menu-category">☀️ Sunscreen & Protection</div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Coppertone Sport Sunscreen SPF 50</div>
-        <div class="item-desc">Water-resistant continuous spray (5.5 oz).</div>
-        <div class="item-price">$14.99</div>
+        <h4>Sun Bum Face Lotion (SPF 70, 3 oz)</h4>
+        <p>Premium broad spectrum SPF 70 facial sunscreen lotion</p>
+        <div class="item-price">$19.99</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('c1', -1)">-</button>
-        <span id="c1" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('c1', 1)">+</button>
+      <div id="btn-SunBumFace">
+        <button class="add-btn" onclick="updateQty('Sun Bum Face Lotion SPF 70', 19.99, 1)">+ Add</button>
       </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Aloe Vera After-Sun Cooling Gel</div>
-        <div class="item-desc">Soothing relief for sun-exposed skin.</div>
-        <div class="item-price">$8.50</div>
+        <h4>Coppertone SPORT Spray (SPF 50, 5.5 oz)</h4>
+        <p>Continuous body spray broad spectrum protection</p>
+        <div class="item-price">$14.49</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('c2', -1)">-</button>
-        <span id="c2" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('c2', 1)">+</button>
+      <div id="btn-CoppertoneSport50">
+        <button class="add-btn" onclick="updateQty('Coppertone SPORT Spray SPF 50', 14.49, 1)">+ Add</button>
       </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Waterproof Phone Dry Pouch</div>
-        <div class="item-desc">Touchscreen compatible with neck lanyard.</div>
+        <h4>Coppertone SPORT Lotion (SPF 50, 7 oz)</h4>
+        <p>Durable water-resistant sport lotion formula</p>
+        <div class="item-price">$15.99</div>
+      </div>
+      <div id="btn-CoppertoneSportLotion">
+        <button class="add-btn" onclick="updateQty('Coppertone SPORT Lotion SPF 50', 15.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Neutrogena Ultra Sheer Dry-Touch (SPF 100+)</h4>
+        <p>Maximum SPF protection with clean dry-touch feel</p>
+        <div class="item-price">$17.49</div>
+      </div>
+      <div id="btn-NeutrogenaSPF100">
+        <button class="add-btn" onclick="updateQty('Neutrogena Dry-Touch SPF 100', 17.49, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Blue Lizard Sensitive Mineral Spray (SPF 50)</h4>
+        <p>Gentle mineral formula sunscreen spray</p>
+        <div class="item-price">$23.99</div>
+      </div>
+      <div id="btn-BlueLizardSpray">
+        <button class="add-btn" onclick="updateQty('Blue Lizard Mineral Spray SPF 50', 23.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Hawaiian Tropic Silk Hydration Face (SPF 30)</h4>
+        <p>Weightless, hydrating facial sun protection</p>
+        <div class="item-price">$16.99</div>
+      </div>
+      <div id="btn-HawaiianTropicFace">
+        <button class="add-btn" onclick="updateQty('Hawaiian Tropic Face SPF 30', 16.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Neutrogena Face Sunscreen Stick (SPF 60)</h4>
+        <p>Easy application mess-free sunscreen stick</p>
+        <div class="item-price">$17.99</div>
+      </div>
+      <div id="btn-NeutrogenaStick">
+        <button class="add-btn" onclick="updateQty('Neutrogena Sunscreen Stick SPF 60', 17.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Blue Lizard Mineral Sunscreen Stick (SPF 50)</h4>
+        <p>Mineral stick protection ideal for face & nose</p>
         <div class="item-price">$11.99</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('c3', -1)">-</button>
-        <span id="c3" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('c3', 1)">+</button>
+      <div id="btn-BlueLizardStick">
+        <button class="add-btn" onclick="updateQty('Blue Lizard Mineral Stick SPF 50', 11.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <!-- BEACH & POOL GEAR -->
+    <div class="menu-category">🏖️ Beach Chairs & Gear</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Rio Beach 5-Position Backpack Chair</h4>
+        <p>Reclining folding backpack beach chair with shoulder straps</p>
+        <div class="item-price">$59.99</div>
+      </div>
+      <div id="btn-RioBackpackChair">
+        <button class="add-btn" onclick="updateQty('Rio Beach 5-Pos Backpack Chair', 59.99, 1)">+ Add</button>
       </div>
     </div>
 
     <div class="item-card">
       <div class="item-info">
-        <div class="item-title">Advil / Tylenol On-the-Go Pack</div>
-        <div class="item-desc">Pain & headache relief travel pack.</div>
-        <div class="item-price">$4.99</div>
+        <h4>Joyward Standard Camp Chair (Dark Blue)</h4>
+        <p>Folding camp chair with built-in cup holder</p>
+        <div class="item-price">$29.99</div>
       </div>
-      <div class="stepper">
-        <button class="step-btn" onclick="updateQty('c4', -1)">-</button>
-        <span id="c4" class="step-count">0</span>
-        <button class="step-btn" onclick="updateQty('c4', 1)">+</button>
+      <div id="btn-JoywardCampChair">
+        <button class="add-btn" onclick="updateQty('Joyward Camp Chair', 29.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Joyward Deluxe Noodle Chair (33 in)</h4>
+        <p>Floating pool & ocean lounge noodle mesh seat</p>
+        <div class="item-price">$23.99</div>
+      </div>
+      <div id="btn-JoywardNoodleChair">
+        <button class="add-btn" onclick="updateQty('Joyward Noodle Chair', 23.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Joyward Swim Dive Rings (6-Pack)</h4>
+        <p>Sinking underwater dive rings pool toy pack</p>
+        <div class="item-price">$5.99</div>
+      </div>
+      <div id="btn-DiveRings">
+        <button class="add-btn" onclick="updateQty('Joyward Dive Rings 6pk', 5.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Joyward Dive 'N Catch Fish Net Set</h4>
+        <p>Fun water game net and sinker target set</p>
+        <div class="item-price">$11.99</div>
+      </div>
+      <div id="btn-FishNetSet">
+        <button class="add-btn" onclick="updateQty('Dive N Catch Fish Net Set', 11.99, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <!-- HYDRATION & ENERGY -->
+    <div class="menu-category">⚡ Drinks & Hydration</div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Monster Energy Zero Ultra (16 oz)</h4>
+        <p>Zero sugar crisp light energy drink</p>
+        <div class="item-price">$3.89</div>
+      </div>
+      <div id="btn-MonsterZeroUltra">
+        <button class="add-btn" onclick="updateQty('Monster Zero Ultra 16oz', 3.89, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Celsius Live Fit Energy (12 oz)</h4>
+        <p>Sparkling Wild Berry fitness energy drink</p>
+        <div class="item-price">$3.59</div>
+      </div>
+      <div id="btn-CelsiusEnergy">
+        <button class="add-btn" onclick="updateQty('Celsius Energy Drink 12oz', 3.59, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Gatorade Thirst Quencher (28 oz)</h4>
+        <p>Fruit Punch or Frost Arctic Blitz electrolyte sports drink</p>
+        <div class="item-price">$3.89</div>
+      </div>
+      <div id="btn-Gatorade28oz">
+        <button class="add-btn" onclick="updateQty('Gatorade 28oz', 3.89, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Body Armor Flash I.V. (20 oz)</h4>
+        <p>Rapid rehydration tropical electrolyte drink</p>
+        <div class="item-price">$4.49</div>
+      </div>
+      <div id="btn-BodyArmorFlash">
+        <button class="add-btn" onclick="updateQty('Body Armor Flash IV 20oz', 4.49, 1)">+ Add</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-info">
+        <h4>Gatorlyte Rapid Rehydration Packets (6 ct)</h4>
+        <p>Electrolyte beverage powder stick packs (Cherry Lime)</p>
+        <div class="item-price">$11.19</div>
+      </div>
+      <div id="btn-GatorlytePackets">
+        <button class="add-btn" onclick="updateQty('Gatorlyte Packets 6ct', 11.19, 1)">+ Add</button>
       </div>
     </div>
 
   </div>
 
-  <div class="checkout-panel">
-    <div class="panel-content">
-      <div class="fee-summary">
-        <div class="fee-row"><span>Items Subtotal:</span><span>$<span id="subtotalDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Sand Delivery Fee:</span><span>$<span id="deliveryFeeDisplay">0.00</span></span></div>
-        <div class="fee-row"><span>Service Fee (8%):</span><span>$<span id="serviceFeeDisplay">0.00</span></span></div>
-      </div>
-      <div class="tip-section">
-        <span class="tip-label">ADD COURIER TIP</span>
-        <div class="tip-buttons">
-          <button class="tip-btn" onclick="selectTip(0.15, this)">15%</button>
-          <button class="tip-btn active" onclick="selectTip(0.20, this)">20%</button>
-          <button class="tip-btn" onclick="selectTip(0.25, this)">25%</button>
-        </div>
-      </div>
-      <div class="cart-summary">
-        <div>
-          <div style="font-size: 0.72rem; color: #64748b;">Final Grand Total</div>
-          <div class="total-amount">$<span id="grandTotal">0.00</span></div>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">Review & Pay →</button>
-      </div>
+  <!-- Cart Bar -->
+  <div class="cart-bar">
+    <div class="cart-info">
+      <span class="cart-count" id="cart-count">0 items added</span>
+      <div class="cart-total" id="cart-total">$0.00</div>
     </div>
+    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
   </div>
 
   <script>
-    const itemPrices = { c1: 14.99, c2: 8.50, c3: 11.99, c4: 4.99 };
-    const cart = { c1: 0, c2: 0, c3: 0, c4: 0 };
-    let tipPercent = 0.20;
+    let cart = {};
 
-    function updateQty(id, delta) {
-      cart[id] = Math.max(0, cart[id] + delta);
-      document.getElementById(id).innerText = cart[id];
-      calculateTotal();
+    function updateQty(name, price, change) {
+      if (!cart[name]) {
+        cart[name] = { price: price, qty: 0 };
+      }
+
+      cart[name].qty += change;
+
+      if (cart[name].qty <= 0) {
+        delete cart[name];
+      }
+
+      renderCart(name, price);
     }
 
-    function selectTip(percent, btnElement) {
-      tipPercent = percent;
-      document.querySelectorAll('.tip-btn').forEach(btn => btn.classList.remove('active'));
-      btnElement.classList.add('active');
-      calculateTotal();
-    }
+    function renderCart(name, price) {
+      let total = 0;
+      let count = 0;
 
-    function calculateTotal() {
-      let subtotal = 0;
-      for (let key in cart) { subtotal += cart[key] * itemPrices[key]; }
-      const deliveryFee = subtotal > 0 ? 5.99 : 0;
-      const serviceFee = subtotal > 0 ? (subtotal * 0.08) : 0;
-      const tipAmount = subtotal * tipPercent;
-      const grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+        count += cart[key].qty;
+      }
 
-      document.getElementById('subtotalDisplay').innerText = subtotal.toFixed(2);
-      document.getElementById('deliveryFeeDisplay').innerText = deliveryFee.toFixed(2);
-      document.getElementById('serviceFeeDisplay').innerText = serviceFee.toFixed(2);
-      document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
-    }
+      document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+      document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
-    function checkout() {
-      const grandTotal = document.getElementById('grandTotal').innerText;
-      if (parseFloat(grandTotal) <= 0) { alert("Please add an item first!"); return; }
-      alert("Checkout Total: $" + grandTotal);
+      const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
+      const container = document.getElementById(safeId);
+
+      if (container) {
+        const qty = cart[name] ? cart[name].qty : 0;
+        if (qty > 0) {
+          container.innerHTML = `
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, -1)">−</button>
+              <span class="qty-count">${qty}</span>
+              <button class="qty-btn" onclick="updateQty('${name}', ${price}, 1)">+</button>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <button class="add-btn" onclick="updateQty('${name}', ${price}, 1)">+ Add</button>
+          `;
+        }
+      }
     }
   </script>
+
 </body>
 </html>
