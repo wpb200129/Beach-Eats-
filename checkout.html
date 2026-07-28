@@ -8,7 +8,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
-    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 18px 16px; text-align: center; display: flex; align-items: center; justify-content: space-between; sticky: top; }
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 18px 16px; text-align: center; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
     .back-btn { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
     header h1 { font-size: 1.1rem; font-weight: 800; }
 
@@ -17,14 +17,16 @@
     .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
     .card-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 
-    /* Location Card */
-    .gps-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
-    .gps-status { font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 8px; }
-    .gps-coords { font-size: 0.78rem; font-family: monospace; color: #15803d; }
-    .location-btn { background: #166534; color: #fff; border: none; padding: 10px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; width: 100%; }
-    .landmark-input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.85rem; margin-top: 8px; }
+    .input-group { margin-bottom: 10px; }
+    .input-group label { display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 4px; }
+    .text-input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.88rem; outline: none; }
+    .text-input:focus { border-color: #0284c7; }
 
-    /* Order Summary Table */
+    .gps-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
+    .gps-status { font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 4px; }
+    .gps-coords { font-size: 0.78rem; font-family: monospace; color: #15803d; }
+    .location-btn { background: #166534; color: #fff; border: none; padding: 10px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; width: 100%; margin-bottom: 8px; }
+
     .order-item { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 8px; color: #334155; }
     .item-qty { font-weight: 700; color: #0284c7; margin-right: 6px; }
     .divider { height: 1px; background: #e2e8f0; margin: 12px 0; }
@@ -32,12 +34,10 @@
     .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: #64748b; margin-bottom: 6px; }
     .summary-row.total { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-top: 8px; }
 
-    /* Tip Options */
     .tip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
     .tip-btn { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; padding: 8px; font-weight: 700; font-size: 0.85rem; color: #0f172a; cursor: pointer; text-align: center; }
     .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
 
-    /* Payment Buttons */
     .pay-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1rem; margin-bottom: 10px; border: none; cursor: pointer; }
     .pay-venmo { background-color: #008CFF; color: #fff; }
     .pay-cashapp { background-color: #00D632; color: #fff; }
@@ -53,45 +53,46 @@
 
   <div class="container">
 
-    <!-- 1. GPS Live Location -->
+    <!-- Contact Info -->
     <div class="card">
-      <div class="card-title">🎯 Delivery Location on the Sand</div>
-      <div class="gps-box">
-        <div class="gps-status" id="gps-status">Detecting your Beach Chair Coordinates...</div>
-        <div class="gps-coords" id="gps-coords">Lat: --.----, Lon: --.----</div>
+      <div class="card-title">👤 Contact Information</div>
+      <div class="input-group">
+        <label for="cust-name">Full Name *</label>
+        <input type="text" id="cust-name" class="text-input" placeholder="e.g. Alex Smith" required>
       </div>
-      <button class="location-btn" onclick="getGPSLocation()">📍 Refresh Live GPS Coordinates</button>
-      <input type="text" id="landmark" class="landmark-input" placeholder="Landmark e.g. Blue Umbrella, near Lifeguard Tower 2">
+      <div class="input-group">
+        <label for="cust-phone">Phone Number (For Runner SMS) *</label>
+        <input type="tel" id="cust-phone" class="text-input" placeholder="e.g. (727) 555-0199" required>
+      </div>
     </div>
 
-    <!-- 2. Order Review -->
+    <!-- Live GPS Location -->
     <div class="card">
-      <div class="card-title">🛍️ Order Summary</div>
-      <div id="order-items-list">
-        <!-- Dynamically populated from cart -->
-        <div class="order-item"><span>No items selected yet.</span><span>$0.00</span></div>
+      <div class="card-title">🎯 Delivery Spot on the Sand</div>
+      <div class="gps-box">
+        <div class="gps-status" id="gps-status">Detecting Beach Chair Coordinates...</div>
+        <div class="gps-coords" id="gps-coords">Lat: --.----, Lon: --.----</div>
       </div>
+      <button class="location-btn" onclick="getGPSLocation()">📍 Refresh Live GPS Location</button>
+      <div class="input-group">
+        <label for="landmark">Landmark / Umbrella Color</label>
+        <input type="text" id="landmark" class="text-input" placeholder="e.g. Yellow Umbrella, near Tower 2">
+      </div>
+    </div>
+
+    <!-- Order Review -->
+    <div class="card">
+      <div class="card-title">🛍️ Order Items</div>
+      <div id="order-items-list"></div>
 
       <div class="divider"></div>
 
-      <!-- Costs Breakdown -->
-      <div class="summary-row">
-        <span>Food & Items Subtotal</span>
-        <span id="subtotal-val">$0.00</span>
-      </div>
-      <div class="summary-row">
-        <span>Sand Runner Delivery Fee</span>
-        <span id="delivery-fee-val">$4.99</span>
-      </div>
-      <div class="summary-row">
-        <span>Service Fee (10%)</span>
-        <span id="service-fee-val">$0.00</span>
-      </div>
+      <div class="summary-row"><span>Subtotal</span><span id="subtotal-val">$0.00</span></div>
+      <div class="summary-row"><span>Sand Runner Fee</span><span id="delivery-fee-val">$4.99</span></div>
+      <div class="summary-row"><span>Service Fee (10%)</span><span id="service-fee-val">$0.00</span></div>
 
-      <!-- Tip Selector -->
       <div class="summary-row" style="margin-top: 8px; font-weight: 700; color: #0f172a;">
-        <span>Runner Tip</span>
-        <span id="tip-val">$0.00</span>
+        <span>Runner Tip</span><span id="tip-val">$0.00</span>
       </div>
       <div class="tip-grid">
         <button class="tip-btn" onclick="selectTip(0.15)">15%</button>
@@ -102,23 +103,14 @@
 
       <div class="divider"></div>
 
-      <div class="summary-row total">
-        <span>Total Due</span>
-        <span id="total-val">$0.00</span>
-      </div>
+      <div class="summary-row total"><span>Total Due</span><span id="total-val">$0.00</span></div>
     </div>
 
-    <!-- 3. Payment Actions -->
+    <!-- Payment Buttons -->
     <div class="card">
       <div class="card-title">💳 Select Payment Method</div>
-      <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 12px;">Clicking payment will copy your order details & location to send directly to your runner:</p>
-
-      <a href="#" id="venmo-link" class="pay-btn pay-venmo" onclick="processPayment('Venmo')">
-        Pay with Venmo
-      </a>
-      <a href="#" id="cashapp-link" class="pay-btn pay-cashapp" onclick="processPayment('Cash App')">
-        Pay with Cash App
-      </a>
+      <button class="pay-btn pay-venmo" onclick="proceedToPayment('Venmo')">Pay with Venmo</button>
+      <button class="pay-btn pay-cashapp" onclick="proceedToPayment('Cash App')">Pay with Cash App</button>
     </div>
 
   </div>
@@ -129,51 +121,58 @@
     let serviceFee = 0.00;
     let tipPercent = 0.20;
     let customTipAmount = null;
+    let grandTotal = 0.00;
     let currentLat = null;
     let currentLng = null;
+    let cartData = {};
 
-    // YOUR VENMO AND CASH APP USERNAMES
-    const VENMO_USERNAME = "YourVenmoHandle";   // Replace with your Venmo username
-    const CASHAPP_TAG = "YourCashAppTag";       // Replace with your $CashAppTag
+    // SET YOUR USERNAMES HERE
+    const VENMO_USERNAME = "YourVenmoHandle"; 
+    const CASHAPP_TAG = "YourCashAppTag";
 
-    // Auto-load location and cart calculation on load
     window.onload = function() {
       getGPSLocation();
+      loadCartItems();
       calculateTotals();
     };
 
     function getGPSLocation() {
-      const statusEl = document.getElementById('gps-status');
-      const coordsEl = document.getElementById('gps-coords');
-
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
-            currentLat = position.coords.latitude.toFixed(5);
-            currentLng = position.coords.longitude.toFixed(5);
-            statusEl.innerText = "🎯 Location Locked!";
-            coordsEl.innerText = `Lat: ${currentLat}, Lon: ${currentLng}`;
+          (pos) => {
+            currentLat = pos.coords.latitude.toFixed(5);
+            currentLng = pos.coords.longitude.toFixed(5);
+            document.getElementById('gps-status').innerText = "🎯 GPS Location Locked!";
+            document.getElementById('gps-coords').innerText = `Lat: ${currentLat}, Lon: ${currentLng}`;
           },
-          (error) => {
-            statusEl.innerText = "⚠️ GPS Permission Denied";
-            coordsEl.innerText = "Please enable location services or use landmark field";
+          () => {
+            document.getElementById('gps-status').innerText = "⚠️ GPS Disabled";
           },
-          { enableHighAccuracy: true, timeout: 10000 }
+          { enableHighAccuracy: true }
         );
-      } else {
-        statusEl.innerText = "GPS Not Supported";
+      }
+    }
+
+    function loadCartItems() {
+      const container = document.getElementById('order-items-list');
+      const rawCart = sessionStorage.getItem('beach_eats_cart');
+      subtotal = parseFloat(sessionStorage.getItem('beach_eats_subtotal') || "0.00");
+
+      if (rawCart) {
+        cartData = JSON.parse(rawCart);
+        container.innerHTML = '';
+        for (let name in cartData) {
+          const item = cartData[name];
+          container.innerHTML += `<div class="order-item"><span><span class="item-qty">${item.qty}x</span> ${name}</span><span>$${(item.price * item.qty).toFixed(2)}</span></div>`;
+        }
       }
     }
 
     function selectTip(percent) {
       tipPercent = percent;
       customTipAmount = null;
-      
-      // Update UI active states
-      const btns = document.querySelectorAll('.tip-btn');
-      btns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
-
       calculateTotals();
     }
 
@@ -181,41 +180,58 @@
       let val = prompt("Enter custom tip amount ($):", "5.00");
       if (val !== null && !isNaN(val) && parseFloat(val) >= 0) {
         customTipAmount = parseFloat(val);
-        const btns = document.querySelectorAll('.tip-btn');
-        btns.forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'));
         event.target.classList.add('active');
         calculateTotals();
       }
     }
 
     function calculateTotals() {
-      // Check if cart total exists in session storage, default to $15.00 sample if empty
-      const storedSubtotal = sessionStorage.getItem('beach_eats_subtotal');
-      subtotal = storedSubtotal ? parseFloat(storedSubtotal) : 15.00;
-
       serviceFee = subtotal * 0.10;
-      
       let tipAmount = customTipAmount !== null ? customTipAmount : (subtotal * tipPercent);
-      let grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
+      grandTotal = subtotal + deliveryFee + serviceFee + tipAmount;
 
       document.getElementById('subtotal-val').innerText = '$' + subtotal.toFixed(2);
       document.getElementById('service-fee-val').innerText = '$' + serviceFee.toFixed(2);
       document.getElementById('tip-val').innerText = '$' + tipAmount.toFixed(2);
       document.getElementById('total-val').innerText = '$' + grandTotal.toFixed(2);
-
-      // Build deep links
-      const note = encodeURIComponent(`Beach Eats Order (Lat: ${currentLat || 'N/A'}, Lon: ${currentLng || 'N/A'})`);
-      
-      // Venmo link format
-      document.getElementById('venmo-link').href = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${grandTotal.toFixed(2)}&note=${note}`;
-      
-      // Cash App link format
-      document.getElementById('cashapp-link').href = `https://cash.app/$${CASHAPP_TAG}/${grandTotal.toFixed(2)}`;
     }
 
-    function processPayment(method) {
-      const landmark = document.getElementById('landmark').value;
-      console.log(`Payment initiated via ${method}. Landmark: ${landmark}`);
+    function proceedToPayment(method) {
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const landmark = document.getElementById('landmark').value.trim();
+
+      if (!name || !phone) {
+        alert("Please enter your Name and Phone Number so your runner can find your beach spot!");
+        return;
+      }
+
+      // Pre-fill note so the payment receipt includes customer info & landmark
+      const noteStr = `Beach Eats - ${name} (${phone}) - ${landmark || 'On Beach'}`;
+      const note = encodeURIComponent(noteStr);
+      const amount = grandTotal.toFixed(2);
+
+      if (method === 'Venmo') {
+        const appUrl = `venmo://paycharge?txn=pay&recipients=${VENMO_USERNAME}&amount=${amount}&note=${note}`;
+        const webUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
+        openAppWithFallback(appUrl, webUrl);
+      } else {
+        const appUrl = `cashapp://cash.app/$${CASHAPP_TAG}/${amount}`;
+        const webUrl = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
+        openAppWithFallback(appUrl, webUrl);
+      }
+    }
+
+    function openAppWithFallback(appUrl, webUrl) {
+      const start = Date.now();
+      window.location.href = appUrl;
+
+      setTimeout(() => {
+        if (Date.now() - start < 2000) {
+          window.location.href = webUrl;
+        }
+      }, 1500);
     }
   </script>
 
