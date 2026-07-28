@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sand Delivery Checkout | Beach Eats</title>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      // EmailJS Public Key
+      emailjs.init("d_MuSbYXPo5M-nx0N");
+    })();
+  </script>
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
@@ -126,9 +136,13 @@
     let currentLng = null;
     let cartData = {};
 
-    // SET YOUR USERNAMES HERE
+    // REPLACE WITH YOUR ACTUAL VENMO & CASH APP HANDLES
     const VENMO_USERNAME = "YourVenmoHandle"; 
     const CASHAPP_TAG = "YourCashAppTag";
+
+    // EMAILJS CONFIGURATION (All keys injected)
+    const EMAILJS_SERVICE_ID = "service_zwko6xd"; 
+    const EMAILJS_TEMPLATE_ID = "template_yxrhhsi";
 
     window.onload = function() {
       getGPSLocation();
@@ -197,6 +211,30 @@
       document.getElementById('total-val').innerText = '$' + grandTotal.toFixed(2);
     }
 
+    function sendEmailJSSummary(name, phone, landmark, method) {
+      let itemsSummary = [];
+      for (let key in cartData) {
+        itemsSummary.push(`${cartData[key].qty}x ${key}`);
+      }
+
+      const templateParams = {
+        customer_name: name,
+        customer_phone: phone,
+        gps_latitude: currentLat || "Not Captured",
+        gps_longitude: currentLng || "Not Captured",
+        google_maps_link: (currentLat && currentLng) ? `https://maps.google.com/?q=${currentLat},${currentLng}` : "N/A",
+        landmark: landmark || "None specified",
+        order_items: itemsSummary.join(", "),
+        total_amount: '$' + grandTotal.toFixed(2),
+        payment_method: method
+      };
+
+      // Dispatches order email via EmailJS
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(() => console.log("Order ticket dispatched to EmailJS!"))
+        .catch((err) => console.error("EmailJS Error:", err));
+    }
+
     function proceedToPayment(method) {
       const name = document.getElementById('cust-name').value.trim();
       const phone = document.getElementById('cust-phone').value.trim();
@@ -207,31 +245,18 @@
         return;
       }
 
-      // Pre-fill note so the payment receipt includes customer info & landmark
-      const noteStr = `Beach Eats - ${name} (${phone}) - ${landmark || 'On Beach'}`;
+      // Send dispatch ticket via EmailJS
+      sendEmailJSSummary(name, phone, landmark, method);
+
+      const noteStr = `Beach Eats - ${name} (${phone})`;
       const note = encodeURIComponent(noteStr);
       const amount = grandTotal.toFixed(2);
 
       if (method === 'Venmo') {
-        const appUrl = `venmo://paycharge?txn=pay&recipients=${VENMO_USERNAME}&amount=${amount}&note=${note}`;
-        const webUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
-        openAppWithFallback(appUrl, webUrl);
+        window.location.href = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
       } else {
-        const appUrl = `cashapp://cash.app/$${CASHAPP_TAG}/${amount}`;
-        const webUrl = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
-        openAppWithFallback(appUrl, webUrl);
+        window.location.href = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
       }
-    }
-
-    function openAppWithFallback(appUrl, webUrl) {
-      const start = Date.now();
-      window.location.href = appUrl;
-
-      setTimeout(() => {
-        if (Date.now() - start < 2000) {
-          window.location.href = webUrl;
-        }
-      }, 1500);
     }
   </script>
 
