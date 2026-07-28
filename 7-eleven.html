@@ -202,10 +202,10 @@
       <div class="item-info">
         <h4>Surfside Vodka Lemonade / Tea (12 oz Can)</h4>
         <p>Real vodka with Lemonade, Iced Tea Lemonade, or Strawberry</p>
-        <div class="item-price">$3.59</div>
+        <div class="item-price">$3.49</div>
       </div>
       <div id="btn-SurfsideVodka">
-        <button class="add-btn" onclick="updateQty('Surfside Vodka Drink (12 oz)', 3.59, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Surfside Vodka Drink (12 oz)', 3.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -260,10 +260,10 @@
       <div class="item-info">
         <h4>7-Select Purified Water (1 Gallon)</h4>
         <p>Full gallon of ice cold purified water for the beach</p>
-        <div class="item-price">$3.59</div>
+        <div class="item-price">$3.49</div>
       </div>
       <div id="btn-PurifiedWaterGallon">
-        <button class="add-btn" onclick="updateQty('7-Select Purified Water (1 Gal)', 3.59, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('7-Select Purified Water (1 Gal)', 3.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -274,10 +274,10 @@
       <div class="item-info">
         <h4>Doritos Nacho Cheese (9.25 oz)</h4>
         <p>Large sharing bag of classic Nacho Cheese Doritos</p>
-        <div class="item-price">$6.59</div>
+        <div class="item-price">$6.49</div>
       </div>
       <div id="btn-DoritosNacho">
-        <button class="add-btn" onclick="updateQty('Doritos Nacho Cheese (9.25 oz)', 6.59, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Doritos Nacho Cheese (9.25 oz)', 6.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -285,10 +285,10 @@
       <div class="item-info">
         <h4>Cheetos Flamin' Hot (8.5 oz)</h4>
         <p>Large sharing bag of Flamin' Hot Cheetos</p>
-        <div class="item-price">$6.59</div>
+        <div class="item-price">$6.49</div>
       </div>
       <div id="btn-CheetosFlaminHot">
-        <button class="add-btn" onclick="updateQty('Cheetos Flamin Hot (8.5 oz)', 6.59, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Cheetos Flamin Hot (8.5 oz)', 6.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -296,10 +296,10 @@
       <div class="item-info">
         <h4>Jack Link's Original Beef Jerky (3.25 oz)</h4>
         <p>High protein original beef jerky</p>
-        <div class="item-price">$10.79</div>
+        <div class="item-price">$10.99</div>
       </div>
       <div id="btn-JackLinksJerky">
-        <button class="add-btn" onclick="updateQty('Jack Links Beef Jerky (3.25 oz)', 10.79, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Jack Links Beef Jerky (3.25 oz)', 10.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -336,7 +336,7 @@
       <span class="cart-count" id="cart-count">0 items added</span>
       <div class="cart-total" id="cart-total">$0.00</div>
     </div>
-    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
+    <a href="checkout.html" class="checkout-btn" id="checkout-link" onclick="goToCheckout()">Sand Checkout →</a>
   </div>
 
   <script>
@@ -368,6 +368,9 @@
       document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
       document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
+      // Store live subtotal for checkout page
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+
       const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
       const container = document.getElementById(safeId);
 
@@ -387,6 +390,14 @@
           `;
         }
       }
+    }
+
+    function goToCheckout() {
+      let total = 0;
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+      }
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
     }
   </script>
 
