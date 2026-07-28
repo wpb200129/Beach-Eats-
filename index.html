@@ -3,132 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beach Eats | Sand Delivery to Your Beach Chair</title>
+  <title>Beach Eats | Delivered to Wherever You Are</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
-    /* Top Hero Header */
-    header { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; padding: 20px 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .brand-title { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .brand-subtitle { font-size: 0.85rem; opacity: 0.9; font-weight: 500; }
+    /* Header with Main Brand Logo */
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 24px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
+    .brand-logo { max-width: 220px; height: auto; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto; }
+    header p { font-size: 0.95rem; opacity: 0.95; font-weight: 600; letter-spacing: 0.2px; }
 
-    /* GPS Banner */
-    .gps-banner { background: #e0f2fe; color: #0369a1; padding: 10px 16px; border-radius: 12px; font-size: 0.82rem; font-weight: 700; margin: 16px auto; max-width: 480px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid #bae6fd; }
+    .container { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
 
-    .container { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+    /* GPS Live Delivery Bar */
+    .gps-status-bar { 
+      background-color: #f0fdf4; 
+      border: 1px solid #bbf7d0; 
+      border-radius: 12px; 
+      padding: 12px 16px; 
+      margin-bottom: 20px; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      color: #166534;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .gps-icon { font-size: 1.2rem; }
 
-    /* Section Title */
-    .section-title { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; margin: 16px 0 12px; color: #0f172a; letter-spacing: 0.5px; }
+    .section-title { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* Vendor Grid / List Cards */
-    .vendor-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 14px; text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: space-between; gap: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-    .vendor-card:active { transform: scale(0.98); }
-
-    .vendor-img { width: 56px; height: 56px; border-radius: 12px; object-fit: contain; background: #f1f5f9; padding: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
-    .vendor-info { flex: 1; }
-    .vendor-info h3 { font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
-    .vendor-info p { font-size: 0.8rem; color: #64748b; line-height: 1.3; margin-bottom: 8px; }
+    /* Store Grid Cards */
+    .store-grid { display: flex; flex-direction: column; gap: 14px; }
     
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag { background: #f1f5f9; color: #475569; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
-    .tag.highlight { background: #dfe4ea; color: #008060; }
+    .store-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      transition: transform 0.15s ease;
+    }
+    .store-card:active { transform: scale(0.98); }
 
-    .arrow { font-size: 1.2rem; font-weight: 800; color: #cbd5e1; }
+    .store-info { display: flex; align-items: center; gap: 14px; }
+    
+    .store-logo-wrapper { 
+      width: 56px; 
+      height: 56px; 
+      border-radius: 12px; 
+      background: #fff; 
+      border: 1px solid #e2e8f0;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      overflow: hidden;
+      padding: 6px;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .store-logo-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-    /* Footer Info */
-    footer { text-align: center; margin-top: 30px; font-size: 0.75rem; color: #94a3b8; line-height: 1.5; }
+    .store-details h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+    .store-details p { font-size: 0.82rem; color: #64748b; font-weight: 500; }
+    
+    .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; flex-shrink: 0; }
+
+    .custom-card { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1.5px dashed #0284c7; }
+
+    .trust-footer { margin-top: 30px; text-align: center; font-size: 0.78rem; color: #94a3b8; font-weight: 500; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="brand-title">🏖️ Beach Eats</div>
-    <p class="brand-subtitle">Direct Sand Delivery to Your Beach Chair</p>
+    <!-- Main Header Logo -->
+    <img src="logo.png" alt="Beach Eats" class="brand-logo">
+    <p>Delivered to wherever you are</p>
   </header>
 
   <div class="container">
-
-    <div class="gps-banner">
-      📍 Delivery Available: Madeira Beach & Surrounding Sand
+    
+    <!-- GPS Location Bar -->
+    <div class="gps-status-bar">
+      <span class="gps-icon">🎯</span>
+      <span>GPS Active • Delivering to your live coordinates</span>
     </div>
 
-    <div class="section-title">Order Food, Drinks & Gear</div>
+    <h2 class="section-title">Select a Store</h2>
 
-    <!-- CADDY'S -->
-    <a href="caddys.html" class="vendor-card">
-      <div class="vendor-img">🍻</div>
-      <div class="vendor-info">
-        <h3>Caddy's Waterfront</h3>
-        <p>Seafood, Tacos, Burgers, Wings & Beach Cocktails</p>
-        <div class="tags">
-          <span class="tag">Hot Eats</span>
-          <span class="tag">Seafood</span>
+    <div class="store-grid">
+      
+      <!-- Caddy's Card -->
+      <a href="caddys.html" class="store-card">
+        <div class="store-info">
+          <div class="store-logo-wrapper">
+            <img src="Caddys.jpeg" alt="Caddy's" onerror="this.src='caddys.jpeg'">
+          </div>
+          <div class="store-details">
+            <h3>Caddy's</h3>
+            <p>Cold Beers, Cocktails, Bar Bites & Eats</p>
+          </div>
         </div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
 
-    <!-- KAIA BOWLS -->
-    <a href="kaiabowls.html" class="vendor-card">
-      <div class="vendor-img">🥣</div>
-      <div class="vendor-info">
-        <h3>Kaia Bowls</h3>
-        <p>Organic Açaí Bowls, Fresh Fruit & Smoothies</p>
-        <div class="tags">
-          <span class="tag">Healthy</span>
-          <span class="tag">Cold Refresh</span>
+      <!-- Kaia Bowls Card -->
+      <a href="kaiabowls.html" class="store-card">
+        <div class="store-info">
+          <div class="store-logo-wrapper">
+            <img src="kaia.png" alt="Kaia Bowls">
+          </div>
+          <div class="store-details">
+            <h3>Kaia Bowls</h3>
+            <p>Signature Açaí Bowls, Pitaya & Tropical Smoothies</p>
+          </div>
         </div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
 
-    <!-- MCDONALD'S -->
-    <a href="mcdonalds.html" class="vendor-card">
-      <div class="vendor-img">🍟</div>
-      <div class="vendor-info">
-        <h3>McDonald's</h3>
-        <p>Burgers, World Famous Fries, McNuggets & Combos</p>
-        <div class="tags">
-          <span class="tag">Fast Food</span>
-          <span class="tag">Value Meals</span>
+      <!-- McDonald's Card -->
+      <a href="mcdonalds.html" class="store-card">
+        <div class="store-info">
+          <div class="store-logo-wrapper">
+            <img src="mcdonalds.png" alt="McDonald's">
+          </div>
+          <div class="store-details">
+            <h3>McDonald's</h3>
+            <p>Burgers, Fries, McFlurries & Cold Drinks</p>
+          </div>
         </div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
 
-    <!-- 7-ELEVEN -->
-    <a href="seveneleven.html" class="vendor-card">
-      <div class="vendor-img">🏪</div>
-      <div class="vendor-info">
-        <h3>7-Eleven</h3>
-        <p>Beer, Seltzers, Slurpees, Chips, Snacks & Ice Cream</p>
-        <div class="tags">
-          <span class="tag highlight">🍺 Beer & Seltzers</span>
-          <span class="tag">Snacks</span>
+      <!-- 7-Eleven Card -->
+      <a href="seveneleven.html" class="store-card">
+        <div class="store-info">
+          <div class="store-logo-wrapper">
+            <img src="7eleven.png" alt="7-Eleven">
+          </div>
+          <div class="store-details">
+            <h3>7-Eleven</h3>
+            <p>Beer, Seltzers, Slurpees, Chips, Candy & Snacks</p>
+          </div>
         </div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
 
-    <!-- CVS PHARMACY -->
-    <a href="cvs.html" class="vendor-card">
-      <div class="vendor-img">💊</div>
-      <div class="vendor-info">
-        <h3>CVS Pharmacy</h3>
-        <p>Sunscreen, Beach Chairs, Pool Toys & Hydration</p>
-        <div class="tags">
-          <span class="tag">Sunscreen</span>
-          <span class="tag">Beach Gear</span>
+      <!-- CVS Card -->
+      <a href="cvs.html" class="store-card">
+        <div class="store-info">
+          <div class="store-logo-wrapper">
+            <img src="CVS.jpeg" alt="CVS Essentials">
+          </div>
+          <div class="store-details">
+            <h3>CVS Essentials</h3>
+            <p>Sunscreen, Towels, First Aid & Hydration</p>
+          </div>
         </div>
-      </div>
-      <span class="arrow">→</span>
-    </a>
+        <div class="arrow-badge">→</div>
+      </a>
 
-    <footer>
-      Beach Eats Delivery • Servicing Madeira Beach & Gulf Beaches<br>
-      Fast delivery directly to your chair or spot on the sand!
-    </footer>
+      <!-- Local Restaurant Not Listed -->
+      <a href="restaurants.html" class="store-card custom-card">
+        <div class="store-info">
+          <div class="store-logo-wrapper">📍</div>
+          <div class="store-details">
+            <h3>Local Spot Not Listed?</h3>
+            <p>Type in any local restaurant or shop & we'll fetch it!</p>
+          </div>
+        </div>
+        <div class="arrow-badge">→</div>
+      </a>
+
+    </div>
+
+    <div class="trust-footer">
+      ⚡ Fast Sand Runner Delivery • Pay via Venmo, Cash App & Cards
+    </div>
 
   </div>
 
