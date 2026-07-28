@@ -140,7 +140,7 @@
     const VENMO_USERNAME = "YourVenmoHandle"; 
     const CASHAPP_TAG = "YourCashAppTag";
 
-    // EMAILJS CONFIGURATION (All keys injected)
+    // EMAILJS CONFIGURATION
     const EMAILJS_SERVICE_ID = "service_zwko6xd"; 
     const EMAILJS_TEMPLATE_ID = "template_yxrhhsi";
 
@@ -212,19 +212,25 @@
     }
 
     function sendEmailJSSummary(name, phone, landmark, method) {
+      // 1. Fetch Store Name from Session Storage (Defaults to 'Beach Eats')
+      const activeStore = sessionStorage.getItem('beach_eats_store') || "Beach Eats Store";
+
+      // 2. Format Items onto New Lines
       let itemsSummary = [];
       for (let key in cartData) {
         itemsSummary.push(`${cartData[key].qty}x ${key}`);
       }
 
+      // 3. Match Parameters to your EmailJS Template
       const templateParams = {
+        store_name: activeStore,
         customer_name: name,
         customer_phone: phone,
         gps_latitude: currentLat || "Not Captured",
         gps_longitude: currentLng || "Not Captured",
         google_maps_link: (currentLat && currentLng) ? `https://maps.google.com/?q=${currentLat},${currentLng}` : "N/A",
         landmark: landmark || "None specified",
-        order_items: itemsSummary.join(", "),
+        order_items: itemsSummary.join("\n"), // Separates items by line instead of comma
         total_amount: '$' + grandTotal.toFixed(2),
         payment_method: method
       };
