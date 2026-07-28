@@ -365,10 +365,10 @@
       <div class="item-info">
         <h4>OREO® McFlurry®</h4>
         <p>Creamy vanilla soft serve blended with crunchy OREO cookies</p>
-        <div class="item-price">$3.29</div>
+        <div class="item-price">$3.49</div>
       </div>
       <div id="btn-OreoMcFlurry">
-        <button class="add-btn" onclick="updateQty('OREO McFlurry', 3.29, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('OREO McFlurry', 3.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -391,7 +391,7 @@
       <span class="cart-count" id="cart-count">0 items added</span>
       <div class="cart-total" id="cart-total">$0.00</div>
     </div>
-    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
+    <a href="checkout.html" class="checkout-btn" id="checkout-link" onclick="goToCheckout()">Sand Checkout →</a>
   </div>
 
   <script>
@@ -423,6 +423,10 @@
       document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
       document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
+      // Store live subtotal & cart data for checkout page
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+      sessionStorage.setItem('beach_eats_cart', JSON.stringify(cart));
+
       const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
       const container = document.getElementById(safeId);
 
@@ -442,6 +446,15 @@
           `;
         }
       }
+    }
+
+    function goToCheckout() {
+      let total = 0;
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+      }
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+      sessionStorage.setItem('beach_eats_cart', JSON.stringify(cart));
     }
   </script>
 
