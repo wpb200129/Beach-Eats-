@@ -331,22 +331,14 @@
       }
 
       const amount = grandTotal.toFixed(2);
-      const noteStr = `Beach Eats - ${name} (${phone})`;
-      const note = encodeURIComponent(noteStr);
 
       sendEmailJSSummary(name, phone, landmark, method)
         .then(() => {
           console.log("Order ticket sent to email successfully!");
           
           if (method === 'Venmo') {
-            // Launches native Venmo app directly, falls back to web profile if app isn't installed
-            const venmoAppUrl = `venmo://paycharge?txn=pay&recipients=${VENMO_USERNAME}&amount=${amount}&note=${note}`;
-            const venmoWebUrl = `https://venmo.com/${VENMO_USERNAME}`;
-
-            window.location.href = venmoAppUrl;
-            setTimeout(() => {
-              window.location.href = venmoWebUrl;
-            }, 1500);
+            // Opens the explicit user profile page to avoid routing errors
+            window.location.href = `https://venmo.com/u/${VENMO_USERNAME}`;
 
           } else if (method === 'Cash App') {
             window.location.href = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
@@ -364,7 +356,7 @@
         .catch((err) => {
           console.error("EmailJS issue, proceeding to payment anyway:", err);
           if (method === 'Venmo') {
-            window.location.href = `https://venmo.com/${VENMO_USERNAME}`;
+            window.location.href = `https://venmo.com/u/${VENMO_USERNAME}`;
           } else if (method === 'Cash App') {
             window.location.href = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
           } else if (method === 'Zelle') {
