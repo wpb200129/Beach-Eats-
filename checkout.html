@@ -254,7 +254,8 @@
       if (method === 'Venmo') {
         redirectUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
       } else {
-        redirectUrl = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
+        // Direct Cash App web payment portal (No app download required)
+        redirectUrl = `https://cash.app/pay/${CASHAPP_TAG}`;
       }
 
       // Sends EmailJS order ticket FIRST, then redirects customer to Cash App/Venmo
