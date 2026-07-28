@@ -1,222 +1,373 @@
-<script>
-  let subtotal = 0.00;
-  let salesTax = 0.00;
-  let deliveryFee = 4.99;
-  let serviceFee = 0.00;
-  let tipPercent = 0.20;
-  let customTipAmount = null;
-  let grandTotal = 0.00;
-  let currentLat = null;
-  let currentLng = null;
-  let cartData = {};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sand Delivery Checkout | Beach Eats</title>
 
-  // PAYMENT HANDLES (Your Live Handles)
-  const VENMO_USERNAME = "YourVenmoHandle"; 
-  const CASHAPP_TAG = "BeachEatsNow";
-  const ZELLE_HANDLE = "your-email-or-phone@gmail.com"; 
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      // EmailJS Public Key
+      emailjs.init("d_MuSbYXPo5M-nx0N");
+    })();
+  </script>
 
-  // EMAILJS CONFIGURATION
-  const EMAILJS_SERVICE_ID = "service_zwko6xd"; 
-  const EMAILJS_TEMPLATE_ID = "template_yxrhhsi";
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 40px; }
 
-  window.onload = function() {
-    getGPSLocation();
-    loadCartItems();
-    calculateTotals();
-  };
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 18px 16px; text-align: center; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .back-btn { color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+    header h1 { font-size: 1.1rem; font-weight: 800; }
 
-  function getGPSLocation() {
-    if (navigator.geolocation) {
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+    .card-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+    .input-group { margin-bottom: 10px; }
+    .input-group label { display: block; font-size: 0.78rem; font-weight: 700; color: #475569; margin-bottom: 4px; }
+    .text-input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.88rem; outline: none; }
+    .text-input:focus { border-color: #0284c7; }
+
+    .gps-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
+    .gps-status { font-size: 0.85rem; font-weight: 700; color: #166534; margin-bottom: 4px; }
+    .gps-coords { font-size: 0.78rem; font-family: monospace; color: #15803d; }
+    .location-btn { background: #166534; color: #fff; border: none; padding: 10px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; width: 100%; margin-bottom: 8px; }
+
+    .order-item { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 8px; color: #334155; }
+    .item-qty { font-weight: 700; color: #0284c7; margin-right: 6px; }
+    .divider { height: 1px; background: #e2e8f0; margin: 12px 0; }
+
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: #64748b; margin-bottom: 6px; }
+    .summary-row.total { font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-top: 8px; }
+
+    .tip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+    .tip-btn { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; padding: 8px; font-weight: 700; font-size: 0.85rem; color: #0f172a; cursor: pointer; text-align: center; }
+    .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
+
+    .pay-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1rem; margin-bottom: 10px; border: none; cursor: pointer; }
+    .pay-venmo { background-color: #008CFF; color: #fff; }
+    .pay-cashapp { background-color: #00D632; color: #fff; }
+    .pay-zelle { background-color: #7414CA; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
+    <h1>Beach Eats Checkout</h1>
+    <div style="width: 40px;"></div>
+  </header>
+
+  <div class="container">
+
+    <!-- Contact Info -->
+    <div class="card">
+      <div class="card-title">👤 Contact Information</div>
+      <div class="input-group">
+        <label for="cust-name">Full Name *</label>
+        <input type="text" id="cust-name" class="text-input" placeholder="e.g. Alex Smith" required>
+      </div>
+      <div class="input-group">
+        <label for="cust-phone">Phone Number (For Runner SMS) *</label>
+        <input type="tel" id="cust-phone" class="text-input" placeholder="e.g. (727) 555-0199" required>
+      </div>
+    </div>
+
+    <!-- Live GPS Location -->
+    <div class="card">
+      <div class="card-title">🎯 Delivery Spot on the Sand</div>
+      <div class="gps-box">
+        <div class="gps-status" id="gps-status">Detecting Beach Chair Coordinates...</div>
+        <div class="gps-coords" id="gps-coords">Lat: --.----, Lon: --.----</div>
+      </div>
+      <button class="location-btn" onclick="getGPSLocation()">📍 Refresh Live GPS Location</button>
+      <div class="input-group">
+        <label for="landmark">Landmark / Umbrella Color</label>
+        <input type="text" id="landmark" class="text-input" placeholder="e.g. Yellow Umbrella, near Tower 2">
+      </div>
+    </div>
+
+    <!-- Order Review -->
+    <div class="card">
+      <div class="card-title">🛍️ Order Items</div>
+      <div id="order-items-list"></div>
+
+      <div class="divider"></div>
+
+      <div class="summary-row"><span>Subtotal</span><span id="subtotal-val">$0.00</span></div>
+      <div class="summary-row"><span>Sales Tax (7%)</span><span id="tax-val">$0.00</span></div>
+      <div class="summary-row"><span>Sand Runner Fee</span><span id="delivery-fee-val">$4.99</span></div>
+      <div class="summary-row"><span>Service Fee (10%)</span><span id="service-fee-val">$0.00</span></div>
+
+      <div class="summary-row" style="margin-top: 8px; font-weight: 700; color: #0f172a;">
+        <span>Runner Tip</span><span id="tip-val">$0.00</span>
+      </div>
+      <div class="tip-grid">
+        <button class="tip-btn" onclick="selectTip(0.15)">15%</button>
+        <button class="tip-btn active" onclick="selectTip(0.20)">20%</button>
+        <button class="tip-btn" onclick="promptCustomTip()">Custom</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="summary-row total"><span>Total Due</span><span id="total-val">$0.00</span></div>
+    </div>
+
+    <!-- Payment Buttons -->
+    <div class="card">
+      <div class="card-title">💳 Select Payment Method</div>
+      <button class="pay-btn pay-venmo" onclick="proceedToPayment('Venmo')">Pay with Venmo</button>
+      <button class="pay-btn pay-cashapp" onclick="proceedToPayment('Cash App')">Pay with Cash App</button>
+      <button class="pay-btn pay-zelle" onclick="proceedToPayment('Zelle')">Pay with Zelle</button>
+    </div>
+
+  </div>
+
+  <script>
+    let subtotal = 0.00;
+    let salesTax = 0.00;
+    let deliveryFee = 4.99;
+    let serviceFee = 0.00;
+    let tipPercent = 0.20;
+    let customTipAmount = null;
+    let grandTotal = 0.00;
+    let currentLat = null;
+    let currentLng = null;
+    let cartData = {};
+
+    // PAYMENT HANDLES
+    const VENMO_USERNAME = "YourVenmoHandle"; 
+    const CASHAPP_TAG = "BeachEatsNow";
+    const ZELLE_HANDLE = "your-email-or-phone@gmail.com"; 
+
+    // EMAILJS CONFIGURATION
+    const EMAILJS_SERVICE_ID = "service_zwko6xd"; 
+    const EMAILJS_TEMPLATE_ID = "template_yxrhhsi";
+
+    window.onload = function() {
+      getGPSLocation();
+      loadCartItems();
+      calculateTotals();
+    };
+
+    function getGPSLocation() {
+      const statusEl = document.getElementById('gps-status');
+      const coordsEl = document.getElementById('gps-coords');
+      
+      statusEl.innerText = "Detecting Beach Coordinates...";
+
+      if (!navigator.geolocation) {
+        statusEl.innerText = "⚠️ GPS Not Supported";
+        return;
+      }
+
+      // Fast 3-Second Timeout to Prevent Page Hanging
+      const gpsTimeout = setTimeout(() => {
+        if (!currentLat) {
+          statusEl.innerText = "📍 Landmark Only (GPS Timed Out)";
+          coordsEl.innerText = "Using Landmark details below";
+        }
+      }, 3000);
+
       navigator.geolocation.getCurrentPosition(
         (pos) => {
+          clearTimeout(gpsTimeout);
           currentLat = pos.coords.latitude.toFixed(5);
           currentLng = pos.coords.longitude.toFixed(5);
-          document.getElementById('gps-status').innerText = "🎯 GPS Location Locked!";
-          document.getElementById('gps-coords').innerText = `Lat: ${currentLat}, Lon: ${currentLng}`;
+          statusEl.innerText = "🎯 GPS Location Locked!";
+          coordsEl.innerText = `Lat: ${currentLat}, Lon: ${currentLng}`;
         },
-        () => {
-          document.getElementById('gps-status').innerText = "⚠️ GPS Disabled";
+        (err) => {
+          clearTimeout(gpsTimeout);
+          statusEl.innerText = "⚠️ GPS Disabled / Denied";
+          coordsEl.innerText = "Runner will use Landmark description";
         },
-        { enableHighAccuracy: true }
+        { enableHighAccuracy: true, timeout: 3000, maximumAge: 10000 }
       );
     }
-  }
 
-  function loadCartItems() {
-    const container = document.getElementById('order-items-list');
-    
-    const rawCart = sessionStorage.getItem('beach_eats_cart') || 
-                    sessionStorage.getItem('cart') || 
-                    sessionStorage.getItem('cartItems');
-    
-    subtotal = 0.00;
-    cartData = {};
+    function loadCartItems() {
+      const container = document.getElementById('order-items-list');
+      
+      const rawCart = sessionStorage.getItem('beach_eats_cart') || 
+                      sessionStorage.getItem('cart') || 
+                      sessionStorage.getItem('cartItems');
+      
+      subtotal = 0.00;
+      cartData = {};
 
-    if (rawCart) {
-      try {
-        const parsed = JSON.parse(rawCart);
+      if (rawCart) {
+        try {
+          const parsed = JSON.parse(rawCart);
 
-        if (Array.isArray(parsed)) {
-          parsed.forEach(item => {
-            const name = item.name || item.title || item.itemName || "Menu Item";
-            const price = parseFloat(item.price || item.itemPrice || 0);
-            const qty = parseInt(item.qty || item.quantity || item.count || 1);
+          if (Array.isArray(parsed)) {
+            parsed.forEach(item => {
+              const name = item.name || item.title || item.itemName || "Menu Item";
+              const price = parseFloat(item.price || item.itemPrice || 0);
+              const qty = parseInt(item.qty || item.quantity || item.count || 1);
 
-            cartData[name] = { price: price, qty: qty };
-            subtotal += price * qty;
-          });
-        } 
-        else if (typeof parsed === 'object' && parsed !== null) {
-          for (let name in parsed) {
-            const item = parsed[name];
-            const price = parseFloat(item.price || item.itemPrice || 0);
-            const qty = parseInt(item.qty || item.quantity || item.count || 1);
+              cartData[name] = { price: price, qty: qty };
+              subtotal += price * qty;
+            });
+          } 
+          else if (typeof parsed === 'object' && parsed !== null) {
+            for (let name in parsed) {
+              const item = parsed[name];
+              const price = parseFloat(item.price || item.itemPrice || 0);
+              const qty = parseInt(item.qty || item.quantity || item.count || 1);
 
-            cartData[name] = { price: price, qty: qty };
-            subtotal += price * qty;
+              cartData[name] = { price: price, qty: qty };
+              subtotal += price * qty;
+            }
           }
+        } catch (e) {
+          console.error("Error parsing cart JSON:", e);
         }
-      } catch (e) {
-        console.error("Error parsing cart JSON:", e);
+      }
+
+      const savedSubtotal = sessionStorage.getItem('beach_eats_subtotal') || sessionStorage.getItem('subtotal');
+      if (savedSubtotal && !isNaN(parseFloat(savedSubtotal)) && parseFloat(savedSubtotal) > 0) {
+        if (subtotal === 0) {
+          subtotal = parseFloat(savedSubtotal);
+          cartData["Sand Delivery Order"] = { price: subtotal, qty: 1 };
+        }
+      }
+
+      container.innerHTML = '';
+      let hasItems = false;
+
+      for (let itemName in cartData) {
+        hasItems = true;
+        const item = cartData[itemName];
+        const lineTotal = (item.price * item.qty).toFixed(2);
+        container.innerHTML += `
+          <div class="order-item">
+            <span><span class="item-qty">${item.qty}x</span> ${itemName}</span>
+            <span>$${lineTotal}</span>
+          </div>`;
+      }
+
+      if (!hasItems) {
+        container.innerHTML = `<div style="color: #94a3b8; font-size: 0.85rem; text-align: center; padding: 8px;">No items selected. Please add items from the menu.</div>`;
       }
     }
 
-    const savedSubtotal = sessionStorage.getItem('beach_eats_subtotal') || sessionStorage.getItem('subtotal');
-    if (savedSubtotal && !isNaN(parseFloat(savedSubtotal)) && parseFloat(savedSubtotal) > 0) {
-      if (subtotal === 0) {
-        subtotal = parseFloat(savedSubtotal);
-        cartData["Sand Delivery Order"] = { price: subtotal, qty: 1 };
-      }
-    }
-
-    container.innerHTML = '';
-    let hasItems = false;
-
-    for (let itemName in cartData) {
-      hasItems = true;
-      const item = cartData[itemName];
-      const lineTotal = (item.price * item.qty).toFixed(2);
-      container.innerHTML += `
-        <div class="order-item">
-          <span><span class="item-qty">${item.qty}x</span> ${itemName}</span>
-          <span>$${lineTotal}</span>
-        </div>`;
-    }
-
-    if (!hasItems) {
-      container.innerHTML = `<div style="color: #94a3b8; font-size: 0.85rem; text-align: center; padding: 8px;">No items selected. Please add items from the menu.</div>`;
-    }
-  }
-
-  function selectTip(percent) {
-    tipPercent = percent;
-    customTipAmount = null;
-    document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    calculateTotals();
-  }
-
-  function promptCustomTip() {
-    let val = prompt("Enter custom tip amount ($):", "5.00");
-    if (val !== null && !isNaN(val) && parseFloat(val) >= 0) {
-      customTipAmount = parseFloat(val);
+    function selectTip(percent) {
+      tipPercent = percent;
+      customTipAmount = null;
       document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
       calculateTotals();
     }
-  }
 
-  function calculateTotals() {
-    salesTax = subtotal * 0.07;
-    serviceFee = subtotal * 0.10;
-    let tipAmount = customTipAmount !== null ? customTipAmount : (subtotal * tipPercent);
-    
-    grandTotal = subtotal + salesTax + deliveryFee + serviceFee + tipAmount;
-
-    document.getElementById('subtotal-val').innerText = '$' + subtotal.toFixed(2);
-    document.getElementById('tax-val').innerText = '$' + salesTax.toFixed(2);
-    document.getElementById('service-fee-val').innerText = '$' + serviceFee.toFixed(2);
-    document.getElementById('tip-val').innerText = '$' + tipAmount.toFixed(2);
-    document.getElementById('total-val').innerText = '$' + grandTotal.toFixed(2);
-  }
-
-  function sendEmailJSSummary(name, phone, landmark, method) {
-    let activeStore = sessionStorage.getItem('beach_eats_store');
-    if (!activeStore) {
-      const ref = document.referrer.toLowerCase();
-      if (ref.includes('hooters')) activeStore = "Hooters";
-      else if (ref.includes('caddys') || ref.includes('caddy')) activeStore = "Caddy's";
-      else if (ref.includes('mcdonalds') || ref.includes('mcdonald')) activeStore = "McDonald's";
-      else activeStore = "Beach Eats Store";
+    function promptCustomTip() {
+      let val = prompt("Enter custom tip amount ($):", "5.00");
+      if (val !== null && !isNaN(val) && parseFloat(val) >= 0) {
+        customTipAmount = parseFloat(val);
+        document.querySelectorAll('.tip-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        calculateTotals();
+      }
     }
 
-    let itemsSummary = [];
-    for (let key in cartData) {
-      const item = cartData[key];
-      const itemTotal = (item.price * item.qty).toFixed(2);
-      itemsSummary.push(`• ${item.qty}x ${key} ($${itemTotal})`);
+    function calculateTotals() {
+      salesTax = subtotal * 0.07;
+      serviceFee = subtotal * 0.10;
+      let tipAmount = customTipAmount !== null ? customTipAmount : (subtotal * tipPercent);
+      
+      grandTotal = subtotal + salesTax + deliveryFee + serviceFee + tipAmount;
+
+      document.getElementById('subtotal-val').innerText = '$' + subtotal.toFixed(2);
+      document.getElementById('tax-val').innerText = '$' + salesTax.toFixed(2);
+      document.getElementById('service-fee-val').innerText = '$' + serviceFee.toFixed(2);
+      document.getElementById('tip-val').innerText = '$' + tipAmount.toFixed(2);
+      document.getElementById('total-val').innerText = '$' + grandTotal.toFixed(2);
     }
 
-    const templateParams = {
-      store_name: activeStore,
-      customer_name: name,
-      customer_phone: phone,
-      gps_latitude: currentLat || "Not Captured",
-      gps_longitude: currentLng || "Not Captured",
-      google_maps_link: (currentLat && currentLng) ? `https://maps.google.com/?q=${currentLat},${currentLng}` : "N/A",
-      landmark: landmark || "None specified",
-      order_items: itemsSummary.length > 0 ? itemsSummary.join("\n") : "No specific items listed",
-      total_amount: '$' + grandTotal.toFixed(2),
-      payment_method: method
-    };
+    function sendEmailJSSummary(name, phone, landmark, method) {
+      let activeStore = sessionStorage.getItem('beach_eats_store');
+      if (!activeStore) {
+        const ref = document.referrer.toLowerCase();
+        if (ref.includes('hooters')) activeStore = "Hooters";
+        else if (ref.includes('caddys') || ref.includes('caddy')) activeStore = "Caddy's";
+        else if (ref.includes('mcdonalds') || ref.includes('mcdonald')) activeStore = "McDonald's";
+        else activeStore = "Beach Eats Store";
+      }
 
-    return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-  }
+      let itemsSummary = [];
+      for (let key in cartData) {
+        const item = cartData[key];
+        const itemTotal = (item.price * item.qty).toFixed(2);
+        itemsSummary.push(`• ${item.qty}x ${key} ($${itemTotal})`);
+      }
 
-  function proceedToPayment(method) {
-    const name = document.getElementById('cust-name').value.trim();
-    const phone = document.getElementById('cust-phone').value.trim();
-    const landmark = document.getElementById('landmark').value.trim();
+      const templateParams = {
+        store_name: activeStore,
+        customer_name: name,
+        customer_phone: phone,
+        gps_latitude: currentLat || "Not Captured",
+        gps_longitude: currentLng || "Not Captured",
+        google_maps_link: (currentLat && currentLng) ? `https://maps.google.com/?q=${currentLat},${currentLng}` : "N/A",
+        landmark: landmark || "None specified",
+        order_items: itemsSummary.length > 0 ? itemsSummary.join("\n") : "No specific items listed",
+        total_amount: '$' + grandTotal.toFixed(2),
+        payment_method: method
+      };
 
-    if (!name || !phone) {
-      alert("Please enter your Name and Phone Number so your runner can find your beach spot!");
-      return;
+      return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
     }
 
-    const amount = grandTotal.toFixed(2);
-    const noteStr = `Beach Eats - ${name} (${phone})`;
-    const note = encodeURIComponent(noteStr);
+    function proceedToPayment(method) {
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const landmark = document.getElementById('landmark').value.trim();
 
-    let redirectUrl = "";
-    if (method === 'Venmo') {
-      redirectUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
-    } else if (method === 'Cash App') {
-      redirectUrl = `https://cash.app/pay/${CASHAPP_TAG}`;
+      if (!name || !phone) {
+        alert("Please enter your Name and Phone Number so your runner can find your beach spot!");
+        return;
+      }
+
+      const amount = grandTotal.toFixed(2);
+      const noteStr = `Beach Eats - ${name} (${phone})`;
+      const note = encodeURIComponent(noteStr);
+
+      let redirectUrl = "";
+      if (method === 'Venmo') {
+        redirectUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
+      } else if (method === 'Cash App') {
+        redirectUrl = `https://cash.app/pay/${CASHAPP_TAG}`;
+      }
+
+      sendEmailJSSummary(name, phone, landmark, method)
+        .then(() => {
+          console.log("Order ticket sent to email successfully!");
+          
+          if (method === 'Zelle') {
+            alert(
+              `🏖️ ORDER PLACED!\n\n` +
+              `Please open your Banking App and Zelle $${amount} to:\n\n` +
+              `📧 ${ZELLE_HANDLE}\n\n` +
+              `Note: Beach Eats - ${name}\n\n` +
+              `Your runner has received your ticket and GPS location!`
+            );
+          } else {
+            window.location.href = redirectUrl;
+          }
+        })
+        .catch((err) => {
+          console.error("EmailJS issue, proceeding to payment anyway:", err);
+          if (method === 'Zelle') {
+            alert(`Please Zelle $${amount} to: ${ZELLE_HANDLE}`);
+          } else {
+            window.location.href = redirectUrl;
+          }
+        });
     }
+  </script>
 
-    sendEmailJSSummary(name, phone, landmark, method)
-      .then(() => {
-        console.log("Order ticket sent to email successfully!");
-        
-        if (method === 'Zelle') {
-          alert(
-            `🏖️ ORDER PLACED!\n\n` +
-            `Please open your Banking App and Zelle $${amount} to:\n\n` +
-            `📧 ${ZELLE_HANDLE}\n\n` +
-            `Note: Beach Eats - ${name}\n\n` +
-            `Your runner has received your ticket and GPS location!`
-          );
-        } else {
-          window.location.href = redirectUrl;
-        }
-      })
-      .catch((err) => {
-        console.error("EmailJS issue, proceeding to payment anyway:", err);
-        if (method === 'Zelle') {
-          alert(`Please Zelle $${amount} to: ${ZELLE_HANDLE}`);
-        } else {
-          window.location.href = redirectUrl;
-        }
-      });
-  }
-</script>
+</body>
+</html>
