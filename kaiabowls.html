@@ -64,10 +64,10 @@
       <div class="item-info">
         <h4>Kaia Bowl ⭐ Most Popular</h4>
         <p>Organic, non-GMO & gluten-free açai, GF granola, bananas, strawberries, coconut flakes & Nutella.</p>
-        <div class="item-price">$15.55</div>
+        <div class="item-price">$15.99</div>
       </div>
       <div id="btn-KaiaBowl">
-        <button class="add-btn" onclick="updateQty('Kaia Bowl', 15.55, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Kaia Bowl', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -75,10 +75,10 @@
       <div class="item-info">
         <h4>Hono Lulu</h4>
         <p>Organic açai, blueberry flax GF granola, chocolate protein, bananas, strawberry, hemp seeds & peanut butter.</p>
-        <div class="item-price">$15.55</div>
+        <div class="item-price">$15.99</div>
       </div>
       <div id="btn-HonoLulu">
-        <button class="add-btn" onclick="updateQty('Hono Lulu', 15.55, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Hono Lulu', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -86,10 +86,10 @@
       <div class="item-info">
         <h4>Purple Passion</h4>
         <p>Organic açai, blueberry flax seed GF granola, bananas, pineapple, kiwi, coconut flakes & honey.</p>
-        <div class="item-price">$15.55</div>
+        <div class="item-price">$15.99</div>
       </div>
       <div id="btn-PurplePassion">
-        <button class="add-btn" onclick="updateQty('Purple Passion', 15.55, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Purple Passion', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -97,10 +97,10 @@
       <div class="item-info">
         <h4>Maui Wowie</h4>
         <p>Organic açai, blueberry flax seed GF granola, blueberries, strawberries, chia seeds & honey.</p>
-        <div class="item-price">$15.55</div>
+        <div class="item-price">$15.99</div>
       </div>
       <div id="btn-MauiWowie">
-        <button class="add-btn" onclick="updateQty('Maui Wowie', 15.55, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Maui Wowie', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -108,10 +108,10 @@
       <div class="item-info">
         <h4>Tom Tom</h4>
         <p>Organic açai, blueberry flax seed granola, pineapple, mango, blueberries, chia seeds & coconut flakes.</p>
-        <div class="item-price">$15.55</div>
+        <div class="item-price">$15.99</div>
       </div>
       <div id="btn-TomTom">
-        <button class="add-btn" onclick="updateQty('Tom Tom', 15.55, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Tom Tom', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -119,10 +119,10 @@
       <div class="item-info">
         <h4>Wipe Out</h4>
         <p>Organic açai, gluten-free granola, banana, pineapple, kiwi, raw cacao nibs & almonds.</p>
-        <div class="item-price">$15.55</div>
+        <div class="item-price">$15.99</div>
       </div>
       <div id="btn-WipeOut">
-        <button class="add-btn" onclick="updateQty('Wipe Out', 15.55, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Wipe Out', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -134,7 +134,7 @@
       <span class="cart-count" id="cart-count">0 items added</span>
       <div class="cart-total" id="cart-total">$0.00</div>
     </div>
-    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
+    <a href="checkout.html" class="checkout-btn" id="checkout-link" onclick="goToCheckout()">Sand Checkout →</a>
   </div>
 
   <script>
@@ -166,6 +166,9 @@
       document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
       document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
+      // Store current subtotal for checkout page
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+
       const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
       const container = document.getElementById(safeId);
 
@@ -185,6 +188,14 @@
           `;
         }
       }
+    }
+
+    function goToCheckout() {
+      let total = 0;
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+      }
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
     }
   </script>
 
