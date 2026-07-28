@@ -139,7 +139,7 @@
     let currentLng = null;
     let cartData = {};
 
-    // PAYMENT HANDLES (LOCKED IN)
+    // PAYMENT HANDLES
     const VENMO_USERNAME = "beacheatsnow"; 
     const CASHAPP_TAG = "BeachEatsNow";
     const ZELLE_HANDLE = "(941) 786-8492"; 
@@ -165,7 +165,6 @@
         return;
       }
 
-      // 3-Second Timeout so GPS never hangs checkout
       const gpsTimeout = setTimeout(() => {
         if (!currentLat) {
           statusEl.innerText = "📍 Landmark Only (GPS Timed Out)";
@@ -337,9 +336,11 @@
 
       let redirectUrl = "";
       if (method === 'Venmo') {
+        // Universal web/app link for Venmo
         redirectUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
       } else if (method === 'Cash App') {
-        redirectUrl = `https://cash.app/pay/${CASHAPP_TAG}`;
+        // Standard profile URL format for Cash App
+        redirectUrl = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
       }
 
       sendEmailJSSummary(name, phone, landmark, method)
