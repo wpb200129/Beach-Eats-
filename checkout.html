@@ -136,9 +136,9 @@
     let currentLng = null;
     let cartData = {};
 
-    // REPLACE WITH YOUR ACTUAL VENMO & CASH APP HANDLES
+    // PAYMENT HANDLES
     const VENMO_USERNAME = "YourVenmoHandle"; 
-    const CASHAPP_TAG = "YourCashAppTag";
+    const CASHAPP_TAG = "BeachEatsNow";
 
     // EMAILJS CONFIGURATION
     const EMAILJS_SERVICE_ID = "service_zwko6xd"; 
@@ -212,16 +212,13 @@
     }
 
     function sendEmailJSSummary(name, phone, landmark, method) {
-      // 1. Fetch Store Name from Session Storage (Defaults to 'Beach Eats')
       const activeStore = sessionStorage.getItem('beach_eats_store') || "Beach Eats Store";
 
-      // 2. Format Items onto New Lines
       let itemsSummary = [];
       for (let key in cartData) {
         itemsSummary.push(`${cartData[key].qty}x ${key}`);
       }
 
-      // 3. Match Parameters to your EmailJS Template
       const templateParams = {
         store_name: activeStore,
         customer_name: name,
@@ -230,15 +227,13 @@
         gps_longitude: currentLng || "Not Captured",
         google_maps_link: (currentLat && currentLng) ? `https://maps.google.com/?q=${currentLat},${currentLng}` : "N/A",
         landmark: landmark || "None specified",
-        order_items: itemsSummary.join("\n"), // Separates items by line instead of comma
+        order_items: itemsSummary.join("\n"),
         total_amount: '$' + grandTotal.toFixed(2),
         payment_method: method
       };
 
-      // Dispatches order email via EmailJS
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-        .then(() => console.log("Order ticket dispatched to EmailJS!"))
-        .catch((err) => console.error("EmailJS Error:", err));
+      // Returns the emailjs promise so proceedToPayment can wait for it
+      return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
     }
 
     function proceedToPayment(method) {
@@ -251,18 +246,27 @@
         return;
       }
 
-      // Send dispatch ticket via EmailJS
-      sendEmailJSSummary(name, phone, landmark, method);
-
       const noteStr = `Beach Eats - ${name} (${phone})`;
       const note = encodeURIComponent(noteStr);
       const amount = grandTotal.toFixed(2);
 
+      let redirectUrl = "";
       if (method === 'Venmo') {
-        window.location.href = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
+        redirectUrl = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${amount}&note=${note}`;
       } else {
-        window.location.href = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
+        redirectUrl = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
       }
+
+      // Sends EmailJS order ticket FIRST, then redirects customer to Cash App/Venmo
+      sendEmailJSSummary(name, phone, landmark, method)
+        .then(() => {
+          console.log("Order ticket sent to email successfully!");
+          window.location.href = redirectUrl;
+        })
+        .catch((err) => {
+          console.error("EmailJS issue, proceeding to payment anyway:", err);
+          window.location.href = redirectUrl;
+        });
     }
   </script>
 
