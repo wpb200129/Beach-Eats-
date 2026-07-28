@@ -139,10 +139,10 @@
     let currentLng = null;
     let cartData = {};
 
-    // PAYMENT HANDLES
-    const VENMO_USERNAME = "YourVenmoHandle"; 
+    // PAYMENT HANDLES (LOCKED IN)
+    const VENMO_USERNAME = "beacheatsnow"; 
     const CASHAPP_TAG = "BeachEatsNow";
-    const ZELLE_HANDLE = "your-email-or-phone@gmail.com"; 
+    const ZELLE_HANDLE = "(941) 786-8492"; 
 
     // EMAILJS CONFIGURATION
     const EMAILJS_SERVICE_ID = "service_zwko6xd"; 
@@ -165,7 +165,7 @@
         return;
       }
 
-      // Fast 3-Second Timeout to Prevent Page Hanging
+      // 3-Second Timeout so GPS never hangs checkout
       const gpsTimeout = setTimeout(() => {
         if (!currentLat) {
           statusEl.innerText = "📍 Landmark Only (GPS Timed Out)";
@@ -350,7 +350,7 @@
             alert(
               `🏖️ ORDER PLACED!\n\n` +
               `Please open your Banking App and Zelle $${amount} to:\n\n` +
-              `📧 ${ZELLE_HANDLE}\n\n` +
+              `📱 ${ZELLE_HANDLE}\n\n` +
               `Note: Beach Eats - ${name}\n\n` +
               `Your runner has received your ticket and GPS location!`
             );
