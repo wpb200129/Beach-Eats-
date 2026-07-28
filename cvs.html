@@ -49,7 +49,7 @@
   <header>
     <a href="index.html" class="back-btn">← Back</a>
     <div class="header-brand">
-      <img src="cvs.png" alt="CVS" onerror="this.outerHTML='💊';">
+      <img src="CVS.jpeg" alt="CVS" onerror="this.src='cvs.png'; this.onerror=function(){this.outerHTML='💊';}">
       <h1>CVS Pharmacy</h1>
     </div>
     <div style="width: 40px;"></div>
@@ -213,10 +213,10 @@
       <div class="item-info">
         <h4>Monster Energy Zero Ultra (16 oz)</h4>
         <p>Zero sugar crisp light energy drink</p>
-        <div class="item-price">$3.89</div>
+        <div class="item-price">$3.99</div>
       </div>
       <div id="btn-MonsterZeroUltra">
-        <button class="add-btn" onclick="updateQty('Monster Zero Ultra 16oz', 3.89, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Monster Zero Ultra 16oz', 3.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -224,10 +224,10 @@
       <div class="item-info">
         <h4>Celsius Live Fit Energy (12 oz)</h4>
         <p>Sparkling Wild Berry fitness energy drink</p>
-        <div class="item-price">$3.59</div>
+        <div class="item-price">$3.49</div>
       </div>
       <div id="btn-CelsiusEnergy">
-        <button class="add-btn" onclick="updateQty('Celsius Energy Drink 12oz', 3.59, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Celsius Energy Drink 12oz', 3.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -235,10 +235,10 @@
       <div class="item-info">
         <h4>Gatorade Thirst Quencher (28 oz)</h4>
         <p>Fruit Punch or Frost Arctic Blitz electrolyte sports drink</p>
-        <div class="item-price">$3.89</div>
+        <div class="item-price">$3.99</div>
       </div>
       <div id="btn-Gatorade28oz">
-        <button class="add-btn" onclick="updateQty('Gatorade 28oz', 3.89, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Gatorade 28oz', 3.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -257,10 +257,10 @@
       <div class="item-info">
         <h4>Gatorlyte Rapid Rehydration Packets (6 ct)</h4>
         <p>Electrolyte beverage powder stick packs (Cherry Lime)</p>
-        <div class="item-price">$11.19</div>
+        <div class="item-price">$11.49</div>
       </div>
       <div id="btn-GatorlytePackets">
-        <button class="add-btn" onclick="updateQty('Gatorlyte Packets 6ct', 11.19, 1)">+ Add</button>
+        <button class="add-btn" onclick="updateQty('Gatorlyte Packets 6ct', 11.49, 1)">+ Add</button>
       </div>
     </div>
 
@@ -272,7 +272,7 @@
       <span class="cart-count" id="cart-count">0 items added</span>
       <div class="cart-total" id="cart-total">$0.00</div>
     </div>
-    <a href="#" class="checkout-btn" id="checkout-link">Sand Checkout →</a>
+    <a href="checkout.html" class="checkout-btn" id="checkout-link" onclick="goToCheckout()">Sand Checkout →</a>
   </div>
 
   <script>
@@ -304,6 +304,10 @@
       document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
       document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
+      // Store live subtotal & cart data for checkout page
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+      sessionStorage.setItem('beach_eats_cart', JSON.stringify(cart));
+
       const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
       const container = document.getElementById(safeId);
 
@@ -323,6 +327,15 @@
           `;
         }
       }
+    }
+
+    function goToCheckout() {
+      let total = 0;
+      for (let key in cart) {
+        total += cart[key].price * cart[key].qty;
+      }
+      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+      sessionStorage.setItem('beach_eats_cart', JSON.stringify(cart));
     }
   </script>
 
