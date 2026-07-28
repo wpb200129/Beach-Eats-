@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slyce Pizza Bar | Beach Eats</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding-bottom: 110px; }
+
+    /* Top Navigation Header */
+    header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(2,132,199,0.2); }
+    .back-btn { background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 8px 14px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 700; backdrop-filter: blur(4px); }
+    .header-title { font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+
+    /* Vendor Banner */
+    .vendor-card { background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+    .vendor-card img { width: 64px; height: 64px; object-fit: contain; border-radius: 12px; border: 1px solid #f1f5f9; padding: 4px; }
+    .vendor-info h1 { font-size: 1.25rem; font-weight: 800; color: #0f172a; }
+    .vendor-info p { font-size: 0.82rem; color: #64748b; margin-top: 2px; }
+
+    /* Section Category Titles */
+    .menu-category { font-size: 1rem; font-weight: 800; color: #0f172a; margin: 20px 0 10px 0; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
+
+    /* Menu Items List */
+    .item-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .item-details { flex: 1; }
+    .item-name { font-size: 0.95rem; font-weight: 700; color: #0f172a; }
+    .item-desc { font-size: 0.78rem; color: #64748b; margin: 4px 0 6px 0; line-height: 1.3; }
+    .item-price { font-size: 0.9rem; font-weight: 800; color: #0284c7; }
+
+    /* Quantity Counter Buttons */
+    .counter { display: flex; align-items: center; background: #f1f5f9; border-radius: 20px; padding: 2px; border: 1px solid #cbd5e1; }
+    .counter-btn { width: 32px; height: 32px; border: none; background: #fff; color: #0284c7; font-size: 1.1rem; font-weight: 800; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .counter-btn:active { transform: scale(0.92); }
+    .qty-num { width: 28px; text-align: center; font-size: 0.9rem; font-weight: 800; color: #0f172a; }
+
+    /* Sticky Bottom Checkout Floating Bar */
+    .checkout-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0; padding: 14px 16px; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); z-index: 100; }
+    .checkout-inner { max-width: 480px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .total-label { font-size: 0.78rem; color: #64748b; font-weight: 600; text-transform: uppercase; }
+    .total-amount { font-size: 1.3rem; font-weight: 900; color: #0f172a; }
+    .checkout-btn { background: #0284c7; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 12px; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; transition: background 0.2s ease; }
+    .checkout-btn:active { background: #0369a1; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <a href="index.html" class="back-btn">← Stores</a>
+    <div class="header-title">🍕 Slyce Pizza Bar</div>
+    <div style="width: 60px;"></div>
+  </header>
+
+  <div class="container">
+
+    <!-- Store Profile Header -->
+    <div class="vendor-card">
+      <img src="Slyce.png" alt="Slyce Pizza Bar" onerror="this.src='https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80';">
+      <div class="vendor-info">
+        <h1>Slyce Pizza Bar</h1>
+        <p>Stone-Baked Artisan Pizzas, Brunch & Wings • Sand Delivery</p>
+      </div>
+    </div>
+
+    <!-- WEEKDAY LUNCH SPECIALS -->
+    <div class="menu-category">☀️ Weekday Lunch Specials (11am - 3pm)</div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Salad & Slice of Cheese Pizza</div>
+        <div class="item-desc">Choice of House or Caesar salad with a cheese pizza slice[cite: 1].</div>
+        <div class="item-price">$8.99</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Salad & Slice', -1, 8.99)">−</button>
+        <span class="qty-num" id="qty-Salad & Slice">0</span>
+        <button class="counter-btn" onclick="updateQty('Salad & Slice', 1, 8.99)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Monday: Buffalo Chicken Wrap</div>
+        <div class="item-desc">Served with choice of pasta salad, potato salad, fruit, or chips[cite: 1].</div>
+        <div class="item-price">$13.99</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Buff Chk Wrap', -1, 13.99)">−</button>
+        <span class="qty-num" id="qty-Buff Chk Wrap">0</span>
+        <button class="counter-btn" onclick="updateQty('Buff Chk Wrap', 1, 13.99)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Friday: Meatball Sub</div>
+        <div class="item-desc">Classic Italian meatballs in red sauce on a sub roll[cite: 1].</div>
+        <div class="item-price">$13.99</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Meatball Sub', -1, 13.99)">−</button>
+        <span class="qty-num" id="qty-Meatball Sub">0</span>
+        <button class="counter-btn" onclick="updateQty('Meatball Sub', 1, 13.99)">+</button>
+      </div>
+    </div>
+
+    <!-- WEEKEND BRUNCH -->
+    <div class="menu-category">🥂 Weekend Brunch (Sat & Sun)</div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Breakfast Pizza (Individual 10")</div>
+        <div class="item-desc">Choose: Bacon/Egg/Cheese OR Veggie OR Sausage/Ham/Bacon[cite: 1].</div>
+        <div class="item-price">$14.99</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Breakfast Pizza', -1, 14.99)">−</button>
+        <span class="qty-num" id="qty-Breakfast Pizza">0</span>
+        <button class="counter-btn" onclick="updateQty('Breakfast Pizza', 1, 14.99)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Meat Breakfast Burrito</div>
+        <div class="item-desc">Eggs, bacon, sausage, cheddar cheese. Served with home fries[cite: 1].</div>
+        <div class="item-price">$13.99</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Meat Burrito', -1, 13.99)">−</button>
+        <span class="qty-num" id="qty-Meat Burrito">0</span>
+        <button class="counter-btn" onclick="updateQty('Meat Burrito', 1, 13.99)">+</button>
+      </div>
+    </div>
+
+    <!-- SPECIALTY PIZZAS -->
+    <div class="menu-category">🍕 Specialty & Classic Pizzas</div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">The Sitton Supreme (16" Large)</div>
+        <div class="item-desc">Pepperoni, bacon, sausage, spinach, red onion, mushrooms[cite: 1].</div>
+        <div class="item-price">$26.49</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Sitton Supreme 16in', -1, 26.49)">−</button>
+        <span class="qty-num" id="qty-Sitton Supreme 16in">0</span>
+        <button class="counter-btn" onclick="updateQty('Sitton Supreme 16in', 1, 26.49)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Sunburn Spicy Pizza (16" Large)</div>
+        <div class="item-desc">Hot Soppressata, Andouille, spicy pepper jack, jalapeños & serranos[cite: 1].</div>
+        <div class="item-price">$28.99</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Sunburn Pizza 16in', -1, 28.99)">−</button>
+        <span class="qty-num" id="qty-Sunburn Pizza 16in">0</span>
+        <button class="counter-btn" onclick="updateQty('Sunburn Pizza 16in', 1, 28.99)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Classic Pepperoni Pizza (16" Large)</div>
+        <div class="item-desc">Signature red sauce, mozzarella, and crisp pepperoni slices[cite: 1].</div>
+        <div class="item-price">$19.98</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Pepperoni Pizza 16in', -1, 19.98)">−</button>
+        <span class="qty-num" id="qty-Pepperoni Pizza 16in">0</span>
+        <button class="counter-btn" onclick="updateQty('Pepperoni Pizza 16in', 1, 19.98)">+</button>
+      </div>
+    </div>
+
+    <!-- STARTERS & WINGS -->
+    <div class="menu-category">🍗 Small Plates & Wings</div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Slyce Baked Wings</div>
+        <div class="item-desc">Dry rubbed, wing sauce, or BBQ. Oven baked crisp[cite: 1].</div>
+        <div class="item-price">$14.79</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Baked Wings', -1, 14.79)">−</button>
+        <span class="qty-num" id="qty-Baked Wings">0</span>
+        <button class="counter-btn" onclick="updateQty('Baked Wings', 1, 14.79)">+</button>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-details">
+        <div class="item-name">Spinach Artichoke Dip</div>
+        <div class="item-desc">Creamy warm dip served with tortilla chips (Gluten Free)[cite: 1].</div>
+        <div class="item-price">$12.49</div>
+      </div>
+      <div class="counter">
+        <button class="counter-btn" onclick="updateQty('Spinach Dip', -1, 12.49)">−</button>
+        <span class="qty-num" id="qty-Spinach Dip">0</span>
+        <button class="counter-btn" onclick="updateQty('Spinach Dip', 1, 12.49)">+</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sticky Bottom Checkout Bar -->
+  <div class="checkout-bar">
+    <div class="checkout-inner">
+      <div>
+        <div class="total-label">Subtotal</div>
+        <div class="total-amount" id="total-display">$0.00</div>
+      </div>
+      <a href="checkout.html" class="checkout-btn" onclick="saveCart()">
+        Checkout →
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Cart State Tracking
+    let cart = {};
+
+    function updateQty(itemName, delta, price) {
+      if (!cart[itemName]) {
+        cart[itemName] = { qty: 0, price: price };
+      }
+
+      cart[itemName].qty += delta;
+
+      if (cart[itemName].qty <= 0) {
+        cart[itemName].qty = 0;
+      }
+
+      // Update UI element counter
+      const qtyElement = document.getElementById('qty-' + itemName);
+      if (qtyElement) {
+        qtyElement.innerText = cart[itemName].qty;
+      }
+
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      for (let item in cart) {
+        total += cart[item].qty * cart[item].price;
+      }
+      document.getElementById('total-display').innerText = '$' + total.toFixed(2);
+    }
+
+    function saveCart() {
+      // Save order items to browser localStorage for checkout.html
+      localStorage.setItem('beachEatsCart', JSON.stringify(cart));
+      localStorage.setItem('beachEatsVendor', 'Slyce Pizza Bar');
+    }
+  </script>
+
+</body>
+</html>
