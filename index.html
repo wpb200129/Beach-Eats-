@@ -10,7 +10,18 @@
 
     /* Header with Main Brand Logo */
     header { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; padding: 24px 16px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
-    .brand-logo { max-width: 220px; height: auto; margin-bottom: 6px; display: block; margin-left: auto; margin-right: auto; }
+    
+    .brand-logo { 
+      max-width: 220px; 
+      height: auto; 
+      margin-bottom: 6px; 
+      display: block; 
+      margin-left: auto; 
+      margin-right: auto; 
+      mix-blend-mode: multiply; /* Eliminates white box around logo */
+      border-radius: 12px;
+    }
+    
     header p { font-size: 0.95rem; opacity: 0.95; font-weight: 600; letter-spacing: 0.2px; }
 
     .container { max-width: 480px; margin: 0 auto; padding: 20px 16px; }
