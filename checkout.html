@@ -49,6 +49,7 @@
     .tip-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
 
     .pay-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; border-radius: 12px; font-weight: 800; text-decoration: none; font-size: 1rem; margin-bottom: 10px; border: none; cursor: pointer; }
+    .pay-square { background-color: #000000; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .pay-venmo { background-color: #008CFF; color: #fff; }
     .pay-cashapp { background-color: #00D632; color: #fff; }
     .pay-zelle { background-color: #7414CA; color: #fff; }
@@ -188,6 +189,7 @@
     <!-- Payment Buttons -->
     <div class="card">
       <div class="card-title">💳 Select Payment Method</div>
+      <button class="pay-btn pay-square" onclick="proceedToPayment('Square')"> Pay with Card or Apple Pay</button>
       <button class="pay-btn pay-venmo" onclick="proceedToPayment('Venmo')">Pay with Venmo</button>
       <button class="pay-btn pay-cashapp" onclick="proceedToPayment('Cash App')">Pay with Cash App</button>
       <button class="pay-btn pay-zelle" onclick="proceedToPayment('Zelle')">Pay with Zelle</button>
@@ -238,7 +240,8 @@
     let pendingPaymentAmount = "0.00";
     let pendingName = "";
 
-    // PAYMENT HANDLES
+    // PAYMENT HANDLES & LINKS
+    const SQUARE_LINK = "https://square.link/u/Wg1OtkK5";
     const VENMO_USERNAME = "beacheatsnow"; 
     const CASHAPP_TAG = "BeachEatsNow";
     const ZELLE_HANDLE = "(941) 786-8492"; 
@@ -453,7 +456,11 @@
       const confirmBtn = document.getElementById('confirm-btn');
       const subtext = document.getElementById('modal-subtext');
 
-      if (method === 'Zelle') {
+      if (method === 'Square') {
+        zelleBox.style.display = 'none';
+        subtext.innerText = "You will enter your card or pay with Apple Pay on the official Square screen.";
+        confirmBtn.innerText = "Proceed to Square Checkout →";
+      } else if (method === 'Zelle') {
         zelleBox.style.display = 'block';
         subtext.innerText = "Please open your banking app and send payment to the Zelle phone number above.";
         confirmBtn.innerText = "I Have Sent Payment →";
@@ -469,7 +476,9 @@
     function executePaymentRedirect() {
       document.getElementById('totalModal').style.display = 'none';
 
-      if (pendingPaymentMethod === 'Venmo') {
+      if (pendingPaymentMethod === 'Square') {
+        window.location.href = SQUARE_LINK;
+      } else if (pendingPaymentMethod === 'Venmo') {
         window.location.href = `https://venmo.com/u/${VENMO_USERNAME}`;
       } else if (pendingPaymentMethod === 'Cash App') {
         window.location.href = `https://cash.app/$${CASHAPP_TAG}/${pendingPaymentAmount}`;
