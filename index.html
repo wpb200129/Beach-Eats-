@@ -19,6 +19,8 @@
       display: inline-block;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
       margin-bottom: 12px;
+      cursor: pointer;
+      user-select: none;
     }
     .brand-logo { 
       max-width: 180px; 
@@ -43,6 +45,7 @@
       color: #166534;
       font-size: 0.85rem;
       font-weight: 600;
+      transition: all 0.2s ease;
     }
     .gps-icon { font-size: 1.2rem; }
 
@@ -62,7 +65,7 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, opacity 0.2s ease;
     }
     .store-card:active { transform: scale(0.98); }
 
@@ -87,7 +90,7 @@
     .store-details h3 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 2px; }
     .store-details p { font-size: 0.82rem; color: #64748b; font-weight: 500; }
     
-    .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; flex-shrink: 0; }
+    .arrow-badge { background-color: #0284c7; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; flex-shrink: 0; transition: all 0.2s ease; }
 
     .trust-footer { margin-top: 30px; text-align: center; font-size: 0.78rem; color: #94a3b8; font-weight: 500; }
   </style>
@@ -95,8 +98,8 @@
 <body>
 
   <header>
-    <!-- Main Header Logo Wrapped in a Styled White Badge -->
-    <div class="brand-logo-container">
+    <!-- Tap 5 times quickly to trigger Admin Open/Closed Toggle -->
+    <div class="brand-logo-container" id="admin-logo-trigger">
       <img src="logo.png" alt="Beach Eats" class="brand-logo">
     </div>
     <p>Delivered to wherever you are</p>
@@ -105,9 +108,9 @@
   <div class="container">
     
     <!-- GPS Location Bar -->
-    <div class="gps-status-bar">
-      <span class="gps-icon">🎯</span>
-      <span>GPS Active • Delivering to your live coordinates</span>
+    <div class="gps-status-bar" id="status-bar">
+      <span class="gps-icon" id="status-icon">🎯</span>
+      <span id="status-text">GPS Active • Delivering to your live coordinates</span>
     </div>
 
     <h2 class="section-title">Select a Store</h2>
@@ -205,6 +208,94 @@
     </div>
 
   </div>
+
+  <script>
+    const ADMIN_PIN = "1234"; // Secret Admin PIN
+    let storeState = localStorage.getItem('beachEatsOpenStatus') || 'OPEN';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyStoreStatus();
+
+      // Secret 5-Tap Gesture on Logo Badge
+      const trigger = document.getElementById('admin-logo-trigger');
+      let tapCount = 0;
+      let tapTimer;
+
+      if (trigger) {
+        trigger.addEventListener('click', () => {
+          tapCount++;
+          clearTimeout(tapTimer);
+
+          if (tapCount === 5) {
+            const inputPin = prompt("🔑 Admin Toggle: Enter PIN to turn delivery OPEN/CLOSED:");
+            if (inputPin === ADMIN_PIN) {
+              storeState = (storeState === 'OPEN') ? 'CLOSED' : 'OPEN';
+              localStorage.setItem('beachEatsOpenStatus', storeState);
+              alert(`Beach Eats Status is now: ${storeState}`);
+              applyStoreStatus();
+            } else if (inputPin !== null) {
+              alert("Incorrect PIN");
+            }
+            tapCount = 0;
+          }
+
+          tapTimer = setTimeout(() => { tapCount = 0; }, 2000);
+        });
+      }
+    });
+
+    function applyStoreStatus() {
+      const statusBar = document.getElementById('status-bar');
+      const statusIcon = document.getElementById('status-icon');
+      const statusText = document.getElementById('status-text');
+      const storeCards = document.querySelectorAll('.store-card');
+
+      if (storeState === 'CLOSED') {
+        statusBar.style.backgroundColor = '#fef2f2';
+        statusBar.style.borderColor = '#fecaca';
+        statusBar.style.color = '#991b1b';
+        statusIcon.innerText = '🔴';
+        statusText.innerText = 'We are currently CLOSED for sand delivery';
+
+        storeCards.forEach(card => {
+          card.style.opacity = '0.5';
+          card.style.pointerEvents = 'none';
+          
+          const badge = card.querySelector('.arrow-badge');
+          if (badge) {
+            badge.innerText = 'CLOSED';
+            badge.style.backgroundColor = '#64748b';
+            badge.style.fontSize = '0.65rem';
+            badge.style.borderRadius = '8px';
+            badge.style.width = 'auto';
+            badge.style.padding = '4px 8px';
+          }
+        });
+      } else {
+        statusBar.style.backgroundColor = '#f0fdf4';
+        statusBar.style.borderColor = '#bbf7d0';
+        statusBar.style.color = '#166534';
+        statusIcon.innerText = '🎯';
+        statusText.innerText = 'GPS Active • Delivering to your live coordinates';
+
+        storeCards.forEach(card => {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+          
+          const badge = card.querySelector('.arrow-badge');
+          if (badge) {
+            badge.innerText = '→';
+            badge.style.backgroundColor = '#0284c7';
+            badge.style.fontSize = '0.9rem';
+            badge.style.borderRadius = '50%';
+            badge.style.width = '32px';
+            badge.style.height = '32px';
+            badge.style.padding = '0';
+          }
+        });
+      }
+    }
+  </script>
 
 </body>
 </html>
