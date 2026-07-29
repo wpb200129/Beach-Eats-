@@ -241,7 +241,6 @@
     let pendingName = "";
 
     // PAYMENT HANDLES & LINKS
-    const SQUARE_LINK = "https://square.link/u/yyTmi1eE";
     const VENMO_USERNAME = "beacheatsnow"; 
     const CASHAPP_TAG = "BeachEatsNow";
     const ZELLE_HANDLE = "(941) 786-8492"; 
@@ -443,9 +442,8 @@
         .then(() => {
           console.log("Order ticket sent to email successfully!");
           
-          // DIRECT REDIRECT FOR SQUARE WITH PRE-FILLED TOTAL
           if (method === 'Square') {
-            window.location.href = `${SQUARE_LINK}?amount=${pendingPaymentAmount}`;
+            executeSquareRedirect(amount);
           } else {
             showTotalModal('$' + amount, method);
           }
@@ -454,11 +452,42 @@
           console.error("EmailJS issue, proceeding anyway:", err);
           
           if (method === 'Square') {
-            window.location.href = `${SQUARE_LINK}?amount=${pendingPaymentAmount}`;
+            executeSquareRedirect(amount);
           } else {
             showTotalModal('$' + amount, method);
           }
         });
+    }
+
+    function executeSquareRedirect(amount) {
+      const squareBtn = document.querySelector('.pay-square');
+      squareBtn.innerText = "Locking in Total...";
+      squareBtn.disabled = true;
+
+      fetch('/.netlify/functions/create-square-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: amount,
+          orderId: Date.now().toString().slice(-4)
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.url) {
+          window.location.href = data.url; // Redirects straight to Square with total locked in!
+        } else {
+          alert("Unable to generate payment link. Please try again.");
+          squareBtn.innerText = " Pay with Card or Apple Pay";
+          squareBtn.disabled = false;
+        }
+      })
+      .catch(err => {
+        console.error("Square Link Error:", err);
+        alert("Payment service error. Please try again or use another payment option.");
+        squareBtn.innerText = " Pay with Card or Apple Pay";
+        squareBtn.disabled = false;
+      });
     }
 
     function showTotalModal(formattedTotal, method) {
