@@ -472,19 +472,19 @@
           orderId: Date.now().toString().slice(-4)
         })
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.url) {
-          window.location.href = data.url; // Redirects straight to Square with total locked in!
+      .then(async res => {
+        const data = await res.json();
+        if (res.ok && data.url) {
+          window.location.href = data.url;
         } else {
-          alert("Unable to generate payment link. Please try again.");
+          alert("Square Error: " + (data.error || JSON.stringify(data)));
           squareBtn.innerText = " Pay with Card or Apple Pay";
           squareBtn.disabled = false;
         }
       })
       .catch(err => {
         console.error("Square Link Error:", err);
-        alert("Payment service error. Please try again or use another payment option.");
+        alert("Network Error: " + err.message);
         squareBtn.innerText = " Pay with Card or Apple Pay";
         squareBtn.disabled = false;
       });
