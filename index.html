@@ -211,10 +211,13 @@
 
   <script>
     const ADMIN_PIN = "1234"; // Secret Admin PIN
-    let storeState = localStorage.getItem('beachEatsOpenStatus') || 'OPEN';
+    const JSONBIN_BIN_ID = "6a6a2347da38895dfea062fc";
+    const JSONBIN_MASTER_KEY = "$2a$10$OdfjHPDIEqSt1GoZPE5ITeVt/XW5DL2MxsXo5BIx2Sya75F7m1Oky";
+
+    let isStoreOpen = true;
 
     document.addEventListener('DOMContentLoaded', () => {
-      applyStoreStatus();
+      fetchLiveStatus();
 
       // Secret 5-Tap Gesture on Logo Badge
       const trigger = document.getElementById('admin-logo-trigger');
@@ -229,10 +232,8 @@
           if (tapCount === 5) {
             const inputPin = prompt("🔑 Admin Toggle: Enter PIN to turn delivery OPEN/CLOSED:");
             if (inputPin === ADMIN_PIN) {
-              storeState = (storeState === 'OPEN') ? 'CLOSED' : 'OPEN';
-              localStorage.setItem('beachEatsOpenStatus', storeState);
-              alert(`Beach Eats Status is now: ${storeState}`);
-              applyStoreStatus();
+              const newStatus = !isStoreOpen;
+              updateLiveCloud(newStatus);
             } else if (inputPin !== null) {
               alert("Incorrect PIN");
             }
@@ -244,18 +245,55 @@
       }
     });
 
+    function fetchLiveStatus() {
+      fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.record && typeof data.record.isOpen !== 'undefined') {
+          isStoreOpen = data.record.isOpen;
+          applyStoreStatus();
+        }
+      })
+      .catch(err => {
+        console.error("Cloud status fetch error, defaulting to open:", err);
+        applyStoreStatus();
+      });
+    }
+
+    function updateLiveCloud(newIsOpen) {
+      fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JSONBIN_MASTER_KEY
+        },
+        body: JSON.stringify({ isOpen: newIsOpen })
+      })
+      .then(res => res.json())
+      .then(data => {
+        isStoreOpen = newIsOpen;
+        alert(`Beach Eats status updated for ALL CUSTOMERS to: ${isStoreOpen ? 'OPEN 🟢' : 'CLOSED 🔴'}`);
+        applyStoreStatus();
+      })
+      .catch(err => {
+        alert("Failed to update status. Please check your network connection.");
+      });
+    }
+
     function applyStoreStatus() {
       const statusBar = document.getElementById('status-bar');
       const statusIcon = document.getElementById('status-icon');
       const statusText = document.getElementById('status-text');
       const storeCards = document.querySelectorAll('.store-card');
 
-      if (storeState === 'CLOSED') {
+      if (!isStoreOpen) {
         statusBar.style.backgroundColor = '#fef2f2';
         statusBar.style.borderColor = '#fecaca';
         statusBar.style.color = '#991b1b';
         statusIcon.innerText = '🔴';
-        statusText.innerText = 'We are currently CLOSED for sand delivery';
+        statusText.innerText = 'Due to high demand, we are currently not accepting orders. Please try again later.';
 
         storeCards.forEach(card => {
           card.style.opacity = '0.5';
