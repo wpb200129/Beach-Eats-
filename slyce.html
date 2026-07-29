@@ -235,13 +235,13 @@
       cart[itemName].qty += delta;
 
       if (cart[itemName].qty <= 0) {
-        cart[itemName].qty = 0;
+        delete cart[itemName];
       }
 
       // Update UI element counter
       const qtyElement = document.getElementById('qty-' + itemName);
       if (qtyElement) {
-        qtyElement.innerText = cart[itemName].qty;
+        qtyElement.innerText = cart[itemName] ? cart[itemName].qty : 0;
       }
 
       calculateTotal();
@@ -253,11 +253,24 @@
         total += cart[item].qty * cart[item].price;
       }
       document.getElementById('total-display').innerText = '$' + total.toFixed(2);
+      saveCart();
     }
 
     function saveCart() {
-      // Save order items to browser localStorage for checkout.html
-      localStorage.setItem('beachEatsCart', JSON.stringify(cart));
+      let total = 0;
+      for (let item in cart) {
+        total += cart[item].qty * cart[item].price;
+      }
+
+      const formattedTotal = total.toFixed(2);
+      const cartJson = JSON.stringify(cart);
+
+      // Save under both sessionStorage & localStorage so checkout.html parses it instantly
+      sessionStorage.setItem('beach_eats_cart', cartJson);
+      sessionStorage.setItem('beach_eats_subtotal', formattedTotal);
+      sessionStorage.setItem('beach_eats_store', 'Slyce Pizza Bar');
+
+      localStorage.setItem('beachEatsCart', cartJson);
       localStorage.setItem('beachEatsVendor', 'Slyce Pizza Bar');
     }
   </script>
