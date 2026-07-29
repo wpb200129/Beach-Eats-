@@ -66,8 +66,8 @@
         <p>Organic, non-GMO & gluten-free açai, GF granola, bananas, strawberries, coconut flakes & Nutella.</p>
         <div class="item-price">$15.99</div>
       </div>
-      <div id="btn-KaiaBowl">
-        <button class="add-btn" onclick="updateQty('Kaia Bowl', 15.99, 1)">+ Add</button>
+      <div id="btn-KaiaBowlMostPopular">
+        <button class="add-btn" onclick="updateQty('Kaia Bowl ⭐ Most Popular', 15.99, 1)">+ Add</button>
       </div>
     </div>
 
@@ -140,6 +140,10 @@
   <script>
     let cart = {};
 
+    function getSafeId(name) {
+      return 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
+    }
+
     function updateQty(name, price, change) {
       if (!cart[name]) {
         cart[name] = { price: price, qty: 0 };
@@ -163,28 +167,38 @@
         count += cart[key].qty;
       }
 
-      document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+      const formattedTotal = total.toFixed(2);
+      const cartJson = JSON.stringify(cart);
+
+      document.getElementById('cart-total').innerText = '$' + formattedTotal;
       document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
 
-      // Store current subtotal for checkout page
-      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+      // Store current subtotal & cart data for checkout page
+      sessionStorage.setItem('beach_eats_subtotal', formattedTotal);
+      sessionStorage.setItem('beach_eats_cart', cartJson);
+      sessionStorage.setItem('beach_eats_store', 'Kaia Bowls');
 
-      const safeId = 'btn-' + name.replace(/[^a-zA-Z0-9]/g, '');
+      localStorage.setItem('beachEatsCart', cartJson);
+      localStorage.setItem('beachEatsVendor', 'Kaia Bowls');
+
+      const safeId = getSafeId(name);
       const container = document.getElementById(safeId);
 
       if (container) {
         const qty = cart[name] ? cart[name].qty : 0;
+        const safeName = name.replace(/'/g, "\\'");
+
         if (qty > 0) {
           container.innerHTML = `
             <div class="qty-controls">
-              <button class="qty-btn" onclick="updateQty('${name}', ${price}, -1)">−</button>
+              <button class="qty-btn" onclick="updateQty('${safeName}', ${price}, -1)">−</button>
               <span class="qty-count">${qty}</span>
-              <button class="qty-btn" onclick="updateQty('${name}', ${price}, 1)">+</button>
+              <button class="qty-btn" onclick="updateQty('${safeName}', ${price}, 1)">+</button>
             </div>
           `;
         } else {
           container.innerHTML = `
-            <button class="add-btn" onclick="updateQty('${name}', ${price}, 1)">+ Add</button>
+            <button class="add-btn" onclick="updateQty('${safeName}', ${price}, 1)">+ Add</button>
           `;
         }
       }
@@ -195,7 +209,15 @@
       for (let key in cart) {
         total += cart[key].price * cart[key].qty;
       }
-      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
+      const formattedTotal = total.toFixed(2);
+      const cartJson = JSON.stringify(cart);
+
+      sessionStorage.setItem('beach_eats_subtotal', formattedTotal);
+      sessionStorage.setItem('beach_eats_cart', cartJson);
+      sessionStorage.setItem('beach_eats_store', 'Kaia Bowls');
+
+      localStorage.setItem('beachEatsCart', cartJson);
+      localStorage.setItem('beachEatsVendor', 'Kaia Bowls');
     }
   </script>
 
