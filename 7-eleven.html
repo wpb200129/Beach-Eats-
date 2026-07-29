@@ -369,15 +369,25 @@
         count += cart[key].qty;
       }
 
-      document.getElementById('cart-total').innerText = '$' + total.toFixed(2);
+      const formattedTotal = total.toFixed(2);
+      const cartJson = JSON.stringify(cart);
+
+      document.getElementById('cart-total').innerText = '$' + formattedTotal;
       document.getElementById('cart-count').innerText = count + (count === 1 ? ' item added' : ' items added');
+
+      // Save live cart data and store name across browser storage keys
+      sessionStorage.setItem('beach_eats_subtotal', formattedTotal);
+      sessionStorage.setItem('beach_eats_cart', cartJson);
+      sessionStorage.setItem('beach_eats_store', '7-Eleven');
+
+      localStorage.setItem('beachEatsCart', cartJson);
+      localStorage.setItem('beachEatsVendor', '7-Eleven');
 
       const safeId = getSafeId(name);
       const container = document.getElementById(safeId);
 
       if (container) {
         const qty = cart[name] ? cart[name].qty : 0;
-        // Escaped string for single quotes inside item names like Jack Link's or Ben & Jerry's
         const safeName = name.replace(/'/g, "\\'");
         
         if (qty > 0) {
@@ -401,8 +411,14 @@
       for (let key in cart) {
         total += cart[key].price * cart[key].qty;
       }
-      sessionStorage.setItem('beach_eats_subtotal', total.toFixed(2));
-      localStorage.setItem('beachEatsCart', JSON.stringify(cart));
+      const formattedTotal = total.toFixed(2);
+      const cartJson = JSON.stringify(cart);
+
+      sessionStorage.setItem('beach_eats_subtotal', formattedTotal);
+      sessionStorage.setItem('beach_eats_cart', cartJson);
+      sessionStorage.setItem('beach_eats_store', '7-Eleven');
+
+      localStorage.setItem('beachEatsCart', cartJson);
       localStorage.setItem('beachEatsVendor', '7-Eleven');
     }
   </script>
