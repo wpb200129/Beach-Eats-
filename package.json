@@ -1,0 +1,7 @@
+{
+  "name": "beach-eats",
+  "version": "1.0.0",
+  "dependencies": {
+    "square": "^39.0.0"
+  }
+}
