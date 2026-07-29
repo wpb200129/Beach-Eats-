@@ -52,6 +52,66 @@
     .pay-venmo { background-color: #008CFF; color: #fff; }
     .pay-cashapp { background-color: #00D632; color: #fff; }
     .pay-zelle { background-color: #7414CA; color: #fff; }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px 20px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      animation: modalPop 0.2s ease-out;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon { font-size: 2.2rem; margin-bottom: 8px; }
+    .modal-card h3 { font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .modal-instruction { font-size: 0.88rem; color: #64748b; font-weight: 500; margin-bottom: 16px; }
+
+    .modal-total-box {
+      background: #f0f9ff;
+      border: 2px dashed #0284c7;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .total-label-sm { font-size: 0.75rem; font-weight: 800; color: #0284c7; letter-spacing: 0.5px; }
+    #modal-total-display { font-size: 2.2rem; font-weight: 900; color: #0f172a; margin-top: 2px; }
+
+    .modal-subtext { font-size: 0.8rem; color: #475569; margin-bottom: 20px; line-height: 1.3; }
+
+    .confirm-pay-btn {
+      width: 100%;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+    }
+    .confirm-pay-btn:active { transform: scale(0.98); background: #0369a1; }
   </style>
 </head>
 <body>
@@ -127,6 +187,24 @@
 
   </div>
 
+  <!-- Total Reminder Pop-up Modal -->
+  <div id="totalModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-icon">💡</div>
+      <h3>Remember Your Order Total!</h3>
+      <p class="modal-instruction">Please keep this exact amount in mind for the payment screen:</p>
+      
+      <div class="modal-total-box">
+        <span class="total-label-sm">FINAL TOTAL</span>
+        <div id="modal-total-display">$0.00</div>
+      </div>
+
+      <p class="modal-subtext">You will enter this amount when sending payment on the next page.</p>
+
+      <button class="confirm-pay-btn" onclick="executePaymentRedirect()">Got It, Pay Now →</button>
+    </div>
+  </div>
+
   <script>
     let subtotal = 0.00;
     let salesTax = 0.00;
@@ -138,6 +216,11 @@
     let currentLat = null;
     let currentLng = null;
     let cartData = {};
+
+    // Temporary variables to hold pending payment redirection state
+    let pendingPaymentMethod = null;
+    let pendingPaymentAmount = "0.00";
+    let pendingName = "";
 
     // PAYMENT HANDLES
     const VENMO_USERNAME = "beacheatsnow"; 
@@ -194,7 +277,8 @@
       
       const rawCart = sessionStorage.getItem('beach_eats_cart') || 
                       sessionStorage.getItem('cart') || 
-                      sessionStorage.getItem('cartItems');
+                      sessionStorage.getItem('cartItems') ||
+                      localStorage.getItem('beachEatsCart');
       
       subtotal = 0.00;
       cartData = {};
@@ -288,7 +372,7 @@
     }
 
     function sendEmailJSSummary(name, phone, landmark, method) {
-      let activeStore = sessionStorage.getItem('beach_eats_store');
+      let activeStore = sessionStorage.getItem('beach_eats_store') || localStorage.getItem('beachEatsVendor');
       if (!activeStore) {
         const ref = document.referrer.toLowerCase();
         if (ref.includes('hooters')) activeStore = "Hooters";
@@ -332,37 +416,43 @@
 
       const amount = grandTotal.toFixed(2);
 
+      // Save references for post-modal action
+      pendingPaymentMethod = method;
+      pendingPaymentAmount = amount;
+      pendingName = name;
+
       sendEmailJSSummary(name, phone, landmark, method)
         .then(() => {
           console.log("Order ticket sent to email successfully!");
-          
-          if (method === 'Venmo') {
-            // Opens the explicit user profile page to avoid routing errors
-            window.location.href = `https://venmo.com/u/${VENMO_USERNAME}`;
-
-          } else if (method === 'Cash App') {
-            window.location.href = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
-
-          } else if (method === 'Zelle') {
-            alert(
-              `🏖️ ORDER PLACED!\n\n` +
-              `Please open your Banking App and Zelle $${amount} to:\n\n` +
-              `📱 ${ZELLE_HANDLE}\n\n` +
-              `Note: Beach Eats - ${name}\n\n` +
-              `Your runner has received your ticket and GPS location!`
-            );
-          }
+          showTotalModal('$' + amount);
         })
         .catch((err) => {
-          console.error("EmailJS issue, proceeding to payment anyway:", err);
-          if (method === 'Venmo') {
-            window.location.href = `https://venmo.com/u/${VENMO_USERNAME}`;
-          } else if (method === 'Cash App') {
-            window.location.href = `https://cash.app/$${CASHAPP_TAG}/${amount}`;
-          } else if (method === 'Zelle') {
-            alert(`Please Zelle $${amount} to: ${ZELLE_HANDLE}`);
-          }
+          console.error("EmailJS issue, proceeding to payment popup anyway:", err);
+          showTotalModal('$' + amount);
         });
+    }
+
+    function showTotalModal(formattedTotal) {
+      document.getElementById('modal-total-display').innerText = formattedTotal;
+      document.getElementById('totalModal').style.display = 'flex';
+    }
+
+    function executePaymentRedirect() {
+      document.getElementById('totalModal').style.display = 'none';
+
+      if (pendingPaymentMethod === 'Venmo') {
+        window.location.href = `https://venmo.com/u/${VENMO_USERNAME}`;
+      } else if (pendingPaymentMethod === 'Cash App') {
+        window.location.href = `https://cash.app/$${CASHAPP_TAG}/${pendingPaymentAmount}`;
+      } else if (pendingPaymentMethod === 'Zelle') {
+        alert(
+          `🏖️ ORDER PLACED!\n\n` +
+          `Please open your Banking App and Zelle $${pendingPaymentAmount} to:\n\n` +
+          `📱 ${ZELLE_HANDLE}\n\n` +
+          `Note: Beach Eats - ${pendingName}\n\n` +
+          `Your runner has received your ticket and GPS location!`
+        );
+      }
     }
   </script>
 
