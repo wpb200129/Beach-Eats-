@@ -168,9 +168,8 @@
       <div class="divider"></div>
 
       <div class="summary-row"><span>Subtotal</span><span id="subtotal-val">$0.00</span></div>
+      <div class="summary-row"><span>Sand Delivery Charge</span><span id="service-fee-val">$0.00</span></div>
       <div class="summary-row"><span>Sales Tax (7%)</span><span id="tax-val">$0.00</span></div>
-      <div class="summary-row"><span>Sand Runner Fee</span><span id="delivery-fee-val">$4.99</span></div>
-      <div class="summary-row"><span>Service Fee (10%)</span><span id="service-fee-val">$0.00</span></div>
 
       <div class="summary-row" style="margin-top: 8px; font-weight: 700; color: #0f172a;">
         <span>Runner Tip</span><span id="tip-val">$0.00</span>
@@ -227,7 +226,7 @@
   <script>
     let subtotal = 0.00;
     let salesTax = 0.00;
-    let deliveryFee = 4.99;
+    let deliveryFee = 0.00;
     let serviceFee = 0.00;
     let tipPercent = 0.20;
     let customTipAmount = null;
@@ -376,15 +375,20 @@
     }
 
     function calculateTotals() {
-      salesTax = subtotal * 0.07;
-      serviceFee = subtotal * 0.10;
+      // 25% Sand Delivery Charge
+      serviceFee = subtotal * 0.25; 
+      deliveryFee = 0.00; // No flat fee line
+
+      // Florida Sales Tax (7% on food + delivery charge)
+      salesTax = (subtotal + serviceFee) * 0.07; 
+      
       let tipAmount = customTipAmount !== null ? customTipAmount : (subtotal * tipPercent);
       
-      grandTotal = subtotal + salesTax + deliveryFee + serviceFee + tipAmount;
+      grandTotal = subtotal + serviceFee + salesTax + tipAmount;
 
       document.getElementById('subtotal-val').innerText = '$' + subtotal.toFixed(2);
-      document.getElementById('tax-val').innerText = '$' + salesTax.toFixed(2);
       document.getElementById('service-fee-val').innerText = '$' + serviceFee.toFixed(2);
+      document.getElementById('tax-val').innerText = '$' + salesTax.toFixed(2);
       document.getElementById('tip-val').innerText = '$' + tipAmount.toFixed(2);
       document.getElementById('total-val').innerText = '$' + grandTotal.toFixed(2);
     }
